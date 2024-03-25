@@ -1,0 +1,10 @@
+{
+    "require Raylib": {
+        "prefix": "require raylib",
+        "body": [
+            "require \"raylib-cr\"",
+            "require \"raylib/rlgl\""
+        ],
+        "description": "setup raylib-cr requirements."
+    }
+}
