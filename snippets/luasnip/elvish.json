@@ -1,0 +1,112 @@
+{
+    "lambda (single line)": {
+        "prefix": "lambda",
+        "body": "{|${1:arguments}| ${2:body}}"
+    },
+    "lambda (multi line)": {
+        "prefix": "lambda",
+        "body": [
+            "{|${1:arguments}|",
+            "\t${2:body}",
+            "}"
+        ]
+    },
+    "var command": {
+        "prefix": "var",
+        "body": "var ${1:names} = ${2:values}"
+    },
+    "set command": {
+        "prefix": "set",
+        "body": "set ${1:names} = ${2:values}"
+    },
+    "tmp command": {
+        "prefix": "tmp",
+        "body": "tmp ${1:names} = ${2:values}"
+    },
+    "if command": {
+        "prefix": "if",
+        "body": [
+            "if ${1:condition} {",
+            "\t${2:body}",
+            "}"
+        ]
+    },
+    "if command with else": {
+        "prefix": "if-else",
+        "body": [
+            "if ${1:condition} {",
+            "\t${2:body}",
+            "} else {",
+            "\t${3:body}",
+            "}"
+        ]
+    },
+    "while command": {
+        "prefix": "while",
+        "body": [
+            "while ${1:condition} {",
+            "\t${2:body}",
+            "}"
+        ]
+    },
+    "while command with else": {
+        "prefix": "while-else",
+        "body": [
+            "while ${1:condition} {",
+            "\t${2:body}",
+            "} else {",
+            "\t${3:body}",
+            "}"
+        ]
+    },
+    "for command": {
+        "prefix": "for",
+        "body": [
+            "for ${1:variable} ${2:container} {",
+            "\t${3:body}",
+            "}"
+        ]
+    },
+    "for command with else": {
+        "prefix": "for-else",
+        "body": [
+            "for ${1:variable} ${2:container} {",
+            "\t${3:body}",
+            "} else {",
+            "\t${4:body}",
+            "}"
+        ]
+    },
+    "try command with catch": {
+        "prefix": "try-catch",
+        "body": [
+            "try {",
+            "\t${1:body}",
+            "} catch ${2:name} {",
+            "\t${3:body}",
+            "}"
+        ]
+    },
+    "try command with finally": {
+        "prefix": "try-finally",
+        "body": [
+            "try {",
+            "\t${1:body}",
+            "} finally {",
+            "\t${2:body}",
+            "}"
+        ]
+    },
+    "fn command": {
+        "prefix": "fn",
+        "body": [
+            "fn ${1:name} {|${1:arguments}|",
+            "\t${2:body}",
+            "}"
+        ]
+    },
+    "pragma command": {
+        "prefix": "pragma",
+        "body": "pragma ${1:name} = ${2:value}"
+    }
+}
