@@ -23,7 +23,5 @@ return {
         end,
     },
 
-    { 'zaldih/themery.nvim', enabled = false },
-    { 'oleksiiluchnikov/gradient.nvim', enabled = false },
     { 'typicode/bg.nvim', lazy = false },
 }

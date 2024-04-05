@@ -1,36 +1,11 @@
 return {
     { require 'plugins.utils.folds' },
-    { require 'plugins.utils.md_utils' },
     { require 'plugins.utils.term_utils' },
 
     {
         'LudoPinelli/comment-box.nvim',
         event = 'VeryLazy',
         opts = {}
-    },
-
-    {
-        'luckasRanarison/nvim-devdocs',
-        cmd = {
-            'DevdocsFetch',
-            'DevdocsKeywordprg',
-            'DevdocsOpen',
-            'DevdocsOpenCurrent',
-            'DevdocsOpenCurrentFloat',
-            'DevdocsOpenFloat',
-            'DevdocsInstall',
-            'DevdocsToggle',
-            'DevdocsUpdate',
-            'DevdocsUpdateAll'
-        },
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope.nvim',
-            'nvim-treesitter/nvim-treesitter',
-        },
-        config = function()
-            require 'plugins.utils.devdocs'
-        end,
     },
 
     { 'numToStr/Comment.nvim', opts = {} },
@@ -60,11 +35,10 @@ return {
 
     {
         'sustech-data/wildfire.nvim',
-        event = 'VeryLazy',
         dependencies = { 'nvim-treesitter/nvim-treesitter' },
         config = function()
             require 'wildfire'.setup()
-        end,
+        end
     },
 
     {
@@ -92,7 +66,6 @@ return {
 
     {
         'jghauser/follow-md-links.nvim',
-        lazy = true,
         ft = { 'md', 'markdown' },
         config = function()
             vim.keymap.set('n', '<BS>', ':edit #<CR>', { silent = true })
@@ -123,17 +96,32 @@ return {
 
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
-    { 'MunifTanjim/nui.nvim', lazy = true },
 
     -- Disabled plugins
 
-    {
-        'OscarCreator/rsync.nvim',
-        enabled = false,
-        build = 'make',
-        dependencies = 'nvim-lua/plenary.nvim',
+    --[[    {
+        'luckasRanarison/nvim-devdocs',
+        cmd = {
+            'DevdocsFetch',
+            'DevdocsKeywordprg',
+            'DevdocsOpen',
+            'DevdocsOpenCurrent',
+            'DevdocsOpenCurrentFloat',
+            'DevdocsOpenFloat',
+            'DevdocsInstall',
+            'DevdocsToggle',
+            'DevdocsUpdate',
+            'DevdocsUpdateAll'
+        },
+dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim',
+            'nvim-treesitter/nvim-treesitter',
+        },
         config = function()
-            require 'rsync'.setup()
+            require 'plugins.utils.devdocs'
         end,
     },
+    ]]
+
 }

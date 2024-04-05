@@ -1,0 +1,23 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "runtime.version": "LuaJIT",
+    "runtime.fileEncoding": "utf8",
+    "completion": {
+        "callSnippet": "Replace",
+        "displayContext": 50
+    },
+    "diagnostics": {
+        "disable": [
+            "missing-fields",
+            "unused-local",
+            "unused-function"
+        ],
+        "globals": ["vim"]
+    },
+    "workspaceEvent": "OnSave",
+    "workspace": {
+        "checkThirdParty": false,
+        "maxPreload": 10000,
+        "preloadFileSize": 1000
+    }
+}
