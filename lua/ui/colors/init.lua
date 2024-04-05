@@ -1,15 +1,15 @@
 local X = {}
 
-function X.kimbox()
-    require 'ui.colors.themes.kimmy'.setup{}
-end
+X.kimbox = {
+    setup = require 'ui.colors.themes.kimmy'.setup
+}
 
-function X.gruvbox()
-    require 'ui.colors.themes.gruvbox'.config()
-end
+X.gruvbox = {
+    setup = require 'ui.colors.themes.gruvbox'.config
+}
 
-function X.osaka()
-    require 'ui.colors.themes.osaka'.setup{}
-end
+X.osaka = {
+    setup = require 'ui.colors.themes.osaka'.setup
+}
 
 return X

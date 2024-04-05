@@ -1,6 +1,5 @@
 return {
     { 'Biscuit-Colorscheme/nvim', name = 'biscuit' },
-    { 'nyoom-engineering/oxocarbon.nvim', lazy = true },
 
     {
         'ray-x/starry.nvim',
@@ -15,19 +14,19 @@ return {
         end,
     },
 
-    { 'rose-pine/neovim', lazy = false },
-
     {
         'luisiacc/gruvbox-baby',
         config = function()
-            require 'ui.colors'.gruvbox()
+          local gruvbox = require 'ui.colors'.gruvbox
+          gruvbox.setup()
         end,
     },
 
     {
         'lmburns/kimbox',
         config = function()
-            require 'ui.colors'.kimbox()
+            local kimbox = require 'ui.colors'.kimbox
+            kimbox.setup{}
         end,
     },
 
@@ -36,7 +35,7 @@ return {
         priority = 10000,
         lazy = false,
         config = function()
-            local osaka = require 'plugins.colors.config.osaka'
+          local osaka = require 'ui.colors'.osaka
             osaka.setup{}
             vim.cmd.colorscheme 'solarized-osaka-storm'
         end

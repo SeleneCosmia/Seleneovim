@@ -5,9 +5,9 @@ return {
         dependencies = {
             { 'williamboman/mason.nvim' },
             { 'williamboman/mason-lspconfig.nvim' },
-            { 'folke/neodev.nvim' },
-            { 'creativenull/efmls-configs-nvim', version = false },
+            { 'folke/neodev.nvim', ft = 'lua' },
             { 'folke/neoconf.nvim', cmd = 'Neoconf' },
+            { 'creativenull/efmls-configs-nvim', version = false },
             { 'nvimtools/none-ls.nvim' },
         },
         config = function()
@@ -28,8 +28,6 @@ return {
                 vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = false })
 
             -------------- efmls setup
-            --- ameba is not that great ‾\_(ツ)_/‾
-            --        local ameba = require "efmls-configs.linters.ameba"
             local selene = require 'efmls-configs.linters.selene'
             local stylua = require 'efmls-configs.formatters.stylua'
             local shellcheck = require 'efmls-configs.linters.shellcheck'
@@ -54,11 +52,6 @@ return {
             }
 
             -------------- Server setups
-
-            lspconfig.arduino_language_server.setup({
-                capabilities = Capabilities,
-                on_attach = def_on_attach,
-            })
 
             lspconfig.bashls.setup({
                 capabilities = Capabilities,

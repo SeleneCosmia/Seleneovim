@@ -1,18 +1,44 @@
+---@diagnostic disable:missing-fields
 return {
     {
         'lukas-reineke/indent-blankline.nvim',
         event = 'ColorScheme',
         main = 'ibl',
         config = function()
-            require('plugins.ui.ibl')
+            require 'plugins.ui.ibl'
         end,
     },
 
-    { 'MunifTanjim/nui.nvim', event = 'VeryLazy' },
+    {
+        'MunifTanjim/nui.nvim',
+        lazy = true
+    },
 
     {
         'rcarriga/nvim-notify',
-        event = 'VeryLazy'
+        event = 'VeryLazy',
+        dependencies = {
+            'nvim-tree/nvim-web-devicons'
+        },
+        config = function(min_w, max_w)
+          local notify = require 'notify'
+            min_w = math.floor(vim.api.nvim_win_get_width(0) / 4)
+            max_w = math.ceil(vim.api.nvim_win_get_width(0) * 0.345)
+
+            notify.setup({
+                background_colour = '#282828',
+                minimum_width = min_w,
+                max_width = max_w,
+                stages = 'slide',
+                timeout = 6000,
+            })
+        end
+    },
+
+    {
+        'nvimdev/hlsearch.nvim',
+        event = 'BufRead',
+        opts = {}
     },
 
     {
@@ -23,9 +49,6 @@ return {
             'rcarriga/nvim-notify',
         },
         config = function()
-            local notify = require('notify')
-            notify.setup({ background_colour = '#170f0d' })
-
             require 'plugins.ui.noice'
         end,
     },
@@ -34,7 +57,7 @@ return {
         'tamton-aquib/flirt.nvim',
         event = 'VeryLazy',
         config = function()
-            require('flirt').setup {
+            require 'flirt'.setup {
                 close_command = 'Q',
                 exclude_fts = { 'notify', 'cmp_menu', 'lazy' },
             }
@@ -83,21 +106,14 @@ return {
         'gen740/SmoothCursor.nvim',
         event = 'BufEnter',
         config = function()
-            require 'ui.eyecandy.smooth_cursor'.config()
+            require 'ui.configs.smooth_cursor'.config()
         end,
-    },
-
-    {
-        'nvimdev/3danimation.nvim',
-        version = 'false',
-        cmd = { 'Cube', 'Dounts' },
-        enabled = false,
     },
 
     {
         'mvllow/modes.nvim',
         event = 'VeryLazy',
-        enabled = false,
+        enabled = true,
         config = function()
             require 'modes'.setup({
                 ignore_filetypes = {
