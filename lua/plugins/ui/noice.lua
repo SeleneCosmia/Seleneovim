@@ -55,7 +55,7 @@ return {
         },
         lsp = {
             hover = {
-                enabled = true,
+                enabled = false,
                 ---@type NoiceViewOptions
                 opts = {
                     win_options = {

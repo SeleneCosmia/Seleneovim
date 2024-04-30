@@ -97,6 +97,12 @@ return {
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
 
+    {
+        'lsvmello/elastictabstops.nvim',
+        cmd = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
+        opts = {}
+    }
+
     -- Disabled plugins
 
     --[[    {
