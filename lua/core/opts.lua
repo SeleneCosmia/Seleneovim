@@ -84,8 +84,8 @@ g.do_filetype_lua            = true
 --stylua ignore:end
 g.loaded_perl_provider = 0
 
-g.ruby_host_prog = os.getenv("XDG_DATA_HOME") .. "/gem/ruby/3.0.0/bin"
+g.ruby_host_prog = os.getenv('XDG_DATA_HOME') .. '/gem/ruby/3.0.0/bin'
 
-if os.getenv("SHELL") == "/bin/bash" then
+if os.getenv('SHELL') == '/bin/bash' then
     g.node_host_prog = os.getenv('NVM_BIN')
 end
