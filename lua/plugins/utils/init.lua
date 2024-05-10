@@ -2,6 +2,8 @@ return {
     { require 'plugins.utils.folds' },
     { require 'plugins.utils.term_utils' },
 
+    { 'chrisgrieser/nvim-spider', lazy = true },
+
     {
         'LudoPinelli/comment-box.nvim',
         event = 'VeryLazy',
@@ -99,6 +101,7 @@ return {
 
     {
         'lsvmello/elastictabstops.nvim',
+        event = 'VeryLazy',
         cmd = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
         opts = {}
     }

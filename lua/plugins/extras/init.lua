@@ -9,6 +9,13 @@ return {
     {
         '3rd/image.nvim',
         dependencies = { 'luarocks.nvim' },
+        enabled = function()
+            if os.getenv('TERM_PROGRAM') == 'kitty' or 'WezTerm' then
+                return true
+            else
+                return false
+            end
+        end,
         config = function(term)
             --[[-@![todo]: config image.nvim in it's own config file ~~
             maybe a broad terminal detetction config, loading specific plugins[^1]

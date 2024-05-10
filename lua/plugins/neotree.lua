@@ -6,13 +6,19 @@ return {
         'nvim-lua/plenary.nvim',
         'nvim-tree/nvim-web-devicons',
         'MunifTanjim/nui.nvim',
+        '3rd/image.nvim'
       },
       config = function()
         local map = require 'utils.globals'.map
         local tree = require 'neo-tree'
           tree.setup({
               default_component_configs = {
-                    indent = {},
+                    indent = {
+                        last_indent_marker = '╰'
+                    },
+              },
+              modified = {
+                  symbol = ' '
               },
               window = {
                   position = 'left',
@@ -24,7 +30,7 @@ return {
                   mappings = {
                       ['S'] = 'open_vsplit',
                       ['s'] = 'open_split',
-                      ['P'] = {'toggle_preview', config = { use_float = true }},
+                      ['P'] = {'toggle_preview', config = { use_float = true, use_image_nvim = true }},
                   }
               },
               filesystem = {

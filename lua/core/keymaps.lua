@@ -47,8 +47,27 @@ map('n', '<leader><A-l>', ss.swap_buf_right)
 key('n', '<Leader>df', '<cmd>lua vim.diagnostic.open_float({scope = "buffer"})<CR>',
     { noremap = true, silent = true, desc = 'Open LSP diagnostics floating window' })
 -- stylua: ignore end
---[[key({'n', 'i'}, 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>',
-    { noremap = true, silent = true, desc = 'Go to previous diagnostic' })
+--════════════════════════════════════════════════════════════
+map(
+    { 'n', 'o', 'x' },
+    'w',
+    "<cmd>lua require 'spider'.motion('w')<CR>",
+    { desc = 'Spider-w' }
+)
 
-key({'n', 'i'}, 'g]', '<cmd>lua vim.diagnostic.goto_next()',
-    { noremap = true, silent = true, desc = 'Go to next diagnostic' })]]
+map(
+    { 'n', 'o', 'x' },
+    'e',
+    "<cmd>lua require 'spider'.motion('e')<CR>",
+    { desc = 'Spider-e' }
+)
+
+map(
+    { 'n', 'o', 'x' },
+    'b',
+    "<cmd>lua require 'spider'.motion('b')<CR>",
+    { desc = 'Spider-b' }
+)
+
+map('i', '<C-f>', "<Esc>l<cmd>lua require 'spider'.motion('w')<CR>i")
+map('i', '<C-b>', "<Esc>l<cmd>lua require 'spider'.motion('b')<CR>i")

@@ -59,7 +59,12 @@ return {
         config = function()
             require 'flirt'.setup {
                 close_command = 'Q',
-                exclude_fts = { 'notify', 'cmp_menu', 'lazy' },
+                exclude_fts = {
+                    'notify',
+                    'cmp_menu',
+                    'lazy',
+                    'neo-tree-popup'
+                },
             }
         end,
     },
@@ -120,7 +125,8 @@ return {
                     'neo-tree',
                     'TelescopePrompt',
                     'notify',
-                    'lazy'
+                    'lazy',
+                    'cmp_menu'
                 }
             })
         end
