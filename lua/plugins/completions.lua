@@ -11,9 +11,8 @@ return {
     --  ╰───────────────────────╯
 
     {
-        'llllvvuu/nvim-cmp',
+        'hrsh7th/nvim-cmp',
         version = false,
-        branch = 'feat/above',
         event = 'InsertEnter',
         dependencies = {
             { 'hrsh7th/cmp-nvim-lsp' },
@@ -62,7 +61,7 @@ return {
     {
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
-        dependencies = { 'llllvvuu/nvim-cmp' },
+        dependencies = { 'hrsh7th/nvim-cmp' },
         config = function()
             local autopairs = require 'nvim-autopairs'
             local cmp_pairs = require 'nvim-autopairs.completion.cmp'
