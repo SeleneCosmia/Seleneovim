@@ -140,7 +140,7 @@ return {
 
             cmdline_popup = {
                 position = {
-                    row = '40%',
+                    row = '45%',
                     col = '50%',
                 },
                 size = {

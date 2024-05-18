@@ -25,7 +25,6 @@ return {
             'julials',
             'lua_ls',
             'taplo',
-            'yamlls'
         }
     })
 }

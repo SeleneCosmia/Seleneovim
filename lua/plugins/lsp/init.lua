@@ -125,6 +125,7 @@ return {
 
     {
         'spywhere/detect-language.nvim',
+        enabled = false,
         version = false,
         config = function()
             require 'detect-language'.setup {}
