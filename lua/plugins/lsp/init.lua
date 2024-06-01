@@ -123,12 +123,15 @@ return {
     },
     { require 'plugins.lsp.ftplugins' },
 
-    {
+
+    --[[
+    {{ {
         'spywhere/detect-language.nvim',
         enabled = false,
         version = false,
         config = function()
             require 'detect-language'.setup {}
         end,
-    },
+    }}},
+    ]]
 }

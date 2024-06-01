@@ -38,6 +38,7 @@ o.shiftround        = true
 --      Display Opts
 --  ╾──────────────────────────────────────────────────────────╼
 o.fillchars         = 'eob: '               -- removes "~" for empty lines @ the end of a buffer 
+o.listchars         = 'tab:  '
 o.winbl             = 0
 o.signcolumn        = "yes"                 -- always show sign column
 o.number            = true                  -- turn on line numbering

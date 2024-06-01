@@ -1,5 +1,7 @@
----@diagnostic disable:missing-fields
 return {
+
+    require('plugins.ui.icons'),
+
     {
         'lukas-reineke/indent-blankline.nvim',
         event = 'ColorScheme',
@@ -10,8 +12,10 @@ return {
     },
 
     {
-        'MunifTanjim/nui.nvim',
-        lazy = true
+        'grapp-dev/nui-components.nvim',
+        dependencies = {
+            'MunifTanjim/nui.nvim'
+        }
     },
 
     {
