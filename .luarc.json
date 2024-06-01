@@ -1,10 +1,9 @@
 {
-    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
     "runtime.version": "LuaJIT",
     "runtime.fileEncoding": "utf8",
     "completion": {
-        "callSnippet": "Replace",
-        "displayContext": 50
+        "callSnippet": "Replace"
     },
     "diagnostics": {
         "disable": [
@@ -18,6 +17,6 @@
     "workspace": {
         "checkThirdParty": false,
         "maxPreload": 10000,
-        "preloadFileSize": 1000
+        "preloadFileSize": 1200
     }
 }

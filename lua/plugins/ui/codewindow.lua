@@ -27,26 +27,19 @@ local function setup_highlights()
     }
 end
 
-return {
-    vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-        pattern = '*',
-        once = false,
-        callback = function(opts)
-            if get_width(0) <= 112 or get_height(0) <= 18 then
-                opts = disabled
-                return {
-                    cw.setup(opts),
-                    keybinds(),
-                    setup_highlights(),
-                }
-            elseif get_width(0) >= 113 or get_height(0) >= 19 then
-                opts = enabled
-                return {
-                    cw.setup(opts),
-                    keybinds(),
-                    setup_highlights(),
-                }
-            end
-        end,
-    }),
-}
+local X = {}
+
+X.auto_toggle = function(opts)
+    if (math.floor(get_width(0) * 0.25) <= 30) or (get_height(0) <= 18) then
+        opts = disabled
+    else
+        opts = enabled
+    end
+    return {
+        cw.setup(opts),
+        keybinds(),
+        setup_highlights()
+    }
+end
+
+return X
