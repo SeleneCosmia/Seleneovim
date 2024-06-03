@@ -8,12 +8,5 @@
                "configured_servers_only": true
            }
        } 
-    },
-    "neodev": {
-        "library": {
-            "runtime": true,
-            "plugins": true,
-            "types": true
-        }
     }
 }

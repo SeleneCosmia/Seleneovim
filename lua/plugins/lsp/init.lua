@@ -5,7 +5,7 @@ return {
         dependencies = {
             { 'williamboman/mason.nvim' },
             { 'williamboman/mason-lspconfig.nvim' },
-            { 'folke/neodev.nvim', ft = 'lua' },
+            { 'folke/neodev.nvim', ft = 'lua', enabled = false },
             { 'folke/neoconf.nvim', cmd = 'Neoconf' },
             { 'creativenull/efmls-configs-nvim', version = false },
             { 'nvimtools/none-ls.nvim' },
@@ -13,12 +13,10 @@ return {
         config = function()
             local lspconfig = require 'lspconfig'
             local Capabilities = require 'lsp.init'.Capabilities()
-            local neodev = require 'neodev'
             local neoconf = require 'neoconf'
             local fmt_on_attach = require 'lsp.autocommands'.format_on_attach
             local def_on_attach = require 'lsp.autocommands'.on_attach
             ----------------------------------------------------------------
-            neodev.setup {}
             neoconf.setup {}
             -------------- Mason setup
             require 'lsp.mason'
@@ -121,17 +119,6 @@ return {
             }))
         end,
     },
+    { require 'plugins.lsp.lazydev' },
     { require 'plugins.lsp.ftplugins' },
-
-
-    --[[
-    {{ {
-        'spywhere/detect-language.nvim',
-        enabled = false,
-        version = false,
-        config = function()
-            require 'detect-language'.setup {}
-        end,
-    }}},
-    ]]
 }

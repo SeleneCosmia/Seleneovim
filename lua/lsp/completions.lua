@@ -129,7 +129,6 @@ cmp.setup({
             winhighlight = winhl,
         },
         documentation = {
-            border = 'rounded',
             winhighlight = winhl,
             max_height = math.floor(vim.o.lines * 0.5),
             max_width = math.floor(vim.o.columns * 0.5),
@@ -192,6 +191,7 @@ cmp.setup({
 
 cmp.setup.filetype('lua', {
     sources = cmp.config.sources({
+        { name = 'lazydev', group_index = 0 },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
         { name = 'luasnip' },
