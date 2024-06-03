@@ -48,87 +48,41 @@ return {
           },
         },
       },
-
-      notify = {
-          enabled = true,
-          view = 'notify',
+    lsp_progress = {
+      format = {
+        {
+          '{progress} ',
+          key = '',
+          contents = {
+              { '{data.progress.message} ' },
+          },
         },
-        lsp = {
-            hover = {
-                enabled = false,
-                ---@type NoiceViewOptions
-                opts = {
-                    win_options = {
-                        wrap = true,
-                        linebreak = true,
-                    },
-                },
-            },
-            override = {
-                ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-                ['vim.lsp.util.stylize_markdown'] = true,
-                ['cmp.entry.get_documentation'] = true,
-            },
-            documentation = {
-                view = 'hover',
-                ---@type NoiceViewOptions
-                opts = {
-                    lang = 'markdown',
-                    replace = true,
-                    render = 'plain',
-                    format = { '{message}' },
-                    win_options = {
-                        breakindent = true,
-                        concealcursor = 'n',
-                        conceallevel = 3,
-                        wrap = true,
-                    },
-                },
-            },
-        },
-
-        lsp_progress = {
-            format = {
-                {
-                    '{progress} ',
-                    key = '',
-                    contents = {
-                        { '{data.progress.message} ' },
-                    },
-                },
-                { '{spinner} ', hl_group = 'LzFlag1' },
-                { '{data.progress.title} ', hl_group = 'LzFlag3' },
-                { '{data.progress.client} ', hl_group = 'LzFlag4' },
-            },
-        },
-        lsp_progress_done = {
-            { '  ', hl_group = 'LzFlag1' },
-            { '{data.progress.title} ', hl_group = 'LzFlag3' },
-            { '{data.progress.client} ', hl_group = 'LzFlag4' },
-        },
-        ---@type NoiceFormatOptions
-        format = {
-            ---@type NoiceFormatOptions.spinner
-            spinner = {
-                name = 'aesthetic',
-            },
-            ---@type NoiceFormatOptions.progress
-            progress = {
-                width = 20,
-            },
-        },
+        { '{spinner} ', hl_group = 'LzFlag1' },
+        { '{data.progress.title} ', hl_group = 'LzFlag3' },
+        { '{data.progress.client} ', hl_group = 'LzFlag4' },
+      },
+    },
+    lsp_progress_done = {
+      { '  ', hl_group = 'LzFlag1' },
+      { '{data.progress.title} ', hl_group = 'LzFlag3' },
+      { '{data.progress.client} ', hl_group = 'LzFlag4' },
+    },
+    format = {
+      spinner = { name = 'aesthetic' },
+      progress = { width = 20 },
+    },
 
         ---@type NoiceConfigViews
-        views = {
-            popup = {
-                scrollbar = false,
-                win_options = {
-                    winhighlight = {
-                        Normal = 'Normal',
-                        FloatBorder = 'LzFlag4',
-                    },
-                },
+      views = {
+        popup = {
+          scrollbar = false,
+          win_options = {
+            winhighlight = {
+              Normal = 'Normal',
+              FloatBorder = 'LzFlag4',
             },
+          },
+        },
 --╞═════════ commandline options ═════════════════════════════════════════════════╡
             cmdline = {
                 win_options = {
@@ -162,7 +116,7 @@ return {
                 },
                 relative = 'editor',
                 position = {
-                    row = '58%',
+                    row = '61%',
                     col = '50%',
                 },
                 size = {
@@ -191,22 +145,7 @@ return {
                     },
                 },
             },
---  ╞═════════ lsp hover-docs options ═════════════════════════════════════════════════╡
-            hover = {
-                border = {
-                    style = 'single',
-                    padding = { 0, 1 },
-                },
-                win_options = {
-                    wrap = true,
-                    linebreak = true,
-                },
-            },
 --  ╞══════════════════════════════════════════════════════════════════════════════════╡
-            notify = {
-                replace = true,
-            },
-
             split = {
                 enter = true,
             },
@@ -242,14 +181,3 @@ return {
         },
     }),
 }
-
---[[{    @type NoiceFilter
-                filter = {
-                    event = 'msg_show',
-                    find = 'Nekifoch',
-                    cmdline = true,
-                    ["not"] = { find = 'Whichkey functionality is disabled.' }
-                },
-                -- @type NoiceRouteOptions|NoiceViewOptions
-                opts = { skip = true },
-            },]]
