@@ -119,6 +119,7 @@ return {
             }))
         end,
     },
+    { 'Fildo7525/pretty_hover', event = 'LspAttach', opts = {} },
     { require 'plugins.lsp.lazydev' },
     { require 'plugins.lsp.ftplugins' },
 }

@@ -14,35 +14,25 @@ return {
     {
         'grapp-dev/nui-components.nvim',
         dependencies = {
-            'MunifTanjim/nui.nvim'
-        }
+            'MunifTanjim/nui.nvim',
+        },
     },
 
     {
         'rcarriga/nvim-notify',
         event = 'VeryLazy',
         dependencies = {
-            'nvim-tree/nvim-web-devicons'
+            'nvim-tree/nvim-web-devicons',
         },
-        config = function(min_w, max_w)
-          local notify = require 'notify'
-            min_w = math.floor(vim.api.nvim_win_get_width(0) / 4)
-            max_w = math.ceil(vim.api.nvim_win_get_width(0) * 0.345)
-
-            notify.setup({
-                background_colour = '#282828',
-                minimum_width = min_w,
-                max_width = max_w,
-                stages = 'slide',
-                timeout = 6000,
-            })
-        end
+        config = function()
+            require 'config.notify'
+        end,
     },
 
     {
         'nvimdev/hlsearch.nvim',
-        event = 'BufReadPost',
-        opts = {}
+        event = 'BufRead',
+        opts = {},
     },
 
     {
@@ -53,7 +43,7 @@ return {
             'rcarriga/nvim-notify',
         },
         config = function()
-            require 'plugins.ui.noice'
+            require 'config.noice'
         end,
     },
 
@@ -67,7 +57,8 @@ return {
                     'notify',
                     'cmp_menu',
                     'lazy',
-                    'neo-tree-popup'
+                    'neo-tree-popup',
+                    'popup'
                 },
             }
         end,
@@ -88,45 +79,8 @@ return {
         lazy = false,
         event = 'UiEnter',
         opts = function()
-          local builtin = require 'statuscol.builtin'
-          return {
-              setopt = true,
-              ft_ignore = {
-                'neo-tree',
-                'help'
-              },
-              segments = {
-                {
-                  text = { builtin.foldfunc },
-                  click = 'v:lua.ScFa',
-                  maxwidth = 1,
-                  colwidth = 1,
-                  auto = false,
-                },
-                {
-                  sign = {
-                      namespace = { '.*', 'Diagnostic*', '.*' },
-                      maxwidth = 2,
-                      colwidth = 2,
-                    },
-                    auto = true,
-                    click = 'v:lua.ScSa',
-                    condition = { true, builtin.not_empty }
-                },
-                {
-                  text = { builtin.lnumfunc, ' ' },
-                  click = 'v:lua.ScLa',
-                  condition = { true, builtin.not_empty }
-                },
-                {
-                  text = { '┇' },
-                  hl = 'Todo',
-                  condition = { true, builtin.not_empty }
-                },
-                { text = { ' ' } }
-              }
-            }
-        end
+            require 'config.statuscolumn'
+        end,
     },
 
     {
@@ -138,7 +92,7 @@ return {
             g.rainbow_delimiters = {
                 strategy = {
                     [''] = rd.strategy['global'],
-                    vim = rd.strategy['local']
+                    vim = rd.strategy['local'],
                 },
                 query = {
                     [''] = 'rainbow-delimiters',
@@ -147,21 +101,16 @@ return {
                     [''] = 110,
                 },
             }
-        end
-    },
-
-    {
-        'gorbit99/codewindow.nvim',
-        config = function()
-            require 'plugins.ui.codewindow'
         end,
     },
+
+    { 'gorbit99/codewindow.nvim', enabled = false },
 
     {
         'gen740/SmoothCursor.nvim',
         event = 'BufEnter',
         config = function()
-            require 'ui.configs.smooth_cursor'.config()
+            require 'config.smooth_cursor'.config()
         end,
     },
 
@@ -176,9 +125,9 @@ return {
                     'TelescopePrompt',
                     'notify',
                     'lazy',
-                    'cmp_menu'
-                }
+                    'cmp_menu',
+                },
             })
-        end
+        end,
     },
 }
