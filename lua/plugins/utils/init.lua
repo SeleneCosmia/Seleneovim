@@ -2,6 +2,22 @@ return {
     { require 'plugins.utils.folds' },
     { require 'plugins.utils.term_utils' },
 
+    {
+        'SuperBo/fugit2.nvim',
+        cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2GRaph' },
+        keys = {
+            { '<leader>fg', mode = 'n', '<cmd>Fugit2<cr>' }
+        },
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+            'nvim-tree/nvim-web-devicons',
+            'nvim-lua/plenary.nvim',
+        },
+        opts = {
+            width = 80,
+        }
+    },
+
     { 'chrisgrieser/nvim-spider', lazy = true },
 
     {
@@ -23,16 +39,11 @@ return {
 
     {
         'ray-x/web-tools.nvim',
-        lazy = true,
-        cmd = { 'BrowserSync', 'BrowserOpen' },
+        ft = { 'html', 'css', 'javascript', 'typescript', 'stylus' },
+        cmd = { 'Npm', 'BrowserOpen', 'Npx', 'Pnpm' },
         config = function()
-            require 'web-tools'.setup({
-                keymaps = {
-                    rename = nil,
-                    repeat_rename = '.',
-                },
-            })
-        end,
+            require 'web-tools'.setup({})
+        end
     },
 
     {
@@ -94,43 +105,14 @@ return {
         end,
     },
 
-    { 'b0o/SchemaStore.nvim', version = false },
-
-    { 'nvim-lua/plenary.nvim' },
-    { 'nvim-tree/nvim-web-devicons', lazy = true },
-
     {
         'lsvmello/elastictabstops.nvim',
-        event = 'VeryLazy',
         cmd = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
-        opts = {}
-    }
-
-    -- Disabled plugins
-
-    --[[    {
-        'luckasRanarison/nvim-devdocs',
-        cmd = {
-            'DevdocsFetch',
-            'DevdocsKeywordprg',
-            'DevdocsOpen',
-            'DevdocsOpenCurrent',
-            'DevdocsOpenCurrentFloat',
-            'DevdocsOpenFloat',
-            'DevdocsInstall',
-            'DevdocsToggle',
-            'DevdocsUpdate',
-            'DevdocsUpdateAll'
-        },
-dependencies = {
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope.nvim',
-            'nvim-treesitter/nvim-treesitter',
-        },
         config = function()
-            require 'plugins.utils.devdocs'
-        end,
+            require 'elastictabstops'.setup()
+        end
     },
-    ]]
-
+    { 'b0o/SchemaStore.nvim', version = false },
+    { 'nvim-lua/plenary.nvim' },
+    { 'nvim-tree/nvim-web-devicons', lazy = true },
 }

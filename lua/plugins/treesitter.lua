@@ -10,16 +10,7 @@ return {
             local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
             local default_parsers = require 'utils.globals'.ts_parsers
 
-            ---@class ParserInfo
-            parser_config.faye = {
-                install_info = {
-                    url = 'https://codeberg.org/faye/tree-sitter',
-                    files = { 'src/parser.c' },
-                    branch = 'master',
-                },
-                filetype = 'faye',
-                maintainers = { '@fawn' },
-            }
+
 
             ---@class ParserInfo
             parser_config.crystal = {
@@ -41,6 +32,17 @@ return {
                 },
                 filetype = 'cyber',
                 maintainers = { '@instance-id' },
+            }
+
+            ---@class ParserInfo
+            parser_config.faye = {
+                install_info = {
+                    url = 'https://codeberg.org/faye/tree-sitter',
+                    files = { 'src/parser.c' },
+                    branch = 'master',
+                },
+                filetype = 'faye',
+                maintainers = { '@fawn' },
             }
 
             treesitter.setup({

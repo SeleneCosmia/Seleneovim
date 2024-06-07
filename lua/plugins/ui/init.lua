@@ -1,7 +1,4 @@
 return {
-
-    require('plugins.ui.icons'),
-
     {
         'lukas-reineke/indent-blankline.nvim',
         event = 'ColorScheme',
@@ -10,6 +7,8 @@ return {
             require 'plugins.ui.ibl'
         end,
     },
+
+    { 'tzachar/highlight-undo.nvim', opts = {} },
 
     {
         'grapp-dev/nui-components.nvim',
@@ -81,6 +80,15 @@ return {
         opts = function()
             require 'config.statuscolumn'
         end,
+    },
+
+    {
+        'rachartier/tiny-devicons-auto-colors.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        event = 'VeryLazy',
+        config = function()
+            require 'config.devicons'
+        end
     },
 
     {
