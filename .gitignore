@@ -7,3 +7,5 @@
 *.so
 *.so.*
 
+# old config files
+_deprecated/
