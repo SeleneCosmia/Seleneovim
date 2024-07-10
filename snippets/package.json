@@ -1,0 +1,35 @@
+{
+    "name":"hebe-snippets",
+    "contributes":
+    {"snippets":
+        [
+            {
+                "path": "luasnip/crystal.json",
+                "language":"crystal"},
+            {
+                "path": "luasnip/crystal_snips/colorize.json",
+                "language":"crystal"
+            },
+            {
+                "path": "luasnip/crystal_snips/option_parser.json",
+                "language": "crystal"
+            },
+            {
+                "path": "luasnip/crystal_snips/raylib.json",
+                "language": "crystal"
+            },
+            {
+                "path": "luasnip/crystal_snips/shard.json",
+                "language": "yaml"
+            },
+            {
+                "path": "luasnip/lua.json",
+                "language": "lua"
+            },
+            {
+                "path": "luasnip/elvish.json",
+                "language": "elvish"
+            }
+        ]
+    }
+}

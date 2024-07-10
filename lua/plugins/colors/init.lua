@@ -13,6 +13,7 @@ return {
     {
         'uga-rosa/ccc.nvim',
         event = 'BufRead',
+        enabled = false,
         config = function()
             local ccc = require 'ccc'
             ccc.setup({
