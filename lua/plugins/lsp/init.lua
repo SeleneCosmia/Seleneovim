@@ -49,6 +49,9 @@ return {
                 },
             }
 
+            -- TODO)) Make file for defining lspServers and --
+            -- TODO)) make these seperate setup calls into as few as possible --
+
             -------------- Server setups
 
             lspconfig.bashls.setup({
@@ -96,10 +99,6 @@ return {
             lspconfig.lua_ls.setup({
                 capabilities = Capabilities,
                 on_attach = def_on_attach,
-            })
-
-            lspconfig.vimls.setup({
-                capabilities = Capabilities,
             })
 
             lspconfig.yamlls.setup({

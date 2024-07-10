@@ -1,6 +1,6 @@
 {
     "require Raylib": {
-        "prefix": "require raylib",
+        "prefix": "req",
         "body": [
             "require \"raylib-cr\"",
             "require \"raylib/rlgl\""
