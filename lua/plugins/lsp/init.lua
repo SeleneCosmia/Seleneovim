@@ -5,7 +5,6 @@ return {
         dependencies = {
             { 'williamboman/mason.nvim' },
             { 'williamboman/mason-lspconfig.nvim' },
-            { 'folke/neodev.nvim', ft = 'lua', enabled = false },
             { 'folke/neoconf.nvim', cmd = 'Neoconf' },
             { 'creativenull/efmls-configs-nvim', version = false },
             { 'nvimtools/none-ls.nvim' },

@@ -8,21 +8,13 @@ return {
         },
     },
 
-    { require 'plugins.colors.schemes' },
-
     {
-        'uga-rosa/ccc.nvim',
-        event = 'BufRead',
-        enabled = false,
+        'brenoprata10/nvim-highlight-colors',
+        ft = { 'css', 'html', 'sass', 'scss', 'stylus' },
         config = function()
-            local ccc = require 'ccc'
-            ccc.setup({
-                highlighter = {
-                    auto_enable = true,
-                },
-            })
-        end,
+            require 'nvim-highlight-colors'.setup()
+        end
     },
 
-    { 'typicode/bg.nvim', enabled = false },
+    { require 'plugins.colors.schemes' },
 }
