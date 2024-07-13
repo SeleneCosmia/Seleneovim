@@ -10,10 +10,8 @@ return {
 
     {
         'brenoprata10/nvim-highlight-colors',
-        ft = { 'css', 'html', 'sass', 'scss', 'stylus' },
-        config = function()
-            require 'nvim-highlight-colors'.setup()
-        end
+        event = 'VeryLazy',
+        config = true
     },
 
     { require 'plugins.colors.schemes' },
