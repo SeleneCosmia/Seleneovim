@@ -1,6 +1,18 @@
 return {
     { require 'plugins.utils.folds' },
     { require 'plugins.utils.term_utils' },
+    { require 'plugins.utils.web_dev'.css },
+
+        {
+        'lambdalisue/suda.vim',
+        cmd = { 'SudaWrite', 'SudaRead' },
+        keys = {
+            { '<leader>sw', '<cmd>SudaWrite<cr>', { desc = 'does a sudo write on keypress' }}
+        },
+        config = function()
+            vim.g.suda_smart_edit = 1
+        end,
+    },
 
     {
         'SuperBo/fugit2.nvim',
@@ -18,7 +30,22 @@ return {
         }
     },
 
+--  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+--  ┃                Movement Related Plugins                 ┃
+--  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+    {
+        'max397574/better-escape.nvim',
+        version = 'v1.0.0',
+        event = 'InsertEnter',
+        opts = {}
+    },
+
     { 'chrisgrieser/nvim-spider', lazy = true },
+
+--  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+--  ┃                     Comment Plugins                     ┃
+--  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
     {
         'LudoPinelli/comment-box.nvim',
@@ -37,14 +64,6 @@ return {
         end,
     },
 
-    {
-        'ray-x/web-tools.nvim',
-        ft = { 'html', 'css', 'javascript', 'typescript', 'stylus' },
-        cmd = { 'Npm', 'BrowserOpen', 'Npx', 'Pnpm' },
-        config = function()
-            require 'web-tools'.setup({})
-        end
-    },
 
     {
         'sustech-data/wildfire.nvim',
@@ -86,22 +105,12 @@ return {
     },
 
     {
-        'lambdalisue/suda.vim',
-        lazy = true,
-        cmd = { 'SudaWrite', 'SudaRead' },
-        keys = {
-            { '<leader>sw', '<cmd>SudaWrite<cr>', { desc = 'does a sudo write on keypress' }}
-        },
+        'ray-x/web-tools.nvim',
+        ft = { 'html', 'css', 'javascript', 'typescript', 'stylus' },
+        cmd = { 'Npm', 'BrowserOpen', 'Npx', 'Pnpm' },
         config = function()
-            vim.g.suda_smart_edit = 1
-        end,
-    },
-
-    {
-        'max397574/better-escape.nvim',
-        version = 'v1.0.0',
-        event = 'InsertEnter',
-        opts = {}
+            require 'web-tools'.setup({})
+        end
     },
 
     {
@@ -111,6 +120,7 @@ return {
             require 'elastictabstops'.setup()
         end
     },
+
     { 'b0o/SchemaStore.nvim', version = false },
     { 'nvim-lua/plenary.nvim' },
     { 'nvim-tree/nvim-web-devicons', lazy = true },
