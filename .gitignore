@@ -7,11 +7,9 @@
 *.so
 *.so.*
 
-# old config files
-_deprecated/
 
 # dolphin fm would be fined $1,000 in the state of CA for littering
-# but we're gonna ignore it :)
+# but we're gonna ignore it
 .directory
 
 # WIP files

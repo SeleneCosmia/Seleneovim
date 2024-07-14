@@ -1,5 +1,5 @@
 return {
-    require 'core.lazy',
-    require 'core.opts',
-    require 'core.highlights'
+    require 'core.setup'.lazy_setup(),
+    require 'core.setup'.opts(),
+    require 'core.setup'.highlights()
 }

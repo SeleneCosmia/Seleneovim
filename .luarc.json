@@ -18,5 +18,6 @@
         "checkThirdParty": false,
         "maxPreload": 10000,
         "preloadFileSize": 1200
-    }
+    },
+    "completion.autoRequire": false
 }

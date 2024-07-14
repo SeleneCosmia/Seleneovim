@@ -29,11 +29,11 @@ end
 
 
 X.ts_parsers = {
+    'awk',
     'bash',
     'css',
     'crystal', -- Custom parser
     'elvish',
-    'faye', -- Custom parser
     'fish',
     'gitignore',
     'glsl',
@@ -41,6 +41,7 @@ X.ts_parsers = {
     'html',
     'http',
     'hyprlang',
+    'julia',
     'lua',
     'markdown',
     'markdown_inline',
@@ -51,11 +52,14 @@ X.ts_parsers = {
     'rust',
     'scss',
     'toml',
+    'uxntal',
     'vim',
     'vimdoc',
+    'wgsl',
     'xml',
     'yaml',
     'yuck',
+    'zig'
 }
 
 X.kind_icons = {

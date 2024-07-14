@@ -1,84 +1,102 @@
-local o, opt, g, go = vim.o, vim.opt, vim.g, vim.go
+local set, g, go = vim.opt, vim.g, vim.go
 --stylua ignore:start
+--  ╾──────────────────────────────────────────────────────────╼
+local options = {
+  clipboard         = 'unnamedplus',
+  confirm           = true,
 
-o.clipboard         = 'unnamedplus'
-o.wrap              = false
-o.cursorline        = true
-o.cursorlineopt     = 'both'
-opt.completeopt     = {'menu','menuone','noselect'}
-o.scrolloff         = 6
-o.sidescroll        = 8
-o.sidescrolloff     = 8
-o.scrolljump        = 8
-o.confirm           = true
-opt.virtualedit     = {'block'}
-o.backspace         = 'indent,eol,start'
-o.updatetime        = 250
-o.timeoutlen        = 300
+  wrap              = false,
+  breakindent       = true,
+
+  cursorline        = true,
+  cursorlineopt     = 'both',
+
+  completeopt       = {'menu','menuone'}, -- 'noselect'
+--  cmdheight         = 0,
+
+  scrolloff         = 8,
+  sidescroll        = 6,
+  sidescrolloff     = 12,
+  scrolljump        = 8,
+  wrapscan          = true, -- wrap searches back to beginning
+
+  virtualedit       = {'block'},
+  backspace         = 'indent,eol,start',
+
+  updatetime        = 300,
+  timeout           = true,
+  timeoutlen        = 500,
+
+  expandtab         = true,
+  tabstop           = 4,
+  shiftwidth        = 2,
+  softtabstop       = 2,
+  smarttab          = true,
+  smartindent       = true,
+  autoindent        = true,
+  shiftround        = true,
+
+  list              = true,
+  lcs               = { lead ='󿠍', tab = nil, trail = '▹' },
+  fillchars         = { eob = nil, vert = '🮍',  },
+
+  signcolumn        = 'auto:1-2',
+  number            = true,
+  numberwidth       = 4,
+  rnu               = false,
+
+  pumheight         = 10,
+  pumblend          = 0,
+
+  wildmenu          = true,
+  wildmode          = 'longest,list,full',
+  wic               = true,
+  conceallevel      = 1,
+
+  splitbelow        = true,
+  splitright        = true,
+  splitkeep         = 'cursor',
+
+  swapfile          = false,
+  undofile          = true,
+  undolevels        = 3000,
+  backup            = false,
+
+  hlsearch          = true,
+  ignorecase        = true,
+  smartcase         = true,
+  infercase         = true,
+
+  showmode          = false,
+  showtabline       = 0,
+  laststatus        = 3,
+
+  mouse             = 'a',
+  mousemoveevent    = true,
+  mousescroll       = { 'ver:1', 'hor:6' }
+}
+
+go.mousemodel           = 'popup'
+go.mousefocus           = true
+
+for k, v in pairs(options) do
+  vim.opt[k] = v
+end
+
+
+set.wildignore = {
+  '*.directory',
+}
+
 --  ╾──────────────────────────────────────────────────────────╼
---      Mouse Opts
---  ╾──────────────────────────────────────────────────────────╼
-o.mouse             = 'a'
-go.mousemodel       = 'popup'
-go.mousefocus       = true
---  ╾──────────────────────────────────────────────────────────╼
---      Indentation Opts
---  ╾──────────────────────────────────────────────────────────╼
-o.expandtab         = true
-o.tabstop           = 4
-o.shiftwidth        = 4
-o.softtabstop       = 4
-o.smarttab          = true
-o.smartindent       = true
-o.autoindent        = true
-o.shiftround        = true
---  ╾──────────────────────────────────────────────────────────╼
---      Display Opts
---  ╾──────────────────────────────────────────────────────────╼
-o.fillchars         = 'eob: '
-opt.list            = true
---  ╾──────────────────────────────────────────────────────────╼
-o.winbl             = 0
-o.signcolumn        = "yes"
-o.number            = true
-o.numberwidth       = 4
-o.rnu               = false
-o.pumheight         = 12
-o.pumblend          = 0
-o.wildmenu          = true
-o.wildmode          = 'list:longest,list:full'
-o.wic               = true
-o.conceallevel      = 1
---  ╾──────────────────────────────────────────────────────────╼
-o.splitbelow        = true
-o.splitright        = true
---  ╾──────────────────────────────────────────────────────────╼
-o.swapfile          = false
-o.undofile          = true
-o.undolevels        = 3000
-o.backup            = false
---  ╾──────────────────────────────────────────────────────────╼
-o.hlsearch          = true
-o.ignorecase        = true
-o.smartcase         = true
-o.infercase         = true
---  ╾──────────────────────────────────────────────────────────╼
---      Statusline Opts
---  ╾──────────────────────────────────────────────────────────╼
-o.showmode          = false
-o.showtabline       = 2
-o.laststatus        = 3
---  ╾──────────────────────────────────────────────────────────╼
-g.do_filetype_lua   = true
---  ╾──────────────────────────────────────────────────────────╼
-vim.opt.listchars:prepend 'lead:󿠍'
-vim.opt.listchars = vim.opt.listchars + 'tab:  '
---------------------------------
 --stylua ignore:end
-g.loaded_perl_provider = 0
+--
+g.do_filetype_lua       = true
+g.did_load_filetypes    = false
+g.loaded_perl_provider  = 0
 
 g.ruby_host_prog = os.getenv("XDG_DATA_HOME") .. "/gem/ruby/3.0.0/bin"
 
-if os.getenv("SHELL") == "/bin/bash" then
+if vim.env.SHELL == "/bin/bash" then
     g.node_host_prog = os.getenv('NVM_BIN')
 end

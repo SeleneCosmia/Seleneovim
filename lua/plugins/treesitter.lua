@@ -7,13 +7,10 @@ return {
         event = { 'BufReadPost', 'BufNewFile' },
         config = function()
             local treesitter = require 'nvim-treesitter.configs'
-            local parser_config = require 'nvim-treesitter.parsers'.get_parser_configs()
+            local pc = require 'nvim-treesitter.parsers'.get_parser_configs()
             local default_parsers = require 'utils.globals'.ts_parsers
 
-
-
-            ---@class ParserInfo
-            parser_config.crystal = {
+            pc.crystal = {
                 install_info = {
                     url = 'https://github.com/crystal-lang-tools/tree-sitter',
                     files = { 'src/parser.c' },
@@ -21,28 +18,6 @@ return {
                 },
                 filetype = 'crystal',
                 maintainers = { '@crystal-lang-tools' },
-            }
-
-            ---@class ParserInfo
-            parser_config.cyber = {
-                install_info = {
-                    url = 'https://github.com/instance-id/tree-sitter-cyber',
-                    files = { 'src/parser.c' },
-                    branch = 'master',
-                },
-                filetype = 'cyber',
-                maintainers = { '@instance-id' },
-            }
-
-            ---@class ParserInfo
-            parser_config.faye = {
-                install_info = {
-                    url = 'https://codeberg.org/faye/tree-sitter',
-                    files = { 'src/parser.c' },
-                    branch = 'master',
-                },
-                filetype = 'faye',
-                maintainers = { '@fawn' },
             }
 
             treesitter.setup({
