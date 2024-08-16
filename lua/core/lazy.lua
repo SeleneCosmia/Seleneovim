@@ -31,7 +31,6 @@ local opts, no_notif = {}, {}
     enabled = true,
     notify = false
   }
-
   opts = {
     checker = no_notif,
     change_detection = no_notif,
@@ -49,15 +48,9 @@ local opts, no_notif = {}, {}
         disabled_plugins = {
           'gzip',
           'matchparen',
-          'netrw',
           'netrwPlugin',
-          'rrhelper',
-          'tar',
           'tarPlugin',
           'tutor',
-          'vimball',
-          'vimballPlugin',
-          'zip',
           'zipPlugin',
         }
       }

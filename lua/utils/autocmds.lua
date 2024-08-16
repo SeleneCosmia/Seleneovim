@@ -27,7 +27,7 @@ autocmd("FileType", {
     end,
 })
 
-autocmd("FileType", {
+--[[autocmd("FileType", {
     group = augroup("MD_Wrap", { clear = true }),
     pattern = {"markdown"},
     callback = function()
@@ -36,7 +36,7 @@ autocmd("FileType", {
         ol.breakindent = true
         ol.wrapmargin = 2
     end
-})
+})]]
 
 autocmd("VimResized", {
   group = augroup("SplitResize", { clear = true }),
@@ -44,3 +44,4 @@ autocmd("VimResized", {
     vim.cmd("tabdo wincmd =")
   end,
 })
+

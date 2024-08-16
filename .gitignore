@@ -7,10 +7,13 @@
 *.so
 *.so.*
 
-
 # dolphin fm would be fined $1,000 in the state of CA for littering
 # but we're gonna ignore it
 .directory
 
 # WIP files
 lua/config/feline.lua
+
+# selene files ... might delete later...
+selene.toml
+neovim.yml

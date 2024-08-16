@@ -1,21 +1,30 @@
-local cmp = require 'cmp'
+local cmp, types = require 'cmp', require 'cmp.types'
 local autopairs = require 'nvim-autopairs.completion.cmp'
 local luasnip = require 'luasnip'
 
-local map = cmp.mapping
-local cmpr = cmp.config.compare
-
-local winhl = 'Normal:PMenu,FloatBorder:PMenu,CursorLine:ModesVisualCursorLine,Search:None'
+local map, cmpr = cmp.mapping, cmp.config.compare
 local b_replace = cmp.ConfirmBehavior.Replace
 
-cmp.setup({
+local winhl = table.concat({
+  'Normal:PMenu',
+  'FloatBorder:PMenu',
+  'CursorLine:ModesVisualCursorLine',
+  'Search:None'}, ',')
 
-    preselect = 'None',
+
+
+cmp.setup({
 
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
+    },
+
+    preselect = 'item',
+
+    confirmation = {
+      default_behavior = types.cmp.ConfirmBehavior.Replace
     },
 
     --  ╭──────────────────────────────────────────────────────╮
@@ -148,7 +157,6 @@ cmp.setup({
                 buffer   = '[BUF]',
                 path     = '[PATH]',
                 env      = '[$ENV]',
-                fonts    = '[FONT]',
             })[entry.source.name]
 
             local menu_icon = {
@@ -158,7 +166,6 @@ cmp.setup({
                 buffer =    '   ',
                 path =      '   ',
                 env =       ' 🏞 ',
-                fonts =     ' 󰛖  ',
             }
             -- cannot for the life of me figure out a less hacky way
             -- to set this up
@@ -175,6 +182,14 @@ cmp.setup({
             elseif entry.source.name == 'env' then
                 item.kind = menu_icon.env
             end
+
+            --[[for src, icon in pairs(menu_icon) do
+              local stringify = function()
+                string.format()
+              end
+              if entry.source.name == 
+                item.kind = menu_icon[src]
+            end]]
 
             if vim.api.nvim_strwidth(item.abbr) > maxw_abbr then
                 item.abbr = vim.fn.strcharpart(item.abbr, 0, maxw_abbr) .. truncd
