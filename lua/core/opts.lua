@@ -37,7 +37,7 @@ local options = {
   shiftround        = true,
 
   list              = true,
-  lcs               = { lead ='󿠍', tab = nil, trail = '▹' },
+  lcs               = { lead = nil, tab = nil, trail = '▹' },
   fillchars         = { eob = nil, vert = '🮍',  },
 
   signcolumn        = 'auto:1-2',
