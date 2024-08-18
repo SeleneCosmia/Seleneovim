@@ -2,17 +2,15 @@ local set, g, go = vim.opt, vim.g, vim.go
 --stylua ignore:start
 --  ╾──────────────────────────────────────────────────────────╼
 local options = {
+  exrc              = true,
+
   clipboard         = 'unnamedplus',
   confirm           = true,
 
   wrap              = false,
   breakindent       = true,
 
-  cursorline        = true,
-  cursorlineopt     = 'both',
-
   completeopt       = {'menu','menuone'}, -- 'noselect'
---  cmdheight         = 0,
 
   scrolloff         = 8,
   sidescroll        = 6,
@@ -37,15 +35,18 @@ local options = {
   shiftround        = true,
 
   list              = true,
-  lcs               = { lead = nil, tab = nil, trail = '▹' },
-  fillchars         = { eob = nil, vert = '🮍',  },
+  lcs               = {lead = nil,tab = nil,trail = '▹'},
+  fillchars         = {eob = nil,vert = '║',},
+
+  cursorline        = true,
+  cursorlineopt     = {'number','screenline'},
 
   signcolumn        = 'auto:1-2',
   number            = true,
   numberwidth       = 4,
-  rnu               = false,
+  rnu               = true,
 
-  pumheight         = 10,
+  pumheight         = 20,
   pumblend          = 0,
 
   wildmenu          = true,
@@ -76,25 +77,23 @@ local options = {
   mousescroll       = { 'ver:1', 'hor:6' }
 }
 
-go.mousemodel           = 'popup'
-go.mousefocus           = true
-
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
-
 set.wildignore = {
-  '*.directory',
+  '.directory',
 }
-
 --  ╾──────────────────────────────────────────────────────────╼
---stylua ignore:end
---
+go.mousemodel           = 'popup'
+go.mousefocus           = true
+--  ╾────────────────────────────────╼
 g.do_filetype_lua       = true
 g.did_load_filetypes    = false
 g.loaded_perl_provider  = 0
-
+--  ╾──────────────────────────────────────────────────────────╼
+--stylua ignore:end
+--
 g.ruby_host_prog = os.getenv("XDG_DATA_HOME") .. "/gem/ruby/3.0.0/bin"
 
 if vim.env.SHELL == "/bin/bash" then
