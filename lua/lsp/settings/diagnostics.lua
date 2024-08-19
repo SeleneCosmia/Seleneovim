@@ -2,49 +2,39 @@
 ---@diagnostic disable: unused-function,unused-local
 local X = {}
 
----@param mode? string|table
----@param opts? table
-local function keymap(mode, lhs, rhs, opts)
-    mode = mode or 'n'
-    if opts == nil then
-        opts = { noremap = true, silent = true }
-    end
-    vim.keymap.set(mode, lhs, rhs, opts)
-end
-
 local sign_icons = {
-    Error = "󰯆 ",
-    Warn  = " ",
-    Hint  = "󰛨 ",
-    Info  = " "
+  ERROR = '󰚌',
+  WARN  = '',
+  HINT  = '󰼈',
+  INFO  = '',
 }
 
-function X.signs()
-    for name, icon in pairs(sign_icons) do
-        name = "DiagnosticSign" .. name
-        vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+local function prefixer(diagnostic)
+  for d, icon in pairs(sign_icons) do
+    if diagnostic.severity == vim.diagnostic.severity[d] then
+      return icon
     end
-end
-
-local prefix_func = function(diagnostic)
-    for d, icon in pairs(sign_icons) do
-        if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-            return icon
-        end
-    end
+  end
 end
 
 function X.setup()
-    return {
-        vim.diagnostic.config({
-            severity_sort = true,
-            update_in_insert = false,
-            virtual_text = {
-                prefix = prefix_func(),
-                spacing = 2
-            },
-        })
-    }
+  return {
+    vim.diagnostic.config({
+      severity_sort = true,
+      update_in_insert = false,
+      virtual_text = {
+        spacing = 2,
+      },
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = sign_icons.ERROR,
+          [vim.diagnostic.severity.WARN]  = sign_icons.WARN,
+          [vim.diagnostic.severity.HINT]  = sign_icons.HINT,
+          [vim.diagnostic.severity.INFO]  = sign_icons.INFO
+        }
+      }
+    }),
+  }
 end
 
 --[[    keymap('n', '<leader>df', diagnostics.open_float)
@@ -52,4 +42,4 @@ end
         keymap('n', '<Alt>]', diagnostics.goto_next)
         keymap('n', '<leader><leader>l', diagnostics.setloclist)]]
 
-return X
+return X.setup()

@@ -1,7 +1,7 @@
 local X = {}
 
 function X.Capabilities()
-    return require 'lsp.settings.capabilities'.client_capabilities()
+    return require 'lsp.settings.capabilities'
 end
 
 function X.setup()
@@ -10,8 +10,7 @@ end
 
 function X.diagnostic_opts()
     local diagnostics = require 'lsp.diagnostics'
-    diagnostics.setup()
-    return diagnostics
+    return diagnostics.setup()
 end
 
 return X
