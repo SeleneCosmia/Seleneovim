@@ -1,6 +1,5 @@
 local methods = vim.lsp.protocol.Methods
-local map = vim.keymap.set
-local api, lsp = vim.api, vim.lsp
+local lsp, map = vim.lsp.buf, vim.keymap.set
 local aucmd = vim.api.nvim_create_autocmd
 
 local X = {}
@@ -12,29 +11,29 @@ function X.on_attach(client, bufnr)
   local opts = { buffer = bufnr }
   local has_method = client.supports_method
   if has_method(methods.textDocument_declaration) then
-    map('n', 'gD', lsp.buf.declaration, opts)
+    map('n', 'gD', lsp.declaration, opts)
   end
   if has_method(methods.textDocument_definition) then
-    map('n', 'gd', lsp.buf.definition, opts)
+    map('n', 'gd', lsp.definition, opts)
   end
   if has_method(methods.textDocument_codeAction) then
-    map({ 'n', 'v' }, '<leader>ca', lsp.buf.code_action, opts)
+    map({ 'n', 'v' }, '<leader>ca', lsp.code_action, opts)
   end
   if has_method(methods.textDocument_signatureHelp) then
-    map({ 'n', 'i' }, '<C-;>', lsp.buf.signature_help, opts)
+    map({ 'n', 'i' }, '<C-k>', lsp.signature_help, opts)
   end
   if has_method(methods.textDocument_hover) then
-    map('n', 'K', lsp.buf.hover, opts)
+    map('n', 'K', lsp.hover, opts)
   end
-  map('n', 'gi', lsp.buf.implementation, opts)
-  map('n', 'gr', lsp.buf.references, opts)
+  map('n', 'gi', lsp.implementation, opts)
+  map('n', 'gr', lsp.references, opts)
 end
 
 ---@param client vim.lsp.Client
 ---@param bufnr integer
 function X.format_on_attach(client, bufnr)
   map('n', '<leader>ff', function()
-    local util = vim.lsp.util
+    local util = require 'vim.lsp.util'
     local params = util.make_formatting_params({})
     client.request('textDocument/formatting', params, nil, bufnr)
   end, { buffer = bufnr })

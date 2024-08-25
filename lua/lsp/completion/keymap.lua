@@ -5,17 +5,21 @@ local X = {}
 local map = cmp.mapping
 
 --[[
-local keymaps = map.preset.insert {
-    ['<C-Space>'] = function()
-      if not cmp.visible then
-        map.complete()
-      end,
-    end,
+local keymaps = {
 
-    ['<C-n>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-      end
+  ['<C-Space>'] = map({
+    i = function()
+      map.complete()
     end,
+  }),
+  ['<C-Down>'] = map({
+    i = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item({
+          behavior = cmp.SelectBehavior.Select
+        })
+      else 
+      end,
+  end,
 }
 ]]

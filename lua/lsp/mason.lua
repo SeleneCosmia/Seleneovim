@@ -4,11 +4,11 @@ local masonlsp = require 'mason-lspconfig'
 return {
   mason.setup({
     ui = {
-      border = 'double',
+      border = 'rounded',
       icons = {
-        package_installed = ' ',
-        package_pending = '󰴲 ',
-        package_uninstalled = ' ',
+        package_installed = '',
+        package_pending = '󰴲',
+        package_uninstalled = '',
       },
     },
   }),
@@ -18,8 +18,8 @@ return {
     ensure_installed = {
       'bashls',
       'cssls',
-      'crystalline',
       'efm',
+      'glsl_analyzer',
       'html',
       'jsonls',
       'julials',
