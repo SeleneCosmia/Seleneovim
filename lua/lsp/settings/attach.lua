@@ -10,6 +10,7 @@ local X = {}
 function X.on_attach(client, bufnr)
   local opts = { buffer = bufnr }
   local has_method = client.supports_method
+
   if has_method(methods.textDocument_declaration) then
     map('n', 'gD', lsp.declaration, opts)
   end

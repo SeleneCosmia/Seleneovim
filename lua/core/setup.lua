@@ -8,3 +8,4 @@ end
 lazy_setup()
 require 'core.options'
 require 'core.highlights'
+require 'core.autocmds'
