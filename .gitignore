@@ -13,7 +13,3 @@
 
 # WIP files
 lua/config/feline.lua
-
-# selene files ... might delete later...
-selene.toml
-neovim.yml

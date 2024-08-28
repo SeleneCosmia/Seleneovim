@@ -36,7 +36,7 @@ local options = {
 
   list              = true,
   lcs               = {lead = nil,tab = nil,trail = '▹'},
-  fillchars         = {eob = nil,vert = '║',},
+  fillchars         = {eob = nil},
 
   cursorline        = true,
   cursorlineopt     = {'number','screenline'},
