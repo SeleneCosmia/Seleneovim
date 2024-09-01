@@ -1,5 +1,5 @@
 return {
-  { -- needs to load before any other plugins are loaded
+  {
     'vhyrro/luarocks.nvim',
     priority = 11001,
     opts = {
