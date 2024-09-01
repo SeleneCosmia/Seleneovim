@@ -8,8 +8,6 @@ return {
     end,
   },
 
-  { 'tzachar/highlight-undo.nvim', opts = {} },
-
   {
     'rcarriga/nvim-notify',
     event = 'VeryLazy',
@@ -19,12 +17,6 @@ return {
     config = function()
       require 'config.notify'
     end,
-  },
-
-  {
-    'nvimdev/hlsearch.nvim',
-    event = 'BufRead',
-    opts = {},
   },
 
   {
@@ -47,6 +39,7 @@ return {
         close_command = 'Q',
         exclude_fts = {
           'notify',
+          'noice',
           'cmp_menu',
           'lazy',
           'neo-tree-popup',
@@ -84,6 +77,9 @@ return {
     end,
   },
 
+-- ╓─────────────────────────────────────────────────────────╖
+-- ║                  Highlighting Plugins                   ║
+-- ╙─────────────────────────────────────────────────────────╜
   {
     'SeleneCosmia/rainbow-delimiters.nvim',
     config = function()
@@ -105,7 +101,11 @@ return {
     end,
   },
 
-  { 'gorbit99/codewindow.nvim', enabled = false },
+  {
+    'nvimdev/hlsearch.nvim',
+    event = 'BufRead',
+    opts = {},
+  },
 
   {
     'gen740/SmoothCursor.nvim',
@@ -115,23 +115,38 @@ return {
     end,
   },
 
+  { 'tzachar/highlight-undo.nvim', opts = {} },
+
   {
-    'mvllow/modes.nvim',
-    event = 'ModeChanged',
-    enabled = true,
-    config = function()
-      require 'modes'.setup({
-        ignore_filetypes = {
-          'neo-tree',
-          'TelescopePrompt',
-          'notify',
-          'lazy',
-          'cmp_menu',
-          'help',
-          'lspinfo',
-          'mason'
-        },
-      })
-    end,
+    'svampkorg/moody.nvim',
+    event = { 'ModeChanged', 'BufWinEnter', 'WinEnter' },
+    opts = {
+        disabled_filetypes = {
+            'TelescopePrompt',
+            'lazy',
+            'mason',
+            'qf'
+        }
+    }
   },
+
+  --{{{ {
+  --   'mvllow/modes.nvim',
+  --   event = 'ModeChanged',
+  --   enabled = false,
+  --   config = function()
+  --     require 'modes'.setup({
+  --       ignore_filetypes = {
+  --         'neo-tree',
+  --         'TelescopePrompt',
+  --         'notify',
+  --         'lazy',
+  --         'cmp_menu',
+  --         'help',
+  --         'lspinfo',
+  --         'mason'
+  --       },
+  --     })
+  --   end,
+  -- }}}--,
 }
