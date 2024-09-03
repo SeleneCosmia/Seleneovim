@@ -41,12 +41,12 @@ local options = {
   cursorline        = true,
   cursorlineopt     = {'number','screenline'},
 
-  signcolumn        = 'auto:1-2',
+--  signcolumn        = 'yes:2',
   number            = true,
-  numberwidth       = 4,
+--  numberwidth       = 4,
   rnu               = true,
 
-  pumheight         = 20,
+  pumheight         = 10,
   pumblend          = 0,
 
   wildmenu          = true,

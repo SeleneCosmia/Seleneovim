@@ -20,6 +20,7 @@ autocmd('FileType', {
     'tsplayground',
     'checkhealth',
     'lspinfo',
+    'qf',
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -27,9 +28,11 @@ autocmd('FileType', {
   end,
 })
 
-autocmd('VimResized', {
-  group = augroup('SplitResize', { clear = true }),
-  callback = function()
-    vim.cmd('tabdo wincmd =')
-  end,
-})
+--autocmd({'Colorscheme'}, opts)
+
+-- autocmd('VimResized', {
+--   group = augroup('SplitResize', { clear = true }),
+--   callback = function()
+--     vim.cmd('tabdo wincmd =')
+--   end,
+-- })

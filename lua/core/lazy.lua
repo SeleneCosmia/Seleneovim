@@ -1,11 +1,10 @@
 local uv, api, fn, set = (vim.uv or vim.loop), vim.api, vim.fn, vim.g
+local dev_path = vim.fn.expand('$GITHUB_ROOT')
 local lazypath = fn.stdpath('data') .. '/lazy/lazy.nvim'
-local X = {}
 
-function X.lazy_boot()
-  if not uv.fs_stat(lazypath) then
-    local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-    local out =
+if not uv.fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local out =
     fn.system({'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
       if vim.v.shell_error ~= 0 then
         api.nvim_echo({
@@ -17,15 +16,13 @@ function X.lazy_boot()
         os.exit(1)
       end
   end
-    return vim.opt.rtp:prepend(lazypath)
-end
----󰞦---󰞦---󰞦---󰞦---󰞦---󰞦---------------------
+vim.opt.rtp:prepend(lazypath)
 
-local dev_path = vim.fn.expand('$GITHUB_ROOT')
-
-function X.lazy_setup()
-local opts, no_notif = {}, {}
+---@param opts? LazyConfig
+local function lazy_setup(opts)
+local no_notif = {}
   no_notif = { enabled = true, notify = false }
+  opts = opts or {}
   opts = {
     checker = no_notif,
     change_detection = no_notif,
@@ -53,4 +50,4 @@ local opts, no_notif = {}, {}
   return require 'lazy'.setup('plugins', opts)
 end
 
-return X
+lazy_setup()
