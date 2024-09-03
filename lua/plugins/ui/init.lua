@@ -1,10 +1,10 @@
 return {
   {
     'lukas-reineke/indent-blankline.nvim',
-    event = 'ColorScheme',
+    event = { 'BufReadPost', 'BufNewFile' },
     main = 'ibl',
     config = function()
-      require 'plugins.ui.ibl'
+      require 'config.ibl'
     end,
   },
 
@@ -61,8 +61,8 @@ return {
 
   {
     'luukvbaal/statuscol.nvim',
-    lazy = false,
-    event = 'UiEnter',
+--    lazy = false,
+    event = 'UIEnter',
     opts = function()
       require 'config.statuscolumn'
     end,
@@ -109,6 +109,7 @@ return {
 
   {
     'gen740/SmoothCursor.nvim',
+    lazy = false,
     event = 'BufEnter',
     config = function()
       require 'config.smooth_cursor'.config()
@@ -121,12 +122,7 @@ return {
     'svampkorg/moody.nvim',
     event = { 'ModeChanged', 'BufWinEnter', 'WinEnter' },
     opts = {
-        disabled_filetypes = {
-            'TelescopePrompt',
-            'lazy',
-            'mason',
-            'qf'
-        }
+      disabled_filetypes = { 'TelescopePrompt' }
     }
   },
 
