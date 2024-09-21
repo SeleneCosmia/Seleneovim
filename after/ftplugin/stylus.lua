@@ -1,1 +1,1 @@
-vim.bo.comments = "//,sr:/*,mb:*,ex:*/,"
+vim.bo.com = '//,sr:/*,mb:*,ex:*/'

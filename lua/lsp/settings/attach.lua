@@ -21,7 +21,7 @@ function X.on_attach(client, bufnr)
     map({ 'n', 'v' }, '<leader>ca', lsp.code_action, opts)
   end
   if has_method(methods.textDocument_signatureHelp) then
-    map({ 'n', 'i' }, '<C-k>', lsp.signature_help, opts)
+    map('n', '<C-k>', lsp.signature_help, opts)
   end
   if has_method(methods.textDocument_hover) then
     map('n', 'K', lsp.hover, opts)
