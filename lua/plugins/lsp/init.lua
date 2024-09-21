@@ -24,6 +24,7 @@ return {
       vim.lsp.handlers['textDocument/publishDiagnostics'] =
         vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = false })
 
+
       -------------- efmls setup
       local stylua = require 'efmls-configs.formatters.stylua'
       local shellcheck = require 'efmls-configs.linters.shellcheck'
@@ -100,7 +101,6 @@ return {
       })
 
       lspconfig.nushell.setup({})
-
       lspconfig.taplo.setup({})
 
       lspconfig.lua_ls.setup({
@@ -121,9 +121,7 @@ return {
             symbolCacheDownload = false,
             useProgressFrontend = false,
             NumThreads = 16,
-            lint = {
-              missingrefs = "all",
-            }
+            lint = { missingrefs = "all" }
           }
         }
       })
@@ -145,7 +143,13 @@ return {
       }))
     end,
   },
-  { 'Fildo7525/pretty_hover', event = 'LspAttach', opts = {} },
+
+  {
+    'Fildo7525/pretty_hover',
+    event = 'LspAttach',
+    opts = {}
+  },
+
   { require 'plugins.lsp.lazydev' },
   { require 'plugins.lsp.ftplugins' },
 }

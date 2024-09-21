@@ -53,7 +53,6 @@ return {
     'willothy/nvim-cokeline',
     event = 'VeryLazy',
     dependencies = {
-      'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
     },
     opts = {},
@@ -80,6 +79,8 @@ return {
 -- ╓─────────────────────────────────────────────────────────╖
 -- ║                  Highlighting Plugins                   ║
 -- ╙─────────────────────────────────────────────────────────╜
+  { 'tzachar/highlight-undo.nvim', opts = {} },
+
   {
     'SeleneCosmia/rainbow-delimiters.nvim',
     config = function()
@@ -115,8 +116,6 @@ return {
       require 'config.smooth_cursor'.config()
     end,
   },
-
-  { 'tzachar/highlight-undo.nvim', opts = {} },
 
   {
     'svampkorg/moody.nvim',

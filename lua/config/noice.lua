@@ -65,11 +65,18 @@ return {
       progress = { width = 20 },
     },
 
+    notify = {
+      enabled = false,
+    },
+
     lsp = {
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
         ['cmp.entry.get_documentation'] = true,
+      },
+      signature = {
+        enabled = false,
       },
       hover = {
         enabled = false,
@@ -87,22 +94,23 @@ return {
           format = { '{message}' },
           win_options = {
             wrap = true,
+            breakindent = true,
             conceallevel = 3,
           }
         }
       }
     },
       ---@type NoiceConfigViews
-      views = {
-        popup = {
-          scrollbar = false,
-          win_options = {
-            winhighlight = {
-              Normal = 'Normal',
-              FloatBorder = 'LzFlag4',
-            },
+    views = {
+      popup = {
+        scrollbar = false,
+        win_options = {
+          winhighlight = {
+            Normal = 'Normal',
+            FloatBorder = 'LzFlag4',
           },
         },
+      },
 --╞═════════ commandline options ═════════════════════════════════════════════════╡
       cmdline = {
         win_options = {
@@ -132,7 +140,7 @@ return {
           style = 'single',
           padding = { 0, 1 },
         },
-        relative = 'editor',
+        -- relative = 'editor',
         position = {
           row = '52%',
           col = '50%',
@@ -146,7 +154,6 @@ return {
           winhighlight = {
             Normal = 'Normal',
             FloatBorder = 'Function',
-            PmenuMatch = 'PmenuSel',
           },
         },
       },

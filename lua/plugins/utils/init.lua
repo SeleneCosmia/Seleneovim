@@ -1,7 +1,7 @@
 return {
   { require 'plugins.utils.folds' },
   { require 'plugins.utils.term_utils' },
-  { require 'plugins.utils.web_dev'.css },
+  { require 'plugins.utils.web_dev' },
 
   {
     'lambdalisue/suda.vim',
@@ -109,14 +109,6 @@ return {
     end,
   },
 
-  {
-    'ray-x/web-tools.nvim',
-    ft = { 'html', 'css', 'javascript', 'typescript', 'stylus' },
-    cmd = { 'Npm', 'BrowserOpen', 'Npx', 'Pnpm' },
-    config = function()
-      require 'web-tools'.setup()
-    end,
-  },
 
   {
     'lsvmello/elastictabstops.nvim',

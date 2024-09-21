@@ -1,5 +1,6 @@
 return {
   { 'Biscuit-Colorscheme/nvim', name = 'biscuit' },
+  { 'ptdewey/darkearth-nvim' },
 
   {
     'ray-x/starry.nvim',
@@ -16,6 +17,7 @@ return {
 
   {
     'luisiacc/gruvbox-baby',
+    enabled = false,
     config = function()
       local gruvbox = require 'ui.colors'.gruvbox
       gruvbox.setup()
@@ -32,7 +34,7 @@ return {
 
   {
     'craftzdog/solarized-osaka.nvim',
-    priority = 10000,
+    priority = 1000,
     lazy = false,
     config = function()
       local osaka = require 'ui.colors'.osaka
@@ -49,5 +51,5 @@ return {
     end,
   },
 
-  { 'ptdewey/darkearth-nvim' },
+
 }
