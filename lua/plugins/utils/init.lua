@@ -1,7 +1,41 @@
 return {
   { require 'plugins.utils.folds' },
-  { require 'plugins.utils.term_utils' },
   { require 'plugins.utils.web_dev' },
+
+-- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+-- ┃                 Terminal Related Utils                  ┃
+-- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  {
+    'RAprogramm/nekifoch',
+    cmd = 'Nekifoch',
+    cond = function()
+      if os.getenv('TERM') == 'xterm-kitty' then
+        return true
+      else
+        return false
+      end
+    end,
+    opts = {}
+  },
+
+  {
+    'akinsho/toggleterm.nvim',
+    event = 'VeryLazy',
+    version = '*',
+    opts = {}
+  },
+
+-- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+-- ┃                       Misc Utils                        ┃
+-- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  {
+    'Zeioth/hot-reload.nvim',
+    dependencies = 'nvim-lua/plenary.nvim',
+    event = 'BufEnter',
+    opts = {}
+  },
 
   {
     'lambdalisue/suda.vim',
@@ -13,6 +47,10 @@ return {
       vim.g.suda_smart_edit = 1
     end,
   },
+
+-- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+-- ┃                        Git Utils                        ┃
+-- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
   {
     'SuperBo/fugit2.nvim',
@@ -28,7 +66,7 @@ return {
     opts = {
       content_width = 92,
       width = math.floor(0.75 * vim.o.columns),
-      height = "75%",
+      height = '75%',
     },
   },
 
@@ -102,16 +140,8 @@ return {
   },
 
   {
-    'jghauser/follow-md-links.nvim',
-    ft = { 'md', 'markdown' },
-    config = function()
-      vim.keymap.set('n', '<BS>', ':edit #<CR>', { silent = true })
-    end,
-  },
-
-
-  {
     'lsvmello/elastictabstops.nvim',
+    cond = false,
     cmd = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
     config = function()
       require 'elastictabstops'.setup()
@@ -119,6 +149,9 @@ return {
   },
 
   { 'b0o/SchemaStore.nvim', version = false },
-  { 'nvim-lua/plenary.nvim' },
+
+  -- nvim lua libraries
+
+  { 'nvim-lua/plenary.nvim', lazy = true },
   { 'nvim-tree/nvim-web-devicons', lazy = true },
 }

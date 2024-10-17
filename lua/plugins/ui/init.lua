@@ -60,10 +60,9 @@ return {
 
   {
     'luukvbaal/statuscol.nvim',
---    lazy = false,
-    event = 'UIEnter',
+    lazy = false,
     opts = function()
-      require 'config.statuscolumn'
+      require 'config.appearance'.statuscolumn()
     end,
   },
 
@@ -72,7 +71,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
     config = function()
-      require 'config.devicons'
+      require 'config.appearance'.icon_colors()
     end,
   },
 
@@ -111,9 +110,8 @@ return {
   {
     'gen740/SmoothCursor.nvim',
     lazy = false,
-    event = 'BufEnter',
     config = function()
-      require 'config.smooth_cursor'.config()
+      require 'config.appearance'.smooth_cursor()
     end,
   },
 
@@ -121,7 +119,11 @@ return {
     'svampkorg/moody.nvim',
     event = { 'ModeChanged', 'BufWinEnter', 'WinEnter' },
     opts = {
-      disabled_filetypes = { 'TelescopePrompt' }
+      disabled_filetypes = {
+        'TelescopePrompt',
+        'help',
+--        'cmp_menu'
+      }
     }
   },
 

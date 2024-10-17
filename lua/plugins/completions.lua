@@ -4,35 +4,28 @@ return {
     enabled = false,
     version = false,
   },
-  --  ╭───────────────────────╮
-  --  │ ~~ Autocompletions ~~ │
-  --  ╰───────────────────────╯
 
   {
-    'hrsh7th/nvim-cmp',
+--    'hrsh7th/nvim-cmp',
+    'iguanacucumber/magazine.nvim',
+    name = 'nvim-cmp',
     version = false,
     event = 'InsertEnter',
     dependencies = {
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lua' },
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-path' },
-      { 'ray-x/cmp-treesitter' },
-      { 'amarakon/nvim-cmp-fonts' },
-      { 'bydlw98/cmp-env' },
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'bydlw98/cmp-env',
 
       -- Snippets
-      { 'L3MON4D3/LuaSnip' },
-      { 'saadparwaiz1/cmp_luasnip', lazy = true },
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
     },
     config = function()
       require 'lsp.completions'
     end,
   },
-
-  --  ╭─────────────────────╮
-  --  │ ~~ Code Snippets ~~ │
-  --  ╰─────────────────────╯
 
   {
     'L3MON4D3/LuaSnip',
@@ -50,14 +43,10 @@ return {
 
       ls.setup({
         keep_roots = true,
-        updateevents = 'TextChanged,TextChangedI',
+        update_events = { 'TextChanged', 'TextChangedI' },
 
         delete_check_events = 'TextChanged',
         enable_autosnippets = true,
-
-        -- ft_func = function()
-        --   return vim.split(vim.bo.filtetype, '.', true)
-        -- end,
       })
 
       from_vscode.lazy_load()
@@ -97,14 +86,9 @@ return {
     end,
   },
 
-  -- ╭───────────────────╮
-  -- │ ~~ Annotations ~~ │
-  -- ╰───────────────────╯
-
   {
     'danymat/neogen',
     event = 'LspAttach',
-    dependencies = 'nvim-treesitter/nvim-treesitter',
     config = function()
       require 'neogen'.setup { snippet_engine = 'luasnip' }
     end,

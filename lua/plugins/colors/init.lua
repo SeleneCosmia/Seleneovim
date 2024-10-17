@@ -26,5 +26,5 @@ return {
         'qaptoR-nvim/chocolatier.nvim'
       })
     end
-  }
+  },
 }
