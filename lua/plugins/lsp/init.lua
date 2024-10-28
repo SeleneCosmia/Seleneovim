@@ -15,6 +15,7 @@ return {
       local neoconf = require 'neoconf'
       local fmt_on_attach = require 'lsp.autocommands'.format_on_attach
       local def_on_attach = require 'lsp.autocommands'.on_attach
+      local publish_diagnostics = vim.lsp.diagnostic.on_publish_diagnostics
       ----------------------------------------------------------------
       neoconf.setup {}
       -------------- Mason setup
@@ -22,8 +23,7 @@ return {
 
       -------------- Diagnostics setup
       vim.lsp.handlers['textDocument/publishDiagnostics'] =
-        vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { update_in_insert = false })
-
+        vim.lsp.with(publish_diagnostics, { update_in_insert = false })
 
       -------------- efmls setup
       local stylua = require 'efmls-configs.formatters.stylua'
@@ -88,9 +88,9 @@ return {
             schemas = require 'schemastore'.json.schemas {
               extra = {
                 {
-                  description = 'LuaLS (sumneko_lua) server schema',
+                  description = 'LuaLS server schema',
                   fileMatch = { 'luarc.json', '.luarc.json' },
-                  name = 'luarc.json',
+                  name = '.luarc.json',
                   url = 'https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json',
                 },
               }
@@ -100,7 +100,6 @@ return {
         },
       })
 
-      lspconfig.nushell.setup({})
       lspconfig.taplo.setup({})
 
       lspconfig.lua_ls.setup({
