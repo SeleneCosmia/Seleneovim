@@ -3,16 +3,13 @@ local autopairs = require 'nvim-autopairs.completion.cmp'
 local luasnip = require 'luasnip'
 
 local map, cmpr = cmp.mapping, cmp.config.compare
-local b_replace = cmp.ConfirmBehavior.Replace
 
-local winhl = table.concat({
-  'Normal:PMenu',
-  'FloatBorder:PMenu',
-  'CursorLine:ModesVisualCursorLine',
-  'Search:None'}, ',')
+local insert = { behavior = types.cmp.SelectBehavior.Insert }
+local select = { behavior = types.cmp.SelectBehavior.Select }
 
+local winhl = 'Normal:PMenu,FloatBorder:CmpBorder,CursorLine:CmpSel,Search:None'
 
-
+---@type cmp.Setup
 cmp.setup({
 
   snippet = {
@@ -21,7 +18,7 @@ cmp.setup({
     end,
   },
 
-  preselect = cmp.PreselectMode.Item,
+  preselect = cmp.PreselectMode.None,
 
   confirmation = {
     default_behavior = types.cmp.ConfirmBehavior.Replace
@@ -33,42 +30,41 @@ cmp.setup({
 
   mapping = map.preset.insert {
     ['<C-Space>'] = map.complete(),
-    ['<C-Up>'] = map.select_prev_item({ behavior = 'select' }),
-    ['<C-Down>'] = map.select_next_item({ behavior = 'select' }),
-    ['<CR>'] = map.confirm({ behavior = b_replace }),
+    ['<CR>'] = map.confirm({ behavior = types.cmp.ConfirmBehavior.Replace }),
 
-    -----|>|>|> cmp-docs commands
-    ['<C-e>'] = map(function(fallback)
-      if cmp.visible_docs() then
-        cmp.close_docs()
+    ['<Tab>'] = map(function(fallback)
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump(1)
+      elseif cmp.visible() then
+        cmp.select_next_item(insert)
       else
         fallback()
       end
     end, { 'i', 's' }),
 
-    ['<C-n>'] = map(function(fallback)
+    ['<S-Tab>'] = map(function(fallback)
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump(-1)
+      elseif cmp.visible() then
+        cmp.select_prev_item(insert)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+
+    ['<C-n>'] = map(function()
       if cmp.visible_docs() then
         cmp.scroll_docs(1)
       else
-        cmp.select_next_item({ behavior = 'select' })
+        cmp.select_next_item(select)
       end
     end, { 'i', 's' }),
 
-    ['<C-p>'] = map(function(fallback)
+    ['<C-p>'] = map(function()
       if cmp.visible_docs() then
         cmp.scroll_docs(-1)
       else
-        cmp.select_prev_item({ behavior = 'select' })
-      end
-    end, { 'i', 's' }),
-
-    -----|>|>|> cmp open/close cmds
-
-    ['<C-c>'] = map(function(fallback)
-      if cmp.visible() then
-        cmp.close()
-      else
-        fallback()
+        cmp.select_prev_item(select)
       end
     end, { 'i', 's' }),
 
@@ -80,21 +76,6 @@ cmp.setup({
       end
     end, { 'i', 's' }),
 
-    ['<A-j>'] = map(function(fallback)
-      if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-
-    ['<A-k>'] = map(function(fallback)
-      if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
   },
 
     --  ╭──────────────────────────────────────────────────────────╮
@@ -104,11 +85,11 @@ cmp.setup({
     sources = cmp.config.sources({
       { name = 'nvim_lsp', group_index = 1 },
       { name = 'luasnip', group_index = 1 },
-      { name = 'path' },
-    }, {
+      { name = 'async_path' },
+    {
       { name = 'env' },
-      { name = 'buffer', keyword_length = 3 },
-    }),
+      { name = 'buffer' },
+    }}),
 
     --  ╭────────────────────────────────╮
     --  │  Sorting & Matching Functions  │
@@ -145,61 +126,64 @@ cmp.setup({
   },
 
   formatting = {
+    expandable_indicator = true,
     fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, item)
-        local maxw_abbr = 25
-        local ellipsis = '⋱'
+        local item_maxwidth = 30
+        local ellipsis_char = '🠶'
+
+        ---@param item string
+        ---@return string limited string
+        local function truncate(item)
+          if item ~= nil and item:len() > item_maxwidth then
+            item = item:sub(0, item_maxwidth) .. ellipsis_char
+            return item
+          end
+          return item
+        end
 
         item.menu = ({
-          nvim_lua = '[API]',
-          nvim_lsp = '[LSP]',
-          luasnip  = '[SNIP]',
-          buffer   = '[BUF]',
-          path     = '[PATH]',
-          env      = '[$ENV]',
+          nvim_lsp      = '[LSP]',
+          luasnip       = '[SNIP]',
+          buffer        = '[BUF]',
+          async_path    = '[PATH]',
+          env           = '[$ENV]',
         })[entry.source.name]
 
         local menu_icon = {
-          nvim_lua = ' 󰽥 ',
-          nvim_lsp = '  ',
-          luasnip  = '  ',
-          buffer   = '  ',
-          path     = '  ',
-          env      = ' 🏞',
+          nvim_lsp      = '  ',
+          luasnip       = '  ',
+          buffer        = '  ',
+          async_path    = ' 󰙁 ',
+          env           = '  ',
         }
-            -- cannot for the life of me figure out a less hacky way
-            -- to set this up
-        if entry.source.name == 'nvim_lua' then
-          item.kind = menu_icon.nvim_lua
-        elseif entry.source.name == 'nvim_lsp' then
+
+        --cannot for the life of me figure out a less hacky way
+        --to set this up
+        if entry.source.name == 'nvim_lsp' then
           item.kind = menu_icon.nvim_lsp
         elseif entry.source.name == 'luasnip' then
           item.kind = menu_icon.luasnip
         elseif entry.source.name == 'buffer' then
           item.kind = menu_icon.buffer
-        elseif entry.source.name == 'path' then
-          item.kind = menu_icon.path
+        elseif entry.source.name == 'async_path' then
+          item.kind = menu_icon.async_path
         elseif entry.source.name == 'env' then
           item.kind = menu_icon.env
         end
 
-            --[[for src, icon in pairs(menu_icon) do
-              local stringify = function()
-                string.format()
-              end
-              if entry.source.name == 
-                item.kind = menu_icon[src]
-            end]]
+        --[[for src, icon in pairs(menu_icon) do
+          local stringify = function()
+            string.format()
+          end
+          if entry.source.name == 
+            item.kind = menu_icon[src]
+        end]]
 
-            if vim.api.nvim_strwidth(item.abbr) > maxw_abbr then
-                item.abbr = vim.fn.strcharpart(item.abbr, 0, maxw_abbr) .. ellipsis
-            end
+          item.menu = truncate(item.menu)
+          item.abbr = truncate(item.abbr)
 
---[[        if vim.api.nvim_strwidth(item.menu or '') > maxw_menu then
-                item.menu =
-            end
-            ]]
-            return item
+          return item
         end,
     },
 })
@@ -208,21 +192,18 @@ cmp.setup.filetype('lua', {
   sources = cmp.config.sources({
     { name = 'lazydev', group_index = 0 },
     { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
     { name = 'luasnip' },
-  }, {
-    { name = 'path' },
-    { name = 'buffer', keyword_length = 3 },
-  }, {
-    { name = 'env' },
-  }),
+    {
+      { name = 'buffer', keyword_length = 3 },
+      { name = 'async_path' },
+    }
+  })
 })
 
 cmp.setup.filetype('sh', {
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }
-  }, {
+    { name = 'luasnip' },
     { name = 'path' },
     { name = 'env' }
   })

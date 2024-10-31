@@ -12,10 +12,10 @@ return {
     version = false,
     event = 'InsertEnter',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-nvim-lua',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
+      { 'iguanacucumber/mag-nvim-lsp', name = 'cmp-nvim-lsp', opts = {} },
+--      { 'iguanacucumber/mag-nvim-lua', name = 'cmp-nvim-lua' },
+      { 'iguanacucumber/mag-buffer', name = 'cmp-buffer' },
+      { url = 'https://codeberg.org/FelipeLema/cmp-async-path.git' },
       'bydlw98/cmp-env',
 
       -- Snippets
@@ -59,7 +59,7 @@ return {
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    dependencies = { 'hrsh7th/nvim-cmp' },
+    dependencies = { 'iguanacucumber/magazine.nvim' },
     config = function()
       local autopairs = require 'nvim-autopairs'
       local cmp_pairs = require 'nvim-autopairs.completion.cmp'

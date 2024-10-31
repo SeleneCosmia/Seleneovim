@@ -1,4 +1,4 @@
-local uv, api, fn, set = (vim.uv or vim.loop), vim.api, vim.fn, vim.g
+local uv, api, fn, set = vim.uv, vim.api, vim.fn, vim.g
 local dev_path = vim.fn.expand('$GITHUB_ROOT')
 local lazypath = fn.stdpath('data') .. '/lazy/lazy.nvim'
 
@@ -20,8 +20,9 @@ vim.opt.rtp:prepend(lazypath)
 
 ---@param opts? LazyConfig
 local function lazy_setup(opts)
-local no_notif = {}
+  local no_notif = {}
   no_notif = { enabled = true, notify = false }
+
   opts = opts or {}
   opts = {
     checker = no_notif,

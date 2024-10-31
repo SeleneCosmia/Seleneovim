@@ -34,12 +34,9 @@ return {
 
   {
     'craftzdog/solarized-osaka.nvim',
-    priority = 1000,
-    lazy = false,
     config = function()
       local osaka = require 'ui.colors'.osaka
       osaka.setup {}
-      vim.cmd.colorscheme 'solarized-osaka-storm'
     end,
   },
 
@@ -50,6 +47,5 @@ return {
       boo.setup({ italic = true })
     end,
   },
-
 
 }

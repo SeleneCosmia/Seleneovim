@@ -32,7 +32,6 @@ return {
 
   {
     'Zeioth/hot-reload.nvim',
-    dependencies = 'nvim-lua/plenary.nvim',
     event = 'BufEnter',
     opts = {}
   },
@@ -130,9 +129,6 @@ return {
     'mrjones2014/smart-splits.nvim',
     version = false,
     event = 'BufEnter',
-    config = function()
-      require 'core.keymaps'
-    end,
     opts = {
       { ignored_buftypes = { 'neo-tree' } },
       { resize_mode = { silent = true } },
@@ -154,4 +150,5 @@ return {
 
   { 'nvim-lua/plenary.nvim', lazy = true },
   { 'nvim-tree/nvim-web-devicons', lazy = true },
+  { 'nvchad/volt', lazy = true },
 }

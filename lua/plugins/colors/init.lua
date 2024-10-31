@@ -14,17 +14,22 @@ return {
     config = true,
   },
 
+  {
+    'nvchad/minty',
+    cmd = { 'Shades', 'Huefy' }
+  },
+
   { require 'plugins.colors.schemes' },
+
   {
     'LmanTW/themify.nvim',
-    enabled = false, -- [WARN] suuuuuper buggy rn :(
-    lazy = false,
-    priority = 999,
-    cmd = 'Themify',
+    enabled = false,
     config = function()
       require 'themify'.setup({
-        'qaptoR-nvim/chocolatier.nvim'
+        'qaptoR-nvim/chocolatier.nvim',
+        'defaults'
       })
     end
   },
+
 }

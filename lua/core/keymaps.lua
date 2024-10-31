@@ -1,6 +1,3 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
------------------------------
 local map = vim.keymap.set
 local keymap = vim.api.nvim_create_user_command
 local key = require 'utils.globals'.map

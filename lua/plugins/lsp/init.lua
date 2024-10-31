@@ -11,10 +11,10 @@ return {
     },
     config = function()
       local lspconfig = require 'lspconfig'
-      local Capabilities = require 'lsp.init'.Capabilities()
+      local capabilities = require 'lsp.init'.Capabilities()
       local neoconf = require 'neoconf'
       local fmt_on_attach = require 'lsp.autocommands'.format_on_attach
-      local def_on_attach = require 'lsp.autocommands'.on_attach
+      local on_attach = require 'lsp.autocommands'.on_attach
       local publish_diagnostics = vim.lsp.diagnostic.on_publish_diagnostics
       ----------------------------------------------------------------
       neoconf.setup {}
@@ -53,36 +53,38 @@ return {
 
       -------------- Server setups
 
+      -- local servers = { 'bashls', 'cssls', 'html', 'ts_ls', 'glsl_analyzer' }
+
       lspconfig.bashls.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       lspconfig.cssls.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       lspconfig.html.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       lspconfig.crystalline.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
         cmd = { 'crystalline', '--stdio' },
         single_file_support = true,
       })
 
       lspconfig.glsl_analyzer.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       lspconfig.jsonls.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
         settings = {
           json = {
             schemas = require 'schemastore'.json.schemas {
@@ -103,13 +105,13 @@ return {
       lspconfig.taplo.setup({})
 
       lspconfig.lua_ls.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
       })
 
       lspconfig.julials.setup({
-        capabilities = Capabilities,
-        on_attach = def_on_attach,
+        capabilities = capabilities,
+        on_attach = on_attach,
         ---@type lspconfig.settings.julials
         settings = {
           julia = {

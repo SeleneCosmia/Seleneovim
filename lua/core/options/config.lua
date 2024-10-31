@@ -36,7 +36,6 @@ local options = {
 
   list              = true,
   lcs               = {lead = nil,tab = nil,trail = '▹'},
-  fillchars         = {eob = nil},
 
   cursorline        = true,
   cursorlineopt     = {'number','screenline'},
@@ -81,6 +80,8 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+set.fillchars = { eob = ' ' }
+
 set.wildignore = {
   '.directory',
 }
@@ -97,5 +98,5 @@ g.loaded_perl_provider  = 0
 g.ruby_host_prog = os.getenv("XDG_DATA_HOME") .. "/gem/ruby/3.0.0/bin"
 
 if vim.env.SHELL == "/bin/bash" then
-    g.node_host_prog = os.getenv('NVM_BIN')
+  g.node_host_prog = os.getenv('NVM_BIN') .. '/neovim-node-host' 
 end
