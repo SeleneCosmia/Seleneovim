@@ -12,13 +12,17 @@ local winhl = 'Normal:PMenu,FloatBorder:CmpBorder,CursorLine:CmpSel,Search:None'
 ---@type cmp.Setup
 cmp.setup({
 
+  experimental = {
+    ghost_text = true,
+  },
+
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
   },
 
-  preselect = cmp.PreselectMode.None,
+  preselect = cmp.PreselectMode.Item,
 
   confirmation = {
     default_behavior = types.cmp.ConfirmBehavior.Replace
@@ -36,7 +40,7 @@ cmp.setup({
       if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump(1)
       elseif cmp.visible() then
-        cmp.select_next_item(insert)
+        cmp.select_next_item(select)
       else
         fallback()
       end
@@ -46,7 +50,7 @@ cmp.setup({
       if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump(-1)
       elseif cmp.visible() then
-        cmp.select_prev_item(insert)
+        cmp.select_prev_item(select)
       else
         fallback()
       end
