@@ -10,7 +10,6 @@ local X = {}
 function X.on_attach(client, bufnr)
   local opts = { buffer = bufnr }
   local has_method = client.supports_method
-
   if has_method(methods.textDocument_declaration) then
     map('n', 'gD', lsp.declaration, opts)
   end
@@ -21,7 +20,7 @@ function X.on_attach(client, bufnr)
     map({ 'n', 'v' }, '<leader>ca', lsp.code_action, opts)
   end
   if has_method(methods.textDocument_signatureHelp) then
-    map('n', '<leader>hh', lsp.signature_help, opts)
+    map({ 'n', 'i' }, '<C-z>', lsp.signature_help, opts)
   end
   if has_method(methods.textDocument_hover) then
     map('n', 'K', lsp.hover, opts)

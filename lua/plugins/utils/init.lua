@@ -60,7 +60,6 @@ return {
     dependencies = {
       'MunifTanjim/nui.nvim',
       'nvim-tree/nvim-web-devicons',
-      'nvim-lua/plenary.nvim',
     },
     opts = {
       content_width = 92,
@@ -101,7 +100,6 @@ return {
   {
     'Cassin01/wf.nvim',
     version = false,
-    dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       require 'wf'.setup()
     end,
@@ -135,20 +133,13 @@ return {
     },
   },
 
-  {
-    'lsvmello/elastictabstops.nvim',
-    cond = false,
-    cmd = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
-    config = function()
-      require 'elastictabstops'.setup()
-    end,
-  },
+  -- {
+  --   'lsvmello/elastictabstops.nvim',
+  --   cmd = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
+  --   config = function()
+  --     require 'elastictabstops'.setup()
+  --   end,
+  -- },
 
   { 'b0o/SchemaStore.nvim', version = false },
-
-  -- nvim lua libraries
-
-  { 'nvim-lua/plenary.nvim', lazy = true },
-  { 'nvim-tree/nvim-web-devicons', lazy = true },
-  { 'nvchad/volt', lazy = true },
 }

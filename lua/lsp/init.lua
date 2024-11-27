@@ -1,7 +1,7 @@
 local X = {}
 
-function X.Capabilities()
-  return require 'lsp.settings.capabilities'
+function X.capabilities()
+  return require 'lsp.settings.capabilities'.capabilities
 end
 
 function X.setup()

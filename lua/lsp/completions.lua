@@ -7,14 +7,11 @@ local map, cmpr = cmp.mapping, cmp.config.compare
 local insert = { behavior = types.cmp.SelectBehavior.Insert }
 local select = { behavior = types.cmp.SelectBehavior.Select }
 
-local winhl = 'Normal:PMenu,FloatBorder:CmpBorder,CursorLine:CmpSel,Search:None'
+-- local winhl = 'Normal:PMenu,FloatBorder:CmpBorder,CursorLine:CmpSel,Search:None'
 
 ---@type cmp.Setup
 cmp.setup({
-
-  experimental = {
-    ghost_text = true,
-  },
+  experimental = { ghost_text = true },
 
   snippet = {
     expand = function(args)
@@ -24,53 +21,61 @@ cmp.setup({
 
   preselect = cmp.PreselectMode.Item,
 
-  confirmation = {
-    default_behavior = types.cmp.ConfirmBehavior.Replace
-  },
-
     --  ╭──────────────────────────────────────────────────────╮
     --  │                              Keymapping Functions    │
     --  ╰──────────────────────────────────────────────────────╯
 
-  mapping = map.preset.insert {
+  mapping = {
     ['<C-Space>'] = map.complete(),
-    ['<CR>'] = map.confirm({ behavior = types.cmp.ConfirmBehavior.Replace }),
+
+    ['<CR>'] = map.confirm({
+      select = false,
+      behavior = cmp.ConfirmBehavior.Insert
+    }),
 
     ['<Tab>'] = map(function(fallback)
-      if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump(1)
-      elseif cmp.visible() then
+      if cmp.visible() then
         cmp.select_next_item(select)
       else
         fallback()
       end
-    end, { 'i', 's' }),
+    end),
 
     ['<S-Tab>'] = map(function(fallback)
-      if luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump(-1)
-      elseif cmp.visible() then
+      if cmp.visible() then
         cmp.select_prev_item(select)
       else
         fallback()
       end
-    end, { 'i', 's' }),
+    end),
+
+    ['<C-]>'] = map(function()
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump(1)
+      end
+    end),
+
+    ['<C-[>'] = map(function()
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump(-1)
+      end
+    end),
 
     ['<C-n>'] = map(function()
       if cmp.visible_docs() then
-        cmp.scroll_docs(1)
+        cmp.scroll_docs(4)
       else
         cmp.select_next_item(select)
       end
-    end, { 'i', 's' }),
+    end),
 
     ['<C-p>'] = map(function()
       if cmp.visible_docs() then
-        cmp.scroll_docs(-1)
+        cmp.scroll_docs(-4)
       else
         cmp.select_prev_item(select)
       end
-    end, { 'i', 's' }),
+    end),
 
     ['<ESC>'] = map(function(fallback)
       if cmp.visible() then
@@ -78,22 +83,28 @@ cmp.setup({
       else
         fallback()
       end
-    end, { 'i', 's' }),
-
+    end),
   },
 
     --  ╭──────────────────────────────────────────────────────────╮
     --  │                         Sources                          │
     --  ╰──────────────────────────────────────────────────────────╯
 
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp', group_index = 1 },
-      { name = 'luasnip', group_index = 1 },
-      { name = 'async_path' },
+  sources = {
+    { name = 'lazydev', group_index = 0 },
+    { name = 'nvim_lsp' },
+    { name = 'luasnip'  },
+    { name = 'async_path' },
+    { name = 'env', trigger_characters = {'$'} },
     {
-      { name = 'env' },
-      { name = 'buffer' },
-    }}),
+      name = 'buffer',
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      }
+    },
+  },
 
     --  ╭────────────────────────────────╮
     --  │  Sorting & Matching Functions  │
@@ -101,8 +112,6 @@ cmp.setup({
 
   matching = {
     disallow_fuzzy_matching = true,
-    disallow_fullfuzzy_matching = false,
-    disallow_partial_fuzzy_matching = true,
   },
 
     --  ╭──────────────────────────────────────────────────────────╮
@@ -112,20 +121,24 @@ cmp.setup({
   view = {
     docs = {
       auto_open = true,
+    },
+    entries = {
+      follow_cursor = true,
+      vertical_positioning = 'above',
     }
   },
+
 
   window = {
     completion = {
       border = 'rounded',
       scrollbar = false,
-      winhighlight = winhl,
     },
     documentation = {
       border = 'rounded',
-      winhighlight = winhl,
-      max_height = math.floor(vim.o.lines * 0.5),
-      max_width = math.floor(vim.o.columns * 0.5),
+      -- winhighlight = winhl,
+      -- max_height = math.floor(vim.o.lines * 0.5),
+      -- max_width = math.floor(vim.o.columns * 0.75),
     },
   },
 
@@ -192,23 +205,11 @@ cmp.setup({
     },
 })
 
-cmp.setup.filetype('lua', {
-  sources = cmp.config.sources({
-    { name = 'lazydev', group_index = 0 },
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    {
-      { name = 'buffer', keyword_length = 3 },
-      { name = 'async_path' },
-    }
-  })
-})
-
 cmp.setup.filetype('sh', {
-  sources = cmp.config.sources({
+  sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'path' },
-    { name = 'env' }
-  })
+    { name = 'async_path' },
+    { name = 'env', trigger_characters = {'$'}}
+  }
 })

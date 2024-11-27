@@ -39,4 +39,11 @@ X.kind_icons = {
 -- stylua: ignore end
 }
 
+X.diagnostic_icons = {
+  Error = '󰚌',
+  Warn  = '',
+  Hint  = '󰼈',
+  Info  = '',
+}
+
 return X

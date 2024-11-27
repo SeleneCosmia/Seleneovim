@@ -1,74 +1,49 @@
 return {
   {
+    'stevearc/conform.nvim',
+    opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        crystal = { 'crystal' },
+        fish = { 'fish_indent' },
+      }
+    }
+  },
+
+  {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufEnter' },
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       { 'williamboman/mason.nvim' },
       { 'williamboman/mason-lspconfig.nvim' },
       { 'folke/neoconf.nvim', cmd = 'Neoconf' },
-      { 'creativenull/efmls-configs-nvim', version = false },
-      { 'nvimtools/none-ls.nvim', enabled = false },
     },
     config = function()
       local lspconfig = require 'lspconfig'
-      local capabilities = require 'lsp.init'.Capabilities()
+      local capabilities = require 'lsp.settings.capabilities'.capabilities
       local neoconf = require 'neoconf'
-      local fmt_on_attach = require 'lsp.autocommands'.format_on_attach
       local on_attach = require 'lsp.autocommands'.on_attach
       local publish_diagnostics = vim.lsp.diagnostic.on_publish_diagnostics
       ----------------------------------------------------------------
       neoconf.setup {}
       -------------- Mason setup
-      require 'lsp.mason'
+      require 'lsp.mason'.config()
+      require 'lsp.mason'.mason_lspconfig()
 
       -------------- Diagnostics setup
       vim.lsp.handlers['textDocument/publishDiagnostics'] =
         vim.lsp.with(publish_diagnostics, { update_in_insert = false })
 
-      -------------- efmls setup
-      local stylua = require 'efmls-configs.formatters.stylua'
-      local shellcheck = require 'efmls-configs.linters.shellcheck'
-      local f_lint = require 'efmls-configs.linters.fish'
-      local fish_indent = require 'efmls-configs.formatters.fish_indent'
-
-      local languages = {
-        fish = { f_lint, fish_indent },
-        lua = { stylua },
-        sh = { shellcheck },
-      }
-      local efmls_config = {
-        filetypes = vim.tbl_keys(languages),
-        settings = {
-          rootMarkers = { '.git/' },
-          languages = languages,
-        },
-        init_options = {
-          documentFormatting = true,
-          documentRangeFormatting = true,
-        },
-      }
-
-      -- TODO)) Make file for defining lspServers and --
-      -- TODO)) make these seperate setup calls into as few as possible --
-
       -------------- Server setups
-
+      local defaults = {
+        capabilities = capabilities,
+        on_attach = on_attach
+      }
       -- local servers = { 'bashls', 'cssls', 'html', 'ts_ls', 'glsl_analyzer' }
 
-      lspconfig.bashls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
-      lspconfig.cssls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
-
-      lspconfig.html.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
+      lspconfig.bashls.setup(defaults)
+      lspconfig.cssls.setup(defaults)
+      lspconfig.html.setup(defaults)
 
       lspconfig.crystalline.setup({
         capabilities = capabilities,
@@ -77,10 +52,7 @@ return {
         single_file_support = true,
       })
 
-      lspconfig.glsl_analyzer.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
+      lspconfig.glsl_analyzer.setup(defaults)
 
       lspconfig.jsonls.setup({
         capabilities = capabilities,
@@ -93,7 +65,7 @@ return {
                   description = 'LuaLS server schema',
                   fileMatch = { 'luarc.json', '.luarc.json' },
                   name = '.luarc.json',
-                  url = 'https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json',
+                  url = 'https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json',
                 },
               }
             },
@@ -104,10 +76,7 @@ return {
 
       lspconfig.taplo.setup({})
 
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
-      })
+      lspconfig.lua_ls.setup(defaults)
 
       lspconfig.julials.setup({
         capabilities = capabilities,
@@ -139,9 +108,22 @@ return {
         },
       })
 
-      lspconfig.efm.setup(vim.tbl_extend('force', efmls_config, {
-        on_attach = fmt_on_attach,
-      }))
+      ---@type lspconfig.options.ts_ls
+      lspconfig.ts_ls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        ---@type lspconfig.settings.ts_ls
+        settings = {
+          javascript = {
+            preferences = {
+              quoteStyle = 'single'
+            }
+          },
+          typescript = {
+            locale = 'en',
+          }
+        }
+      })
     end,
   },
 
@@ -150,6 +132,8 @@ return {
     event = 'LspAttach',
     opts = {}
   },
+
+  { 'creativenull/efmls-configs-nvim', enabled = false },
 
   { require 'plugins.lsp.lazydev' },
   { require 'plugins.lsp.ftplugins' },

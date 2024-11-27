@@ -1,45 +1,28 @@
---# selene: allow(unused_variable)
 ---@diagnostic disable: unused-function,unused-local
 local X = {}
 
-local sign_icons = {
-  ERROR = '󰚌',
-  WARN  = '',
-  HINT  = '󰼈',
-  INFO  = '',
-}
-
-local function prefixer(diagnostic)
-  for d, icon in pairs(sign_icons) do
-    if diagnostic.severity == vim.diagnostic.severity[d] then
-      return icon
-    end
-  end
-end
-
-function X.setup()
-  return {
-    vim.diagnostic.config({
-      severity_sort = true,
-      update_in_insert = false,
-      virtual_text = {
-        spacing = 2,
-      },
-      signs = {
-        text = {
-          [vim.diagnostic.severity.ERROR] = sign_icons.ERROR,
-          [vim.diagnostic.severity.WARN]  = sign_icons.WARN,
-          [vim.diagnostic.severity.HINT]  = sign_icons.HINT,
-          [vim.diagnostic.severity.INFO]  = sign_icons.INFO
-        }
-      }
-    }),
+X.setup = function()
+  local icons = require 'utils.icons'.diagnostic_icons
+  local signs = {
+    { name = 'DiagnosticsSignError', text = icons.Error },
+    { name = 'DiagnosticsSignWarn',  text = icons.Warn  },
+    { name = 'DiagnosticsSignHint',  text = icons.Hint  },
+    { name = 'DiagnosticsSignInfo',  text = icons.Info  }
   }
-end
+  for _, sign in ipairs(signs) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
+  end
 
---[[    keymap('n', '<leader>df', diagnostics.open_float)
-        keymap('n', '<Alt>[', diagnostics.goto_prev)
-        keymap('n', '<Alt>]', diagnostics.goto_next)
-        keymap('n', '<leader><leader>l', diagnostics.setloclist)]]
+  local config = {
+    on_attach_callback = nil,
+    on_init_callback = nil,
+    severity_sort = true,
+    update_in_insert = false,
+    underline = true,
+    virtual_text = { spacing = 2 }
+  }
+
+  vim.diagnostic.config(config)
+end
 
 return X.setup()

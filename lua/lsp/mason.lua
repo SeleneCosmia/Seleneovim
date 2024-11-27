@@ -1,7 +1,24 @@
-local mason = require 'mason'
-local masonlsp = require 'mason-lspconfig'
+local M = {}
+local mason, mason_lsp = require 'mason', require 'mason-lspconfig'
 
-return {
+M.mason_lspconfig = function()
+  mason_lsp.setup({
+    automatic_installation = true,
+    ensure_installed = {
+      'bashls',
+      'cssls',
+      'glsl_analyzer',
+      'html',
+      'jsonls',
+      'julials',
+      'lua_ls',
+      'taplo',
+      'yamlls'
+    }
+  })
+end
+
+M.config = function()
   mason.setup({
     ui = {
       border = 'rounded',
@@ -11,20 +28,7 @@ return {
         package_uninstalled = '',
       },
     },
-  }),
+  })
+end
 
-  masonlsp.setup({
-    handlers = nil,
-    ensure_installed = {
-      'bashls',
-      'cssls',
-      'efm',
-      'glsl_analyzer',
-      'html',
-      'jsonls',
-      'julials',
-      'lua_ls',
-      'taplo',
-    },
-  }),
-}
+return M

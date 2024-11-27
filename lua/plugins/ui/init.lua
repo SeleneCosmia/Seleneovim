@@ -1,4 +1,7 @@
 return {
+  { require 'plugins.ui.bars' },
+  { require 'plugins.ui.statusline' },
+
   {
     'lukas-reineke/indent-blankline.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
@@ -10,7 +13,6 @@ return {
 
   {
     'rcarriga/nvim-notify',
-    event = 'VeryLazy',
     dependencies = {
       'nvim-tree/nvim-web-devicons',
     },
@@ -21,7 +23,7 @@ return {
 
   {
     'folke/noice.nvim',
-    event = 'VeryLazy',
+    event = 'UiEnter',
     dependencies = {
       'MunifTanjim/nui.nvim',
       'rcarriga/nvim-notify',
@@ -47,15 +49,6 @@ return {
         },
       }
     end,
-  },
-
-  {
-    'willothy/nvim-cokeline',
-    event = 'VeryLazy',
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    opts = {},
   },
 
   {

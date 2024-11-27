@@ -1,0 +1,33 @@
+  {
+    "Require raylib": {
+      "prefix": "req",
+      "body": [
+        "require \"raylib-cr\"",
+      ],
+      "description": "Import raylib module from raylib-cr."
+    },
+    "Setup screen dimensions": {
+      "prefix": "screen",
+      "body": [
+        "screen_width = $1",
+        "screen_height = $2"
+      ],
+      "description": "Create global vars for screen width/height for later use."
+    },
+    "raylib init window": {
+      "prefix": "Ray",
+      "body": [
+        "Raylib.init_window(screen_width, screen_height, \"$1\")",
+        "Raylib.set_target_fps(60)",
+        "\n",
+        "until Raylib.close_window?",
+        "\tRaylib.begin_drawing",
+        "\t$0",
+        "\tRaylib.end_drawing",
+        "end",
+        "\n",
+        "Raylib.close_window"
+      ],
+      "description": "Skeleton code to instatiate a raylib window."
+    }
+  }
