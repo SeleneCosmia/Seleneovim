@@ -40,8 +40,11 @@ local function lazy_setup(opts)
       rtp = {
         disabled_plugins = {
           'gzip',
+          'matchit',
           'matchparen',
+          'osc52',
           'tarPlugin',
+          'tohtml',
           'tutor',
           'zipPlugin',
         }

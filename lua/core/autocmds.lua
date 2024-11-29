@@ -18,6 +18,7 @@ autocmd('FileType', {
     'lspinfo',
     'nofile',
     'notify',
+    'man',
     'qf',
     'tsplayground',
   },

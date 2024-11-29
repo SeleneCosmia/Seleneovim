@@ -1,5 +1,5 @@
-local set, g, go = vim.opt, vim.g, vim.go
---stylua ignore:start
+local opt, g, go = vim.opt, vim.g, vim.go
+-- stylua: ignore start
 --  ╾──────────────────────────────────────────────────────────╼
 local options = {
   exrc              = true,
@@ -26,23 +26,19 @@ local options = {
   timeoutlen        = 500,
 
   expandtab         = true,
-  tabstop           = 4,
+  tabstop           = 2,
   shiftwidth        = 2,
   softtabstop       = 2,
-  smarttab          = true,
   smartindent       = true,
   autoindent        = true,
-  shiftround        = true,
 
   list              = true,
-  lcs               = {lead = nil,tab = nil,trail = '▹'},
+  fillchars         = { eob = ' ' },
 
   cursorline        = true,
   cursorlineopt     = {'number','screenline'},
 
---  signcolumn        = 'yes:2',
   number            = true,
---  numberwidth       = 4,
   rnu               = true,
 
   pumheight         = 10,
@@ -56,6 +52,7 @@ local options = {
   splitbelow        = true,
   splitright        = true,
   splitkeep         = 'cursor',
+  title             = true,
 
   swapfile          = false,
   undofile          = true,
@@ -77,14 +74,17 @@ local options = {
 }
 
 for k, v in pairs(options) do
-  vim.opt[k] = v
+  opt[k] = v
 end
 
-set.fillchars = { eob = ' ' }
-
-set.wildignore = {
-  '.directory',
+opt.listchars = {
+  lead = nil,
+  tab = '••',
+  trail = '⬧',
 }
+
+opt.wildignore = { '.directory' }
+
 --  ╾──────────────────────────────────────────────────────────╼
 go.mousemodel           = 'popup'
 go.mousefocus           = true
@@ -92,11 +92,11 @@ go.mousefocus           = true
 g.do_filetype_lua       = true
 g.did_load_filetypes    = false
 g.loaded_perl_provider  = 0
+g.loaded_ruby_provider  = 0
 --  ╾──────────────────────────────────────────────────────────╼
---stylua ignore:end
+-- stylua: ignore end
 --
-g.ruby_host_prog = os.getenv("XDG_DATA_HOME") .. "/gem/ruby/3.0.0/bin"
 
-if vim.env.SHELL == "/bin/bash" then
-  g.node_host_prog = os.getenv('NVM_BIN') .. '/neovim-node-host' 
+if vim.env.SHELL == '/bin/bash' then
+  g.node_host_prog = os.getenv('NVM_BIN') .. '/neovim-node-host'
 end

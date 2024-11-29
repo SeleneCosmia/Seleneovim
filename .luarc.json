@@ -1,23 +1,24 @@
 {
-    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
-    "runtime.version": "LuaJIT",
-    "runtime.fileEncoding": "utf8",
-    "completion": {
-        "callSnippet": "Replace",
-        "autoRequire": false
-    },
-    "diagnostics": {
-        "disable": [
-            "missing-fields",
-            "unused-local",
-            "unused-function"
-        ],
-        "globals": ["vim"]
-    },
-    "workspaceEvent": "OnSave",
-    "workspace": {
-        "checkThirdParty": false,
-        "maxPreload": 10000,
-        "preloadFileSize": 1200
-    }
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime.version": "LuaJIT",
+  "completion": {
+    "callSnippet": "Replace",
+    "autoRequire": false
+  },
+  "diagnostics": {
+    "disable": [
+      "missing-fields",
+      "unused-local",
+      "unused-function"
+    ],
+    "globals": ["vim"]
+  },
+  "format.enable": false,
+  "hint.enable": true,
+  "workspaceEvent": "OnSave",
+  "workspace": {
+    "checkThirdParty": false,
+    "maxPreload": 10000,
+    "preloadFileSize": 1200
+  }
 }

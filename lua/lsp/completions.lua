@@ -7,8 +7,7 @@ local map, cmpr = cmp.mapping, cmp.config.compare
 local insert = { behavior = types.cmp.SelectBehavior.Insert }
 local select = { behavior = types.cmp.SelectBehavior.Select }
 
--- local winhl = 'Normal:PMenu,FloatBorder:CmpBorder,CursorLine:CmpSel,Search:None'
-
+---@module "cmp"
 ---@type cmp.Setup
 cmp.setup({
   experimental = { ghost_text = true },
@@ -149,8 +148,7 @@ cmp.setup({
         local item_maxwidth = 30
         local ellipsis_char = '🠶'
 
-        ---@param item string
-        ---@return string limited string
+        ---@diagnostic disable-next-line: redefined-local
         local function truncate(item)
           if item ~= nil and item:len() > item_maxwidth then
             item = item:sub(0, item_maxwidth) .. ellipsis_char
@@ -175,6 +173,10 @@ cmp.setup({
           env           = '  ',
         }
 
+        -- local get_menu_icon = function(name, icon)
+        --   for _, name in ipairs(vim.tbl_keys())
+        -- end
+
         --cannot for the life of me figure out a less hacky way
         --to set this up
         if entry.source.name == 'nvim_lsp' then
@@ -188,14 +190,6 @@ cmp.setup({
         elseif entry.source.name == 'env' then
           item.kind = menu_icon.env
         end
-
-        --[[for src, icon in pairs(menu_icon) do
-          local stringify = function()
-            string.format()
-          end
-          if entry.source.name == 
-            item.kind = menu_icon[src]
-        end]]
 
           item.menu = truncate(item.menu)
           item.abbr = truncate(item.abbr)

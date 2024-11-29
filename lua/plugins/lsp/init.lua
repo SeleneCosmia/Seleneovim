@@ -1,13 +1,27 @@
 return {
   {
     'stevearc/conform.nvim',
+    event = 'VeryLazy',
+    ---@module 'conform'
+    ---@type conform.setupOpts
     opts = {
       formatters_by_ft = {
-        lua = { 'stylua' },
+        -- stylua: ignore start
         crystal = { 'crystal' },
-        fish = { 'fish_indent' },
-      }
-    }
+        fish    = { 'fish_indent' },
+        lua     = { 'stylua' },
+        toml    = { 'taplo' },
+        ['*']   = { 'trim_whitespace', 'trim_newlines' },
+        -- stylua: ignore end
+      },
+      default_format_opts = {
+        lsp_format = 'fallback',
+        timeout_ms = 500,
+      },
+    },
+    keys = {
+      { '<leader>ff', '<cmd>lua require("conform").format({})<cr>', { modes = { 'n', 'x' } } },
+    },
   },
 
   {
@@ -21,11 +35,10 @@ return {
     config = function()
       local lspconfig = require 'lspconfig'
       local capabilities = require 'lsp.settings.capabilities'.capabilities
-      local neoconf = require 'neoconf'
-      local on_attach = require 'lsp.autocommands'.on_attach
+      local on_attach = require 'lsp.settings.attach'.on_attach
       local publish_diagnostics = vim.lsp.diagnostic.on_publish_diagnostics
       ----------------------------------------------------------------
-      neoconf.setup {}
+      require 'neoconf'.setup {}
       -------------- Mason setup
       require 'lsp.mason'.config()
       require 'lsp.mason'.mason_lspconfig()
@@ -35,25 +48,24 @@ return {
         vim.lsp.with(publish_diagnostics, { update_in_insert = false })
 
       -------------- Server setups
+      local servers = {
+        'bashls',
+        'cssls',
+        'html',
+        'glsl_analyzer',
+        'lua_ls',
+      }
+
       local defaults = {
         capabilities = capabilities,
-        on_attach = on_attach
-      }
-      -- local servers = { 'bashls', 'cssls', 'html', 'ts_ls', 'glsl_analyzer' }
-
-      lspconfig.bashls.setup(defaults)
-      lspconfig.cssls.setup(defaults)
-      lspconfig.html.setup(defaults)
-
-      lspconfig.crystalline.setup({
-        capabilities = capabilities,
         on_attach = on_attach,
-        cmd = { 'crystalline', '--stdio' },
-        single_file_support = true,
-      })
+      }
 
-      lspconfig.glsl_analyzer.setup(defaults)
+      for _, ls in ipairs(servers) do
+        lspconfig[ls].setup(defaults)
+      end
 
+      ------------- Custom server setups
       lspconfig.jsonls.setup({
         capabilities = capabilities,
         on_attach = on_attach,
@@ -67,7 +79,7 @@ return {
                   name = '.luarc.json',
                   url = 'https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json',
                 },
-              }
+              },
             },
             validate = { enable = true },
           },
@@ -76,12 +88,9 @@ return {
 
       lspconfig.taplo.setup({})
 
-      lspconfig.lua_ls.setup(defaults)
-
       lspconfig.julials.setup({
         capabilities = capabilities,
         on_attach = on_attach,
-        ---@type lspconfig.settings.julials
         settings = {
           julia = {
             environmentPath = '~/.local/share/julia/environments/nvim-lspconfig',
@@ -91,9 +100,9 @@ return {
             symbolCacheDownload = false,
             useProgressFrontend = false,
             NumThreads = 16,
-            lint = { missingrefs = "all" }
-          }
-        }
+            lint = { missingrefs = 'all' },
+          },
+        },
       })
 
       lspconfig.yamlls.setup({
@@ -108,21 +117,19 @@ return {
         },
       })
 
-      ---@type lspconfig.options.ts_ls
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
         on_attach = on_attach,
-        ---@type lspconfig.settings.ts_ls
         settings = {
           javascript = {
             preferences = {
-              quoteStyle = 'single'
-            }
+              quoteStyle = 'single',
+            },
           },
           typescript = {
             locale = 'en',
-          }
-        }
+          },
+        },
       })
     end,
   },
@@ -130,10 +137,8 @@ return {
   {
     'Fildo7525/pretty_hover',
     event = 'LspAttach',
-    opts = {}
+    opts = {},
   },
-
-  { 'creativenull/efmls-configs-nvim', enabled = false },
 
   { require 'plugins.lsp.lazydev' },
   { require 'plugins.lsp.ftplugins' },

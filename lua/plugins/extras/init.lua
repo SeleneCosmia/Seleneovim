@@ -1,7 +1,6 @@
 return {
   {
     '3rd/image.nvim',
-    cond = os.getenv('TERM_PROGRAM') == 'kitty' or 'WezTerm',
     dependencies = { 'leafo/magick' },
     opts = {}
   },

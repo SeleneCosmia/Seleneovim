@@ -9,9 +9,9 @@ return {
   },
 
   {
-    'brenoprata10/nvim-highlight-colors',
-    event = 'VeryLazy',
-    config = true,
+    'catgoose/nvim-colorizer.lua',
+    event = 'BufReadPre',
+    opts = {},
   },
 
   {

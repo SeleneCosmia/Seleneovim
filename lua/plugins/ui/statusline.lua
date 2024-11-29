@@ -7,13 +7,5 @@ return {
       feline.setup()
     end,
     event = 'UiEnter'
-    -- init = function()
-    --   vim.api.nvim_create_autocmd('User', {
-    --     pattern = 'LazyCheck',
-    --     callback = function()
-    --       vim.opt.statusline = vim.opt.statusline
-    --     end,
-    --   })
-    -- end,
   },
 }

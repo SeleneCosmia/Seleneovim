@@ -1,6 +1,7 @@
 local noice = require 'noice'
 
 return {
+  ---@module 'noice'
   ---@type NoiceConfig
   noice.setup({
     ---@type NoiceCmdline
@@ -77,6 +78,7 @@ return {
       },
       signature = {
         enabled = false,
+
       },
       hover = {
         enabled = false,
@@ -112,15 +114,9 @@ return {
         },
       },
 --╞═════════ commandline options ═════════════════════════════════════════════════╡
-      cmdline = {
-        win_options = {
-          winhighlight = { Normal = 'Normal' },
-        },
-      },
-
       cmdline_popup = {
         position = {
-          row = '40%',
+          row = 5,
           col = '50%',
         },
         size = {
@@ -129,34 +125,36 @@ return {
         },
         win_options = {
           winhighlight = {
-            Normal = 'Normal',
+            Normal = 'NormalFloat',
             FloatTitle = 'Function',
           },
         },
+        border = {
+          style = 'single',
+          padding = { 0, 1 }
+        }
       },
 
-      popupmenu = {
+      cmdline_popupmenu = {
         border = {
           style = 'single',
           padding = { 0, 1 },
         },
-        -- relative = 'editor',
-        position = {
-          row = '52%',
-          col = '50%',
-        },
+        position = 'auto',
         size = {
-          width = 57,
-          height = 10,
+          width = 56,
+          height = 12,
         },
         win_options = {
           winblend = 0,
           winhighlight = {
-            Normal = 'Normal',
+            Normal = 'NormalFloat',
             FloatBorder = 'Function',
           },
         },
+        zindex = 500,
       },
+
 --  ╞══════════════════════════════════════════════════════════════════════════════════╡
       mini = {
         border = { style = 'rounded' },
