@@ -20,6 +20,7 @@ autocmd('FileType', {
     'notify',
     'man',
     'qf',
+    'query',
     'tsplayground',
   },
   callback = function(event)

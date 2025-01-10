@@ -1,12 +1,10 @@
 return {
-  {
-    'Fymyte/rasi.vim',
-    ft = 'rasi',
+  { 'Fymyte/rasi.vim',
     build = ':TSInstall rasi',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = 'rasi',
   },
 
   { 'jlcrochet/vim-crystal', ft = 'crystal' },
 
-  { 'instance-id/nvim-cyber', ft = 'cyber', build = ':TSInstall cyber' },
 }

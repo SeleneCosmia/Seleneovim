@@ -1,9 +1,14 @@
 ---@diagnostic disable:inject-field
 
 return {
+  { 'instance-id/nvim-cyber', ft = 'cyber', build = ':TSInstall cyber' },
+  { 'bezhermoso/tree-sitter-ghostty', build = 'make nvim_install' },
+
   {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'VeryLazy' },
+    cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
+    lazy = vim.fn.argc(-1) == 0,
     build = ':TSUpdate',
     config = function()
       local treesitter = require 'nvim-treesitter.configs'
@@ -12,7 +17,7 @@ return {
 
       pc.crystal = {
         install_info = {
-          url = 'https://github.com/crystal-lang-tools/tree-sitter',
+          url = 'https://github.com/crystal-lang-tools/tree-sitter-crystal',
           files = { 'src/parser.c' },
           branch = 'main',
         },
@@ -42,8 +47,6 @@ return {
     end,
   },
 
-  {
-    'windwp/nvim-ts-autotag',
-    opts = {},
-  },
+  { 'windwp/nvim-ts-autotag', opts = {} },
+
 }

@@ -1,5 +1,6 @@
 local M = {}
 local mason, mason_lsp = require 'mason', require 'mason-lspconfig'
+---@module 'mason'
 
 M.mason_lspconfig = function()
   mason_lsp.setup({
@@ -19,14 +20,21 @@ M.mason_lspconfig = function()
 end
 
 M.config = function()
+  ---@type MasonSettings
   mason.setup({
     ui = {
       border = 'rounded',
+      height = 0.72,
+      width = 0.72,
       icons = {
         package_installed = '',
         package_pending = '󰴲',
         package_uninstalled = '',
       },
+    },
+    registries = {
+      'github:mason-org/mason-registry',
+      'github:mkindberg/ghostty-ls'
     },
   })
 end

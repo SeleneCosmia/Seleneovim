@@ -1,6 +1,7 @@
 return {
   {
     'stevearc/conform.nvim',
+    cmd = 'ConformInfo',
     event = 'VeryLazy',
     ---@module 'conform'
     ---@type conform.setupOpts
@@ -20,7 +21,7 @@ return {
       },
     },
     keys = {
-      { '<leader>ff', '<cmd>lua require("conform").format({})<cr>', { modes = { 'n', 'x' } } },
+      { '<leader>ff', '<cmd>lua require("conform").format({})<cr>', { modes = { 'n', 'x' }}},
     },
   },
 

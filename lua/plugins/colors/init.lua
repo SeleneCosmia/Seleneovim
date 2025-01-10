@@ -1,35 +1,38 @@
+---@module 'lazy'
+---@type LazySpec
 return {
   {
-    'rktjmp/lush.nvim',
-    cmd = { 'Lushify' },
-    dependencies = {
-      'rktjmp/shipwright.nvim',
-      cmd = { 'Shipwright' },
+    'catgoose/nvim-colorizer.lua',
+    event = 'BufReadPre',
+    opts = {
+      user_default_options = {
+        RRGGBBAA = true,
+        css_fn = true,
+        always_update = true,
+      },
     },
   },
 
   {
-    'catgoose/nvim-colorizer.lua',
-    event = 'BufReadPre',
+    'eero-lehtinen/oklch-color-picker.nvim',
     opts = {},
+    keys = {
+      {
+        '<leader>v',
+        '<cmd>lua require("oklch-color-picker").pick_under_cursor()<cr>',
+        desc = 'Open the color picker UI using the color under cursor',
+      },
+    },
   },
 
-  {
-    'nvchad/minty',
-    cmd = { 'Shades', 'Huefy' }
-  },
+  { 'rktjmp/lush.nvim', cmd = { 'Lushify' } },
+  { 'rktjmp/shipwright.nvim', cmd = { 'Shipwright' } },
 
   { require 'plugins.colors.schemes' },
-
+  ----------------------------------------| disabled plugins
   {
-    'LmanTW/themify.nvim',
+    'nvchad/minty',
     enabled = false,
-    config = function()
-      require 'themify'.setup({
-        'qaptoR-nvim/chocolatier.nvim',
-        'defaults'
-      })
-    end
+    cmd = { 'Shades', 'Huefy' },
   },
-
 }
