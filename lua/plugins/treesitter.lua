@@ -18,10 +18,10 @@ return {
       pc.crystal = {
         install_info = {
           url = 'https://github.com/crystal-lang-tools/tree-sitter-crystal',
-          files = { 'src/parser.c' },
+          files = { 'src/parser.c', 'src/scanner.c' },
           branch = 'main',
         },
-        filetype = 'crystal',
+        filetype = 'cr',
         maintainers = { '@crystal-lang-tools' },
       }
 
@@ -33,10 +33,7 @@ return {
         highlight = {
           enable = true,
           use_languagetree = true,
-          additional_vim_regex_highlighting = {
-            'bash',
-            'crystal',
-          },
+          additional_vim_regex_highlighting = { 'bash' },
         },
         query_linter = {
           enable = true,

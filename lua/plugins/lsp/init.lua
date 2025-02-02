@@ -8,6 +8,7 @@ return {
     opts = {
       formatters_by_ft = {
         -- stylua: ignore start
+        bash    = { 'shellcheck', 'shfmt' },
         crystal = { 'crystal' },
         fish    = { 'fish_indent' },
         lua     = { 'stylua' },
@@ -53,4 +54,5 @@ return {
 
   { require 'plugins.lsp.lazydev' },
   { require 'plugins.lsp.ftplugins' },
+  { require 'plugins.lsp.diagnostics' }
 }

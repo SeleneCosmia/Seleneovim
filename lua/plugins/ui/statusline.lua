@@ -1,11 +1,12 @@
+---@module 'lazy'
+---@type LazySpec[]
 return {
   {
-    'freddiehaddad/feline.nvim',
+    'nvim-lualine/lualine.nvim',
+    event = 'VeryLazy',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local feline = require 'feline'
-      feline.setup()
+      require 'lualine'.setup({})
     end,
-    event = 'UiEnter'
   },
 }

@@ -12,7 +12,7 @@ keymap('Wqa', 'wqa', { bang = true, desc = 'Mistyped :wqa cmd' })
 keymap('Qa', 'qa', { bang = true, desc = 'Mistyped :qa cmd' })
 
 --════════════════════════════════════════════════════════════
-map('n', '<leader>lz', '<cmd>Lazy<CR>', { desc = 'Open Lazy float' })
+map('n', '<leader>lz', ':Lazy<CR>', { desc = 'Open Lazy float' })
 
 map(modes, '<C-s>', '<Esc>:w<CR>', { desc = 'Exit insert mode & save changes.' })
 map(modes, '<C>ss', '<Esc>:wa<CR>', { desc = 'Exit insert mode & save all changes.' })
@@ -41,7 +41,7 @@ map('n', '<leader><A-k>', ss.swap_buf_up)
 map('n', '<leader><A-l>', ss.swap_buf_right)
 --════════════════════════════════════════════════════════════
 -- stylua: ignore start
-key('n', '<leader>df', '<cmd>lua vim.diagnostic.open_float({scope = "buffer"})<CR>',
+key('n', '<leader>df', ':= vim.diagnostic.open_float({scope = "buffer"})<CR>',
     { noremap = true, silent = true, desc = 'Open LSP diagnostics floating window' })
 -- stylua: ignore end
 --════════════════════════════════════════════════════════════
@@ -49,5 +49,7 @@ map('n', 'w', "<cmd>lua require 'spider'.motion('w')<CR>")
 map('n', 'e', "<cmd>lua require 'spider'.motion('e')<CR>")
 map('n', 'b', "<cmd>lua require 'spider'.motion('b')<CR>")
 
-map('i', '<C-f>', "<Esc>l<cmd>lua require 'spider'.motion('w')<CR>i")
-map('i', '<C-b>', "<Esc>l<cmd>lua require 'spider'.motion('b')<CR>i")
+map('i', '<C-f>', "<Esc>:= require 'spider'.motion('w')<CR>i", { silent = true })
+map('i', '<C-b>', "<Esc>:= require 'spider'.motion('b')<CR>i", { silent = true })
+--════════════════════════════════════════════════════════════
+map('n', '<leader>mm', '<cmd>Mason<CR>', { desc = "Open Mason's floating window" })

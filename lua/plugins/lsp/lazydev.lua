@@ -4,8 +4,10 @@ return {
     ft = 'lua',
     opts = {
       library = {
+        'lazy.nvim',
         { path = 'luvit-meta/library', words = { 'vim%.uv' }},
       },
+
     },
   },
 

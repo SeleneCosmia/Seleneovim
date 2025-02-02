@@ -93,6 +93,7 @@ g.do_filetype_lua       = true
 g.did_load_filetypes    = false
 g.loaded_perl_provider  = 0
 g.loaded_ruby_provider  = 0
+g.editorconfig          = false
 --  ╾──────────────────────────────────────────────────────────╼
 -- stylua: ignore end
 --

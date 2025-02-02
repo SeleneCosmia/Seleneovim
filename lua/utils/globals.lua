@@ -2,7 +2,7 @@ local X = {}
 local fmt = string.format
 
 --- Create a custom keymapping
----@param mode? string|table what mode this command will work in ('n' or 'normal' is the default)
+---@param mode? string|string[] what mode this command will work in ('n' or 'normal' is the default)
 ---@param lhs string "left-hand-side"
 ---                 - the <key sequence> that executes the {rhs} function
 ---@param rhs string|function a lua or vimscript function to execute on {lhs} keypress

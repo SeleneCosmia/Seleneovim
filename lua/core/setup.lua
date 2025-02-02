@@ -1,5 +1,5 @@
 vim.g.mapleader = ' '
-vim.g.maplocalleader = '\\'
+vim.g.maplocalleader = ' '
 
 require 'core.lazy'
 require 'core.options'

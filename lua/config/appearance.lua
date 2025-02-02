@@ -1,16 +1,18 @@
 ---@diagnostic disable:unused-local
 local Config = {}
-local load = require
 
 Config.indent = function()
   -- stylua: ignore start
   local ibl, hooks, hl =
-    load 'ibl',
-    load 'ibl.hooks',
-    load 'utils.globals'.hl
+    require 'ibl',
+    require 'ibl.hooks',
+    require 'utils.globals'.hl
   -- stylua: ignore end
 end
 
+-- ╓──────────────────────╖
+-- ║ Status Column Config ║
+-- ╙──────────────────────╜
 Config.statuscolumn = function()
   local StCl = require 'statuscol'
   local builtin = require 'statuscol.builtin'
@@ -62,6 +64,9 @@ Config.statuscolumn = function()
   return StCl.setup(config)
 end
 
+-- ╓──────────────────────╖
+-- ║ Smooth Cursor Config ║
+-- ╙──────────────────────╜
 Config.smooth_cursor = function()
   local SC = require 'smoothcursor'
   local config = {
@@ -94,6 +99,9 @@ Config.smooth_cursor = function()
   return SC.setup(config)
 end
 
+-- ╓────────────────────────╖
+-- ║ Icon Auto-Color Config ║
+-- ╙────────────────────────╜
 Config.icon_colors = function()
   local devicons = require 'tiny-devicons-auto-colors'
   local opts = {

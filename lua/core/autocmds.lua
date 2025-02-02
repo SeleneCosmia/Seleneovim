@@ -10,11 +10,21 @@ autocmd('TextYankPost', {
   end,
 })
 
+autocmd('VimResized', {
+  group = augroup('ResizeSplits', { clear = true }),
+  pattern = '*',
+  callback = function()
+    vim.cmd('tabdo wincmd =')
+    vim.cmd('tabnext ' .. vim.fn.tabpagenr())
+  end,
+  desc = 'Resize buffers when nvim is resized.'
+})
+
 autocmd('FileType', {
   group = augroup('QToQuit', { clear = true }),
   pattern = {
-    'help',
     'checkhealth',
+    'help',
     'lspinfo',
     'nofile',
     'notify',
