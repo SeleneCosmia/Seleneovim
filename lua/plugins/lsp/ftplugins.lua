@@ -1,5 +1,6 @@
 return {
-  { 'Fymyte/rasi.vim',
+  {
+    'Fymyte/rasi.vim',
     build = ':TSInstall rasi',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     ft = 'rasi',

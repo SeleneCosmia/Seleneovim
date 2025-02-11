@@ -11,6 +11,14 @@ return {
     dependencies = 'nvim-treesitter/nvim-treesitter'
   },
 
+  {
+    'echasnovski/mini.misc',
+    version = false,
+    config = function()
+      require 'mini.misc'.setup()
+      MiniMisc.setup_termbg_sync()
+    end
+  }
   -- {
   --   'rachartier/tiny-glimmer.nvim',
   --   event = 'VeryLazy',

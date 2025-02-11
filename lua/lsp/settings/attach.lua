@@ -46,7 +46,6 @@ function X.on_attach(client, bufnr)
   if client.name == 'glsl_analyzer' then
     client.cancel_request = glsl_cancel_request
   end
-
 end
 
 ---@param client vim.lsp.Client

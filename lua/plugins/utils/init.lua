@@ -65,27 +65,6 @@ return {
     end,
   },
 
--- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
--- ┃                        Git Utils                        ┃
--- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-  {
-    'SuperBo/fugit2.nvim',
-    cmd = { 'Fugit2', 'Fugit2Diff', 'Fugit2GRaph' },
-    keys = {
-      { '<leader>fg', '<cmd>Fugit2<cr>', { desc = 'Open [F]u[G]it2 Floating Window' }},
-    },
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-tree/nvim-web-devicons',
-    },
-    opts = {
-      content_width = 92,
-      width = math.floor(0.75 * vim.o.columns),
-      height = '75%',
-    },
-  },
-
   --  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
   --  ┃                Movement Related Plugins                 ┃
   --  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛

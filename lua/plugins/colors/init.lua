@@ -1,18 +1,4 @@
----@module 'lazy'
----@type LazySpec
 return {
-  {
-    'catgoose/nvim-colorizer.lua',
-    event = 'BufReadPre',
-    opts = {
-      user_default_options = {
-        RRGGBBAA = true,
-        css_fn = true,
-        always_update = true,
-      },
-    },
-  },
-
   {
     'eero-lehtinen/oklch-color-picker.nvim',
     opts = {},
@@ -29,10 +15,5 @@ return {
   { 'rktjmp/shipwright.nvim', cmd = { 'Shipwright' } },
 
   { require 'plugins.colors.schemes' },
-  ----------------------------------------| disabled plugins
-  {
-    'nvchad/minty',
-    enabled = false,
-    cmd = { 'Shades', 'Huefy' },
-  },
+  { require 'plugins.colors.colorizer' },
 }
