@@ -1,9 +1,4 @@
 return {
-  {
-    'onsails/lspkind.nvim',
-    enabled = false,
-    version = false,
-  },
 
   {
 --    'hrsh7th/nvim-cmp',

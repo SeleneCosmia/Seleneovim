@@ -18,7 +18,34 @@ return {
           }
         }
       },
+      explorer = {},
       lazygit = { configure = true },
+      image = {
+        enabled = true,
+        doc = {
+          inline = false,
+          max_width = 45,
+          max_height = 20,
+        },
+        formats = {
+          'png',
+          'jpg',
+          'jpeg',
+          'jxl',
+          'gif',
+          'bmp',
+          'webp',
+          'tiff',
+          'heic',
+          'avif',
+          'mp4',
+          'mov',
+          'avi',
+          'mkv',
+          'webm',
+          'pdf'
+        }
+      },
       indent = { enabled = false },
       input = { enabled = true },
       notifier = {
@@ -51,7 +78,7 @@ return {
           return true
         end,
       },
-      picker = { enabled = true },
+      picker = {},
       quickfile = { enabled = true },
       scope = { enabled = false },
       scroll = { enabled = false },
@@ -75,6 +102,10 @@ return {
         debounce = 500,
       },
       styles = {
+        snacks_image = {
+          relative = 'editor',
+          col = -1
+        },
         notification = {
           wo = { wrap = true },
         },
@@ -83,7 +114,25 @@ return {
     },
     keys = {
       { '<leader>gg', function() require 'snacks'.lazygit() end, desc = 'Open lazygit' },
-    }
+      {
+        '<leader>N',
+        desc = 'Neovim News',
+        function()
+          Snacks.win({
+            file = vim.api.nvim_get_runtime_file('docs/news.txt', false)[1],
+            width = 0.65,
+            height = 0.75,
+            wo = {
+              spell = false,
+              wrap = false,
+              signcolumn = 'yes',
+              statuscolumn = '  ',
+              conceallevel = 2,
+            }
+          })
+        end,
+      }
+    },
   },
 }
 

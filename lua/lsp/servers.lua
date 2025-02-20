@@ -33,13 +33,17 @@ function X.init(lspconfig)
       filetypes = css_ft,
       settings = {
         css = {
-          validate = true, lint = {
+          validate = true,
+          lint = {
             unknownAtRules = 'ignore',
-        } },
+          },
+        },
         scss = {
-          validate = true, lint = {
+          validate = true,
+          lint = {
             unknownAtRules = 'ignore',
-        } },
+          },
+        },
       },
     },
     html = {
@@ -66,7 +70,7 @@ function X.init(lspconfig)
     lua_ls = {
       hint = {
         enable = false,
-      }
+      },
     },
     julials = {
       capabilities = capabilities,
