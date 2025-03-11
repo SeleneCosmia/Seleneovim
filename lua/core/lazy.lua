@@ -1,29 +1,25 @@
-local uv, api, fn, set = vim.uv, vim.api, vim.fn, vim.g
+local api, set = vim.api, vim.g
 local dev_path = vim.fn.expand('$GITHUB_ROOT')
-local lazypath = fn.stdpath('data') .. '/lazy/lazy.nvim'
+local lazy_path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
-if not uv.fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
-  local out =
-    fn.system({'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath })
-      if vim.v.shell_error ~= 0 then
-        api.nvim_echo({
-          { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
-          { out, 'WarningMsg' },
-          { '\nPress any key to exit...' },
-        }, true, {})
-        fn.getchar()
-        os.exit(1)
-      end
-  end
-vim.opt.rtp:prepend(lazypath)
+local lazy_repo = 'https://gtihub.com/folke/lazy.nvim.git'
+local lazy_clone_cmd = { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazy_repo, lazy_path }
+
+if not vim.uv.fs_stat(lazy_path) then
+  vim.system(lazy_clone_cmd, { text = true }, function(job)
+    if job.code == 0 then
+      print('Install lazy.nvim!')
+    end
+  end)
+end
 
 ---@param opts? LazyConfig
 local function lazy_setup(opts)
-  local no_notif = {}
-  no_notif = { enabled = true, notify = false }
+  local no_notif = { enabled = true, notify = false }
 
   opts = opts or {}
+  ---@module 'lazy'
+  ---@type LazyConfig
   opts = {
     checker = no_notif,
     change_detection = no_notif,
@@ -33,25 +29,31 @@ local function lazy_setup(opts)
       patterns = { '*.nvim', 'nvim-plugins' },
       fallback = true,
     },
-    install = {
-      colorscheme = { 'sunset_cloud' },
+    git = {
+      timeout = 300,
+      throttle = {
+        enabled = false,
+        rate = 2,
+        duration = 5000,
+      },
     },
     performance = {
+      cache = { enabled = true },
       rtp = {
         disabled_plugins = {
           'gzip',
           'matchit',
           'matchparen',
-          'osc52',
           'tarPlugin',
           'tohtml',
           'tutor',
           'zipPlugin',
-        }
-      }
-    }
+        },
+      },
+    },
   }
   return require 'lazy'.setup('plugins', opts)
 end
 
+vim.opt.rtp:prepend(lazy_path)
 lazy_setup()

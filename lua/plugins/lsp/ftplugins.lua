@@ -6,5 +6,5 @@ return {
     ft = 'rasi',
   },
 
-  { 'jlcrochet/vim-crystal', ft = 'cr' },
+  { 'jlcrochet/vim-crystal', ft = 'crystal' },
 }

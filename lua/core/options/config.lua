@@ -1,4 +1,15 @@
-local opt, g, go = vim.opt, vim.g, vim.go
+vim.wo.nu = true
+
+vim.o.termguicolors = true
+
+vim.opt.listchars = {
+  lead = nil,
+  tab = '••',
+  trail = '⬧',
+}
+
+vim.opt.wildignore:append { '.directory' }
+
 -- stylua: ignore start
 --  ╾──────────────────────────────────────────────────────────╼
 local options = {
@@ -10,16 +21,16 @@ local options = {
   wrap              = false,
   breakindent       = true,
 
-  completeopt       = {'menu','menuone'}, -- 'noselect'
+  completeopt       = {'menu','menuone','preview'}, -- 'noselect'
 
   scrolloff         = 8,
   sidescroll        = 6,
   sidescrolloff     = 12,
   scrolljump        = 8,
-  wrapscan          = true, -- wrap searches back to beginning
+  wrapscan          = true,
 
   virtualedit       = {'block'},
-  backspace         = 'indent,eol,start',
+  backspace         = {'indent','eol','start'},
 
   updatetime        = 300,
   timeout           = true,
@@ -38,14 +49,11 @@ local options = {
   cursorline        = true,
   cursorlineopt     = {'number','screenline'},
 
-  number            = true,
-  rnu               = true,
-
   pumheight         = 10,
   pumblend          = 0,
 
   wildmenu          = true,
-  wildmode          = 'longest,list,full',
+  wildmode          = {'longest','list','full'},
   wic               = true,
   conceallevel      = 1,
 
@@ -54,10 +62,10 @@ local options = {
   splitkeep         = 'cursor',
   title             = true,
 
+  backup            = false,
   swapfile          = false,
   undofile          = true,
   undolevels        = 3000,
-  backup            = false,
 
   hlsearch          = true,
   ignorecase        = true,
@@ -74,30 +82,16 @@ local options = {
 }
 
 for k, v in pairs(options) do
-  opt[k] = v
+  vim.opt[k] = v
 end
 
-opt.listchars = {
-  lead = nil,
-  tab = '••',
-  trail = '⬧',
-}
-
-opt.wildignore = { '.directory' }
-
 --  ╾──────────────────────────────────────────────────────────╼
-go.mousemodel           = 'popup'
-go.mousefocus           = true
---  ╾────────────────────────────────╼
-g.do_filetype_lua       = true
-g.did_load_filetypes    = false
-g.loaded_perl_provider  = 0
-g.loaded_ruby_provider  = 0
-g.editorconfig          = false
+vim.go.mousemodel           = 'popup'
+vim.go.mousefocus           = true
 --  ╾──────────────────────────────────────────────────────────╼
 -- stylua: ignore end
 --
 
 if vim.env.SHELL == '/bin/bash' then
-  g.node_host_prog = os.getenv('NVM_BIN') .. '/neovim-node-host'
+  vim.g.node_host_prog = os.getenv('NVM_BIN') .. '/neovim-node-host'
 end

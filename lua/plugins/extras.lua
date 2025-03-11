@@ -19,6 +19,7 @@ return {
       MiniMisc.setup_termbg_sync()
     end
   }
+
   -- {
   --   'rachartier/tiny-glimmer.nvim',
   --   event = 'VeryLazy',

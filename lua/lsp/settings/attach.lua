@@ -1,5 +1,5 @@
 local methods = vim.lsp.protocol.Methods
-local lsp, map = vim.lsp.buf, vim.keymap.set
+local lsp = vim.lsp.buf
 local aucmd = vim.api.nvim_create_autocmd
 
 local X = {}
@@ -7,54 +7,59 @@ local X = {}
 --- glsl_analyzer startup error hotfix
 --- ---
 --- see: https://github.com/nolanderc/glsl_analyzer/issues/68#issuecomment-2316380963
-local function glsl_cancel_request(client, request_id)
-  -- Do nothing... fixes the issue 🤷
-end
+---@param id? integer
+-- local function glsl_cancel_request(id)
+--   -- Do nothing... fixes the issue 🤷
+-- end
 
 --- Implements lsp config automatically on lsp attach
----  ---
----```lua
----   map('n', 'gD', lsp.declaration, opts)
----   map('n', 'gd', lsp.definition, opts)
----   map({ 'n', 'i' }, '<C-z>', lsp.signature_help, opts)
----   map('n', 'K', lsp.hover, opts)
----   map('n', 'gi', lsp.implementation, opts)
----   map('n', 'gr', lsp.references, opts)
----
----   if client.supports_method(methods.textDocument_codeAction) then
----     map({ 'n', 'v' }, '<leader>ca', lsp.code_action, opts)
----   end
----
----   if client.name == 'glsl_analyzer' then
----     client.cancel_request = glsl_cancel_request
----   end
----```
+---@param client vim.lsp.Client
+---@param bufnr integer
 function X.on_attach(client, bufnr)
-  local opts = { buffer = bufnr }
--- ────────────────────────────────────── setup keymaps ──────────┨
-  map('n', 'gD', lsp.declaration, opts)
-  map('n', 'gd', lsp.definition, opts)
-  map({ 'n', 'i' }, '<C-z>', lsp.signature_help, opts)
-  map('n', 'K', lsp.hover, opts)
-  map('n', 'gi', lsp.implementation, opts)
-  map('n', 'gr', lsp.references, opts)
+  ---@param lhs string
+  ---@param rhs string|function
+  ---@param desc? string
+  ---@param mode? string|string[]
+  local function map(lhs, rhs, desc, mode)
+    mode = mode or 'n'
+    desc = desc or nil
+    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+  end
+  -- ────────────────────────────────────── setup keymaps ──────────┨
+  map('[d', function()
+    vim.diagnostic.jump { count = -1 }
+  end, 'Jump to previous diagnostic')
+  map(']d', function ()
+    vim.diagnostic.jump { count = 1 }
+  end, 'Jump to next diagnostic')
 
-  if client.supports_method(methods.textDocument_codeAction) then
-    map({ 'n', 'v' }, '<leader>ca', lsp.code_action, opts)
+  if client:supports_method(methods.textDocument_definition) then
+    map('gd', function()
+      require 'snacks'.picker.lsp_definitions()
+    end, 'Go to definition')
   end
 
-  if client.name == 'glsl_analyzer' then
-    client.cancel_request = glsl_cancel_request
+  if client:supports_method(methods.textDocument_signatureHelp) then
+    map('<C-z>', lsp.signature_help, 'Signature help', { 'n', 'i' })
+  end
+
+  map('K', lsp.hover)
+  map('gi', lsp.implementation)
+  map('gr', lsp.references)
+
+  if client and client:supports_method(methods.textDocument_codeAction) then
+    map('<leader>ca', lsp.code_action, 'Code Action', { 'n', 'v' })
   end
 end
 
 ---@param client vim.lsp.Client
 ---@param bufnr integer
 function X.format_on_attach(client, bufnr)
+  local map = vim.keymap.set
+  local format_params = vim.lsp.util.make_formatting_params({})
+
   map('n', '<leader>ff', function()
-    local util = require 'vim.lsp.util'
-    local params = util.make_formatting_params({})
-    client.request('textDocument/formatting', params, nil, bufnr)
+    client:request('textDocument/formatting', format_params, nil, bufnr)
   end, { buffer = bufnr })
 end
 

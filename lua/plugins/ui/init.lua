@@ -1,4 +1,6 @@
 return {
+  { require 'plugins.ui.colors' },
+  { require 'plugins.ui.colorschemes' },
   { require 'plugins.ui.bars' },
   { require 'plugins.ui.statusline' },
 
@@ -11,87 +13,36 @@ return {
     end,
   },
 
-  {
-    'rcarriga/nvim-notify',
-    enabled = false,
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function()
-      require 'config.notify'
-    end,
-  },
+  { 'MunifTanjim/nui.nvim' },
 
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
     dependencies = {
-      'MunifTanjim/nui.nvim'
+      'folke/snacks.nvim',
+      'MunifTanjim/nui.nvim',
     },
-    opts = function(_, opts)
-      opts.routes = opts.routes or {}
-
-      table.insert(opts.routes, {
-        filter = {
-          event = 'notify',
-          find = 'No information available',
-        },
-        opts = { skip = true },
-      })
-
-      local focused = true
-      vim.api.nvim_create_autocmd('FocusGained', {
-        callback = function()
-          focused = true
-        end,
-      })
-      vim.api.nvim_create_autocmd('FocusLost', {
-        callback = function()
-          focused = false
-        end,
-      })
-
-      table.insert(opts.routes, 1, {
-        filter = {
-          ['not'] = {
-            event = 'lsp',
-            kind = 'progress',
-          },
-          cond = function()
-            return not focused and false
-          end,
-        },
-        view = 'notify_send',
-        opts = { stop = false, replace = true },
-      })
-
-      -- opts.lsp = {
-      --   override = {
-      --     ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-      --     ['vim.lsp.util.stylize_markdown'] = true,
-      --     ['cmp.entry.get_documentation'] = true,
-      --   },
-      --   signature = {enabled = false},
-      -- }
-      -- opts.notify = {
-      --   enabled = false,
-      -- }
-      opts.presets = {
+    ---@module 'noice'
+    ---@type NoiceConfig
+    opts = {
+      routes = {
+        { filter = { event = 'notify', find = 'No information available' }, skip = true },
+      },
+      lsp = {
+        signature = { enabled = false },
+        hover = { enabled = true },
+      },
+      override = {
+        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+        ['vim.lsp.util.stylize_markdown'] = true,
+        ['cmp.entry.get_documentation'] = false,
+      },
+      presets = {
         bottom_search = true,
         command_palette = true,
-        long_message_to_split = true,
-      }
-
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'markdown',
-        callback = function(event)
-          vim.schedule(function()
-            require 'noice.text.markdown'.keys(event.buf)
-          end)
-        end,
-      })
-      return opts
-    end,
+        lsp_doc_border = true,
+      },
+    },
   },
 
   {
@@ -103,21 +54,15 @@ return {
         exclude_fts = {
           'notify',
           'noice',
+          'snacks_notify',
           'cmp_menu',
+          'blink_cmp_menu',
+          'blink_cmp_docs',
           'lazy',
           'neo-tree-popup',
           'popup',
         },
       }
-    end,
-  },
-
-  {
-    'luukvbaal/statuscol.nvim',
-    enabled = false,
-    lazy = false,
-    opts = function()
-      require 'config.appearance'.statuscolumn()
     end,
   },
 
@@ -130,9 +75,9 @@ return {
     end,
   },
 
--- ╓─────────────────────────────────────────────────────────╖
--- ║                  Highlighting Plugins                   ║
--- ╙─────────────────────────────────────────────────────────╜
+  -- ╓─────────────────────────────────────────────────────────╖
+  -- ║                  Highlighting Plugins                   ║
+  -- ╙─────────────────────────────────────────────────────────╜
   { 'tzachar/highlight-undo.nvim', opts = {} },
 
   {
@@ -178,27 +123,7 @@ return {
       disabled_filetypes = {
         'TelescopePrompt',
         'help',
-      }
-    }
+      },
+    },
   },
-
-  --{{{ {
-  --   'mvllow/modes.nvim',
-  --   event = 'ModeChanged',
-  --   enabled = false,
-  --   config = function()
-  --     require 'modes'.setup({
-  --       ignore_filetypes = {
-  --         'neo-tree',
-  --         'TelescopePrompt',
-  --         'notify',
-  --         'lazy',
-  --         'cmp_menu',
-  --         'help',
-  --         'lspinfo',
-  --         'mason'
-  --       },
-  --     })
-  --   end,
-  -- }}}--,
 }

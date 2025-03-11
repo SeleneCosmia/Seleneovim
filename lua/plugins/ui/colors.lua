@@ -5,8 +5,8 @@ return {
     keys = {
       {
         '<leader>v',
-        '<cmd>lua require("oklch-color-picker").pick_under_cursor()<cr>',
-        desc = 'Open the color picker UI using the color under cursor',
+        '<Cmd>lua require("oklch-color-picker").pick_under_cursor()<CR>',
+        desc = 'Open the oklch color-picker UI using the color under cursor',
       },
     },
   },
@@ -14,6 +14,6 @@ return {
   { 'rktjmp/lush.nvim', cmd = { 'Lushify' } },
   { 'rktjmp/shipwright.nvim', cmd = { 'Shipwright' } },
 
-  { require 'plugins.colors.schemes' },
-  { require 'plugins.colors.colorizer' },
+  --- highlights colors in buffer
+  { require 'plugins.ui.colorizer' },
 }

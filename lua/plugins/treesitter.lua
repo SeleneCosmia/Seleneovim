@@ -29,7 +29,10 @@ return {
         ensure_installed = default_parsers,
         sync_install = true,
         auto_install = true,
-        indent = { enable = false },
+        indent = {
+          enable = true,
+          disable = { 'lua' },
+        },
         highlight = {
           enable = true,
           use_languagetree = true,

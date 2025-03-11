@@ -1,11 +1,10 @@
 local on_attach = require 'lsp.settings.attach'.on_attach
 local capabilities = require 'lsp.settings.capabilities'.capabilities
-local snippet_capabilities = require 'lsp.settings.capabilities'.snippet_capabilities
 
 local X = {}
 
 function X.init(lspconfig)
-  local css_ft = { 'css', 'sass', 'scss', 'sss' }
+  local css_ft = { 'css', 'sass', 'scss', 'sss', 'sugarss' }
   local ts_ft = { 'javascript', 'typescript' }
 
   local server_setups = {
@@ -29,7 +28,6 @@ function X.init(lspconfig)
       },
     },
     cssls = {
-      capabilities = snippet_capabilities,
       filetypes = css_ft,
       settings = {
         css = {
@@ -46,11 +44,8 @@ function X.init(lspconfig)
         },
       },
     },
-    html = {
-      capabilities = snippet_capabilities,
-    },
+    html = {},
     jsonls = {
-      capabilities = snippet_capabilities,
       settings = {
         json = {
           schemas = require 'schemastore'.json.schemas({
@@ -68,12 +63,25 @@ function X.init(lspconfig)
       },
     },
     lua_ls = {
-      hint = {
-        enable = false,
+      ---@type lspconfig.settings.lua_ls
+      settings = {
+        Lua = {
+          completion = {
+            callSnippet = 'Replace',
+            autoRequire = false,
+          },
+          format = {
+            enable = false
+          },
+          hint = {
+            enable = true,
+            setType = true,
+          },
+          codeLens = { enable = true },
+        },
       },
     },
     julials = {
-      capabilities = capabilities,
       settings = {
         julia = {
           environmentPath = '~/.local/share/julia/environments/nvim-lspconfig',
@@ -88,39 +96,44 @@ function X.init(lspconfig)
       },
     },
     ts_ls = {
-      capabilities = snippet_capabilities,
       filetypes = ts_ft,
+      ---@type lspconfig.settings.ts_ls
       settings = {
         javascript = {
           preferences = {
             quoteStyle = 'single',
           },
         },
-        typescript = { locale = 'en' },
+        typescript = {
+          preferences = {
+            quoteStyle = 'single',
+          },
+          locale = 'en',
+        },
       },
     },
   }
 
-  for server, cfg in pairs(server_setups) do
+  for server, config in pairs(server_setups) do
     if server == 'language_servers' then
-      for _, ls in ipairs(cfg) do
+      for _, ls in ipairs(config) do
         lspconfig[ls].setup({
           capabilities = capabilities,
           on_attach = on_attach,
         })
       end
     elseif server == 'preconfig_servers' then
-      for srv, config in ipairs(cfg) do
+      for srv, cfg in ipairs(config) do
         lspconfig[srv].setup(config)
       end
     else
-      if not cfg.on_attach then
-        cfg.on_attach = on_attach
+      if not config.on_attach then
+        config.on_attach = on_attach
       end
-      if not cfg.capabilities then
-        cfg.capabilities = snippet_capabilities
+      if not config.capabilities then
+        config.capabilities = capabilities
       end
-      lspconfig[server].setup(cfg)
+      lspconfig[server].setup(config)
     end
   end
 end
