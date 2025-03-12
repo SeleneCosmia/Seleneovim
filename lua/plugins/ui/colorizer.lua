@@ -35,10 +35,11 @@ local opts = {
   lazy_load = false,
 }
 
+---@type LazySpec[]
 return {
   {
     'catgoose/nvim-colorizer.lua',
-    event = 'BufReadPre',
+    event = { 'BufReadPost', 'BufNewFile' },
     opts = opts
   }
 }

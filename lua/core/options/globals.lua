@@ -1,5 +1,6 @@
 -- stylua: ignore start
 --  ╾──────────────────────────────────────────────────────────╼
+---@type 'blink'|'cmp'
 vim.g.completion_plugin = 'blink'
 --  ╾────────────────────────────────╼
 vim.g.loaded_perl_provider  = 0

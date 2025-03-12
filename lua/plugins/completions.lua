@@ -1,13 +1,14 @@
 return {
   {
     'saghen/blink.cmp',
+    event = 'InsertEnter',
     build = 'cargo +nightly build --release',
-    lazy = false,
     enabled = true,
     dependencies = {
       'L3MON4D3/LuaSnip',
       'bydlw98/blink-cmp-env',
       'jdrupal-dev/css-vars.nvim',
+      { 'xzbdmw/colorful-menu.nvim', opts = {} },
     },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
@@ -22,8 +23,26 @@ return {
         ['<C-y>']     = { 'select_and_accept', 'fallback' },
         ['<CR>']      = { 'accept', 'fallback' },
 
-        ['<Tab>']     = { 'select_next', 'snippet_forward', 'fallback' },
-        ['<S-Tab>']   = { 'select_prev', 'snippet_backward', 'fallback' },
+        ['<Tab>'] = {
+          function(cmp)
+            if cmp.is_menu_visible() then
+              return cmp.select_next()
+            elseif cmp.snippet_active() then
+              return cmp.snippet_forward()
+            end
+          end,
+          'fallback'
+        },
+        ['<S-Tab>'] = {
+          function(cmp)
+            if cmp.is_menu_visible() then
+              return cmp.select_prev()
+            elseif cmp.snippet_active() then
+              return cmp.snippet_backward()
+            end
+          end,
+          'fallback'
+        },
         ['<C-p>']     = { 'select_prev', 'fallback_to_mappings' },
         ['<C-n>']     = { 'select_next', 'fallback_to_mappings' },
 
@@ -34,7 +53,18 @@ return {
       },
       -- stylua: ignore end
       signature = { enabled = false },
+      fuzzy = {
+        sorts = {
+          'exact',
+          'score',
+          'sort_text',
+          'kind',
+        },
+      },
       completion = {
+        trigger = {
+          show_in_snippet = false,
+        },
         list = {
           selection = {
             preselect = false,
@@ -42,38 +72,62 @@ return {
           },
         },
         accept = {
-          auto_brackets = {
-            enabled = true,
-          },
+          auto_brackets = { enabled = true },
         },
         menu = {
           auto_show = true,
-          -- enabled = true,
-          border = 'rounded',
+          enabled = true,
+          scrollbar = false,
+          border = 'single',
           draw = {
             align_to = 'label',
             columns = {
-              { 'source_name' },
-              { 'label', 'label_description', gap = 2 },
               { 'kind_icon' },
+              { 'label', gap = 2 },
+              { 'kind' },
+            },
+            components = {
+              -- source_name = {
+              --   text = function(ctx)
+              --     ctx.source_name = '' .. ctx.item.source_name .. ''
+              --     return ctx.source_name
+              --   end,
+                -- highlight = function(ctx)
+                --   local name = ctx.source_name
+                --
+                -- end,
+              -- },
+              label = {
+                width = { fill = true, max = 60, min = 25 },
+                text = function(ctx)
+                  return require 'colorful-menu'.blink_components_text(ctx)
+                end,
+                highlight = function(ctx)
+                  return require 'colorful-menu'.blink_components_highlight(ctx)
+                end,
+              },
             },
           },
         },
-        -- documentation = {
-        --   auto_show = true,
-        --   auto_show_delay_ms = 500,
-        -- },
-        trigger = {
-          -- prefetch_on_insert = true,
+        documentation = {
+          treesitter_highlighting = false,
+          auto_show = true,
+          auto_show_delay_ms = 300,
+          update_delay_ms = 50,
         },
       },
       appearance = {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'normal',
       },
-      snippets = { preset = 'luasnip' },
+      snippets = {
+        preset = 'luasnip',
+      },
       sources = {
         default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'env' },
+        per_filetype = {
+          css = { 'lsp', 'css_vars', 'snippets', 'path', 'buffer' },
+        },
         providers = {
           css_vars = {
             name = 'CSS',
@@ -83,37 +137,52 @@ return {
             },
           },
           lsp = {
-            name = 'lsp',
-            score_offset = 10,
-            fallbacks = { 'buffer' },
+            name = 'LSP',
+            score_offset = 90,
           },
           path = {
-            name = ' ',
-            score_offset = -1,
-            fallbacks = { 'env', 'buffer' },
+            name = 'PATH',
+            score_offset = 25,
             opts = {
               show_hidden_files_by_default = true,
+              trailing_slash = false,
             },
           },
           snippets = {
-            name = ' ',
+            name = 'SNIP',
             min_keyword_length = 2,
-            score_offset = 1,
+            score_offset = 85,
+            max_items = 8,
           },
           buffer = {
-            name = '󰔨 ',
-            max_items = 4,
+            name = 'BUFF',
             min_keyword_length = 3,
-            score_offset = -3,
+            max_items = 4,
+            score_offset = 15,
           },
           env = {
-            name = ' ',
+            name = '$ENV',
             module = 'blink-cmp-env',
-            max_items = 4,
-            score_offset = -2,
+            max_items = 8,
+            score_offset = 20,
+            should_show_items = function()
+              local cursor = vim.api.nvim_win_get_cursor(0)[2]
+              local line = vim.api.nvim_get_current_line()
+
+              if string.sub(line, cursor, cursor + 1) == '$' then
+                return true
+              else
+                return false
+              end
+            end,
+            opts = {
+              -- item_kind = require 'blink.cmp.types'.CompletionItemKind.Variable,
+              show_braces = false,
+              show_documentation_window = true,
+            },
           },
           lazydev = {
-            name = ' ',
+            name = 'LAZY',
             module = 'lazydev.integrations.blink',
             score_offset = 100,
           },
