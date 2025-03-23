@@ -1,6 +1,16 @@
+---@type LazySpec[]
 return {
   { 'Biscuit-Colorscheme/nvim', name = 'biscuit' },
   { 'ptdewey/darkearth-nvim' },
+  { 'pustota-theme/pustota.nvim' },
+
+  {
+    'craftzdog/solarized-osaka.nvim',
+    lazy = false,
+    opts = {
+      sidebars = { 'neo-tree' }
+    }
+  },
 
   {
     'rockerBOO/boo-colorscheme-nvim',
@@ -24,10 +34,8 @@ return {
   },
 
   {
-    'lmburns/kimbox',
-    config = function()
-      local kimbox = require 'ui.colors'.kimbox
-      kimbox.setup {}
-    end,
+    'shoenot/witchesbrew.nvim',
+    dependencies = 'rktjmp/lush.nvim',
+    lazy = false,
   },
 }

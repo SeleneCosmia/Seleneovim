@@ -13,29 +13,43 @@ return {
     end,
   },
 
-  { 'MunifTanjim/nui.nvim' },
+  { 'MunifTanjim/nui.nvim', lazy = true },
 
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
-    dependencies = {
-      'folke/snacks.nvim',
-      'MunifTanjim/nui.nvim',
-    },
+    dependencies = { 'folke/snacks.nvim' },
     ---@module 'noice'
     ---@type NoiceConfig
     opts = {
       routes = {
-        { filter = { event = 'notify', find = 'No information available' }, skip = true },
+        {
+          filter = {
+            event = 'notify',
+            any = {
+              { find = 'No information available' },
+            },
+          },
+          opts = { skip = true},
+        },
       },
       lsp = {
-        signature = { enabled = false },
+        signature = { enabled = true },
         hover = { enabled = true },
+        documentation = {
+          opts = {
+            win_options = {
+              concealcursor = 'n',
+              conceallevel = 3,
+              winhighlight = { Normal = 'LspFloat' },
+            },
+          },
+        },
       },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
-        ['cmp.entry.get_documentation'] = false,
+        ['cmp.entry.get_documentation'] = true,
       },
       presets = {
         bottom_search = true,
@@ -58,7 +72,6 @@ return {
           'cmp_menu',
           'blink_cmp_menu',
           'blink_cmp_docs',
-          'lazy',
           'neo-tree-popup',
           'popup',
         },

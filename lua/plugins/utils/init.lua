@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   { require 'plugins.utils.web_dev' },
 
@@ -39,7 +40,7 @@ return {
 
   {
     'akinsho/toggleterm.nvim',
-    event = 'VeryLazy',
+    cmd = 'ToggleTerm',
     version = '*',
     opts = {}
   },
@@ -50,8 +51,17 @@ return {
 
   {
     'Zeioth/hot-reload.nvim',
+    dependencies = 'nvim-lua/plenary.nvim',
     event = 'BufEnter',
-    opts = {}
+    opts = function(_, opts)
+      local lua_dir = vim.fn.stdpath('config') .. '/lua'
+      local plugins = lua_dir .. '/plugins/'
+
+      opts.reload_files = {
+        plugins .. 'snacks.lua',
+        plugins .. 'completions.lua',
+      }
+    end,
   },
 
   {
@@ -94,12 +104,12 @@ return {
     opts = {},
   },
 
+-- ──────────────────────────────────────────────────────────────────────
+
   {
     'Cassin01/wf.nvim',
     version = false,
-    config = function()
-      require 'wf'.setup()
-    end,
+    opts = {},
   },
 
   {
@@ -112,14 +122,14 @@ return {
 
   {
     'chrishrb/gx.nvim',
+    cmd = 'Browse',
     keys = {
       { 'gx', '<cmd>Browse<cr>', mode = {'n','x'}},
     },
-    cmd = 'Browse',
+    opts = {},
     init = function()
       vim.g.netrw_nogx = 1
     end,
-    opts = {}
   },
 
   {
@@ -142,13 +152,5 @@ return {
     },
   },
 
-  -- {
-  --   'lsvmello/elastictabstops.nvim',
-  --   cmd = { 'ElasticTabstopsEnable', 'ElasticTabstopsDisable' },
-  --   config = function()
-  --     require 'elastictabstops'.setup()
-  --   end,
-  -- },
-
-  { 'b0o/SchemaStore.nvim', version = false },
+  'b0o/schemastore.nvim',
 }

@@ -43,7 +43,7 @@ return {
       require 'lsp.mason'.config()
       require 'lsp.mason'.mason_lspconfig()
 
-      require 'lsp.servers'.init(lspconfig)
+      require 'lsp.servers'.setup()
     end
   },
 

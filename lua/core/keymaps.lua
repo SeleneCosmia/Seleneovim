@@ -45,11 +45,11 @@ key('n', '<leader>df', ':= vim.diagnostic.open_float({scope = "buffer"})<CR>',
     { noremap = true, silent = true, desc = 'Open LSP diagnostics floating window' })
 -- stylua: ignore end
 --════════════════════════════════════════════════════════════
-map('n', 'w', "<cmd>lua require 'spider'.motion('w')<CR>")
-map('n', 'e', "<cmd>lua require 'spider'.motion('e')<CR>")
-map('n', 'b', "<cmd>lua require 'spider'.motion('b')<CR>")
+map('n', 'w', '<cmd>lua require "spider".motion("w")<CR>')
+map('n', 'e', '<cmd>lua require "spider".motion("e")<CR>')
+map('n', 'b', '<cmd>lua require "spider".motion("b")<CR>')
 
-map('i', '<C-f>', "<Esc>:= require 'spider'.motion('w')<CR>i", { silent = true })
-map('i', '<C-b>', "<Esc>:= require 'spider'.motion('b')<CR>i", { silent = true })
+map('i', '<C-f>', '<Esc>:= require "spider".motion("w")<CR>i', { silent = true })
+map('i', '<C-b>', '<Esc>:= require "spider".motion("b")<CR>i', { silent = true })
 --════════════════════════════════════════════════════════════
 map('n', '<leader>mm', '<cmd>Mason<CR>', { desc = "Open Mason's floating window" })

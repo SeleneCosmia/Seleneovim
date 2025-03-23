@@ -61,7 +61,6 @@ return {
         style = 'fancy',
         timeout = 5000,
         sort = { 'added', 'level' },
-        level = vim.log.levels.WARN,
         icons = {
           error = icon.diagnostic_icons.Error,
         },
