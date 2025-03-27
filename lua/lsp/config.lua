@@ -76,8 +76,9 @@ end
 ---@return string[]
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
+  opts = vim.tbl_deep_extend('force', opts, { wrap = true })
   contents = vim.lsp.util._normalize_markdown(contents, {
-    width = vim.lsp.util._make_floating_popup_size(contents, { wrap = true }),
+    width = vim.lsp.util._make_floating_popup_size(contents, opts),
   })
   vim.bo[bufnr].filetype = 'markdown'
   vim.treesitter.start(bufnr)
@@ -96,6 +97,26 @@ vim.lsp.handlers[methods.client_registerCapability] = function(err, res, ctx)
   on_attach(client, vim.api.nvim_get_current_buf())
 
   return register_capability(err, res, ctx)
+end
+
+local hover = vim.lsp.buf.hover
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.buf.hover = function()
+  return hover {
+    border = 'rounded',
+    max_height = math.floor(vim.o.lines * 0.5),
+    max_width = math.floor(vim.o.columns * 0.4),
+  }
+end
+
+local signature_help = vim.lsp.buf.signature_help
+---@diagnostic disable-next-line: duplicate-set-field
+vim.lsp.buf.signature_help = function()
+  return signature_help {
+    border = 'rounded',
+    max_height = math.floor(vim.o.lines * 0.6),
+    max_width = math.floor(vim.o.columns * 0.4),
+  }
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
