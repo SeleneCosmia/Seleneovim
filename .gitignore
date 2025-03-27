@@ -8,3 +8,5 @@
 *.so.*
 
 .directory
+
+lsp/luals.lua

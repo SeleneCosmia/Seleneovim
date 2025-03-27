@@ -6,19 +6,28 @@ return {
     ---@module 'conform'
     ---@type conform.setupOpts
     opts = {
+      formatters = {
+        runic = {
+          command = 'julia',
+          args = { '--project=@nvim-lspconfig', '-e', 'using Runic; exit(Runic.main(ARGS))' },
+        }
+      },
       formatters_by_ft = {
         -- stylua: ignore start
         bash    = { 'shellcheck', 'shfmt' },
         crystal = { 'crystal' },
+        css     = { 'stylelint' },
         fish    = { 'fish_indent' },
+        julia   = { 'runic' },
         lua     = { 'stylua' },
+        sugarss = { 'styelint' },
         toml    = { 'taplo' },
         ['*']   = { 'trim_whitespace', 'trim_newlines' },
         -- stylua: ignore end
       },
       default_format_opts = {
         lsp_format = 'fallback',
-        timeout_ms = 500,
+        timeout_ms = 1000,
       },
     },
     keys = {
@@ -40,8 +49,8 @@ return {
       ----------------------------------------------------------------
       require 'neoconf'.setup {}
       -------------- Mason setup
-      require 'lsp.mason'.config()
-      require 'lsp.mason'.mason_lspconfig()
+      require 'lsp.mason'.setup('mason')
+      require 'lsp.mason'.setup('mason-lspconfig')
 
       require 'lsp.servers'.setup()
     end

@@ -78,7 +78,7 @@ local options = {
 
   mouse             = 'a',
   mousemoveevent    = true,
-  mousescroll       = { 'ver:1', 'hor:6' }
+  mousescroll       = { 'ver:1', 'hor:6' },
 }
 
 for k, v in pairs(options) do

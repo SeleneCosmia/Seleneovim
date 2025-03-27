@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   {
     'Fymyte/rasi.vim',
@@ -7,4 +8,17 @@ return {
   },
 
   { 'jlcrochet/vim-crystal', ft = 'crystal' },
+
+  {
+    'farias-hecdin/CSSVarHighlight',
+    ft = 'css',
+    dependencies = { 'echasnovski/mini.hipatterns' },
+    opts = {},
+  },
+
+  {
+    'farias-hecdin/CSSVarViewer',
+    ft = 'css',
+    opts = {},
+  },
 }
