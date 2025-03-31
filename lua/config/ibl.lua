@@ -1,8 +1,6 @@
-local o = vim.opt
+---@diagnostic disable:unused-local
 local hl = require 'utils.globals'.hl
 local ibl, hooks = require 'ibl', require 'ibl.hooks'
----@diagnostic disable:unused-local
-o.list = true
 
 local highlight = {
   'LzFlag1',
@@ -50,7 +48,13 @@ ibl.setup {
   },
   scope = { enabled = false },
   exclude = {
-    buftypes = { 'terminal', 'telescope', 'nofile', 'quickfix', 'prompt' },
+    buftypes = {
+      'terminal',
+      'telescope',
+      'nofile',
+      'quickfix',
+      'prompt'
+    },
     filetypes = {
       'markdown',
       'mason',
@@ -60,6 +64,7 @@ ibl.setup {
       'dashboard',
       'help',
       'notify',
+      'noice',
       'man',
       'TelescopePrompt',
       'qf',

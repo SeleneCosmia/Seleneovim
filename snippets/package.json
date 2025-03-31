@@ -1,28 +1,38 @@
 {
-  "name":"hebe-snippets",
+  "name": "user-snippets",
   "contributes": {
     "snippets": [
       {
-        "path": "./luasnip/crystal.json",
-        "language":"crystal"
-      }, {
-        "path": "./luasnip/crystal_snips/colorize.json",
-        "language":"crystal"
-      }, {
-        "path": "./luasnip/crystal_snips/option_parser.json",
-        "language": "crystal"
-      }, {
-        "path": "./luasnip/crystal_snips/shard.json",
-        "language": "yaml"
-      }, {
-        "path": "./luasnip/lua.json",
-        "language": "lua"
-      }, {
-        "path": "./luasnip/raylib-cr/raylib.json",
-        "language": "crystal"
-      }, {
-        "path": "./luasnip/elvish.json",
-        "language": "elvish"
+        "language": "crystal",
+        "path": "./vscode/crystal.json"
+      },
+      {
+        "language": "crystal",
+        "path": "./vscode/crystal/colorize.json"
+      },
+      {
+        "language": "crystal",
+        "path": "./vscode/crystal/option_parser.json"
+      },
+      {
+        "language": "crystal",
+        "path": "./vscode/raylib-cr/raylib.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./vscode/crystal/shard.json"
+      },
+      {
+        "language": "lua",
+        "path": "./vscode/lua.json"
+      },
+      {
+        "language": "elvish",
+        "path": "./vscode/elvish.json"
+      },
+      {
+        "language": "fish",
+        "path": "./vscode/fish.json"
       }
     ]
   }

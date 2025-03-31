@@ -7,7 +7,7 @@ local X = {}
 --- glsl_analyzer startup error hotfix
 --- ---
 --- see: https://github.com/nolanderc/glsl_analyzer/issues/68#issuecomment-2316380963
----@param id? integer
+--- param id? integer
 -- local function glsl_cancel_request(id)
 --   -- Do nothing... fixes the issue 🤷
 -- end
@@ -29,7 +29,7 @@ function X.on_attach(client, bufnr)
   map('[d', function()
     vim.diagnostic.jump { count = -1 }
   end, 'Jump to previous diagnostic')
-  map(']d', function ()
+  map(']d', function()
     vim.diagnostic.jump { count = 1 }
   end, 'Jump to next diagnostic')
 
@@ -56,7 +56,7 @@ end
 ---@param bufnr integer
 function X.format_on_attach(client, bufnr)
   local map = vim.keymap.set
-  local format_params = vim.lsp.util.make_formatting_params({})
+  local format_params = vim.lsp.util.make_formatting_params()
 
   map('n', '<leader>ff', function()
     client:request('textDocument/formatting', format_params, nil, bufnr)

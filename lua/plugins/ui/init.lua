@@ -1,6 +1,5 @@
 return {
   { require 'plugins.ui.colors' },
-  { require 'plugins.ui.colorschemes' },
   { require 'plugins.ui.bars' },
   { require 'plugins.ui.statusline' },
 
@@ -61,6 +60,7 @@ return {
 
   {
     'tamton-aquib/flirt.nvim',
+    enabled = false,
     event = 'VeryLazy',
     config = function()
       require 'flirt'.setup {
@@ -83,9 +83,19 @@ return {
     'rachartier/tiny-devicons-auto-colors.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     event = 'VeryLazy',
-    config = function()
-      require 'config.appearance'.icon_colors()
-    end,
+    opts = {
+      autoreload = true,
+      cache = {
+        enabled = true,
+        path = vim.fn.stdpath('cache') .. '/devicon-auto-colors-cache.json',
+      },
+      precise_search = {
+        enabled = true,
+        iteration = 10,
+        precision = 22,
+        threshold = 24,
+      }
+    }
   },
 
   -- ╓─────────────────────────────────────────────────────────╖

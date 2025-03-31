@@ -8,90 +8,63 @@ vim.opt.listchars = {
   trail = '⬧',
 }
 
-vim.opt.wildignore:append { '.directory' }
+vim.opt.wildignore:append { '.directory', '.github', '.git', 'node_modules' }
 
 -- stylua: ignore start
 --  ╾──────────────────────────────────────────────────────────╼
 local options = {
-  exrc              = true,
-
-  clipboard         = 'unnamedplus',
-  confirm           = true,
-
-  wrap              = false,
-  breakindent       = true,
-
-  completeopt       = {'menu','menuone','preview'}, -- 'noselect'
-
-  scrolloff         = 8,
-  sidescroll        = 6,
-  sidescrolloff     = 12,
-  scrolljump        = 8,
-  wrapscan          = true,
-
-  virtualedit       = {'block'},
-  backspace         = {'indent','eol','start'},
-
-  updatetime        = 300,
-  timeout           = true,
-  timeoutlen        = 500,
-
-  expandtab         = true,
-  tabstop           = 2,
-  shiftwidth        = 2,
-  softtabstop       = 2,
-  smartindent       = true,
   autoindent        = true,
-
-  list              = true,
-  fillchars         = { eob = ' ' },
-
+  backspace         = {'indent','eol','start'},
+  backup            = false,
+  breakindent       = true,
+  clipboard         = 'unnamedplus',
+  completeopt       = {'menu','menuone','preview'},
+  conceallevel      = 1,
+  confirm           = true,
   cursorline        = true,
   cursorlineopt     = {'number','screenline'},
-
-  pumheight         = 10,
-  pumblend          = 0,
-
-  wildmenu          = true,
-  wildmode          = {'longest','list','full'},
-  wic               = true,
-  conceallevel      = 1,
-
-  splitbelow        = true,
-  splitright        = true,
-  splitkeep         = 'cursor',
-  title             = true,
-
-  backup            = false,
-  swapfile          = false,
-  undofile          = true,
-  undolevels        = 3000,
-
+  expandtab         = true,
+  exrc              = true,
+  fillchars         = { eob = ' ' },
   hlsearch          = true,
   ignorecase        = true,
-  smartcase         = true,
   infercase         = true,
-
-  showmode          = false,
-  showtabline       = 0,
   laststatus        = 3,
-
+  list              = true,
   mouse             = 'a',
   mousemoveevent    = true,
   mousescroll       = { 'ver:1', 'hor:6' },
+  pumblend          = 0,
+  pumheight         = 10,
+  scrolljump        = 8,
+  scrolloff         = 8,
+  shiftwidth        = 2,
+  showmode          = false,
+  showtabline       = 0,
+  sidescroll        = 6,
+  sidescrolloff     = 12,
+  smartcase         = true,
+  smartindent       = true,
+  softtabstop       = 2,
+  splitbelow        = true,
+  splitkeep         = 'cursor',
+  splitright        = true,
+  swapfile          = false,
+  tabstop           = 2,
+  timeout           = true,
+  timeoutlen        = 500,
+  title             = true,
+  undofile          = true,
+  undolevels        = 3000,
+  updatetime        = 300,
+  virtualedit       = {'block'},
+  wic               = true,
+  wildmenu          = true,
+  wildmode          = {'longest','list','full'},
+  wrap              = false,
+  wrapscan          = true,
 }
-
+-- stylua: ignore end
 for k, v in pairs(options) do
   vim.opt[k] = v
-end
-
---  ╾──────────────────────────────────────────────────────────╼
-vim.go.mousemodel           = 'popup'
-vim.go.mousefocus           = true
---  ╾──────────────────────────────────────────────────────────╼
--- stylua: ignore end
---
-
-if vim.env.SHELL == '/bin/bash' then
-  vim.g.node_host_prog = os.getenv('NVM_BIN') .. '/neovim-node-host'
 end

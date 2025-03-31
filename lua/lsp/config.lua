@@ -14,7 +14,8 @@ local function on_attach(client, bufnr)
   ---@param mode? string|string[]
   local function map(lhs, rhs, desc, mode)
     mode = mode or 'n'
-    vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, desc = desc })
+    local opts = { noremap = true, buffer = bufnr, desc = desc }
+    vim.keymap.set(mode, lhs, rhs, opts)
   end
 
   map('K', lsp.hover, 'LSP Hover')
@@ -40,7 +41,11 @@ local function on_attach(client, bufnr)
   end, 'LSP References')
 
   if client:supports_method(methods.textDocument_codeAction) then
-    map('<leader>ca', lsp.code_action, 'Code Actions', { 'n', 'x', 'v' })
+    map('<leader>ca', function()
+      require 'actions-preview'.code_actions()
+    end, 'Code Action Preview', { 'n', 'v' })
+    map('<C-a>', function() lsp.code_action() end, 'Code Actions', 'i')
+    -- map('<leader>ca', lsp.code_action(), 'Code Action', { 'n', 'v' })
   end
 
   -- if client:supports_method(methods.textDocument_inlayHint) then

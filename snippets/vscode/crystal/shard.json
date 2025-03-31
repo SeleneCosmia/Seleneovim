@@ -1,0 +1,43 @@
+{
+  "required attributes": {
+    "prefix": "name",
+    "description": "required shard.yml attributes",
+    "body": [
+      "name: ${1:name}",
+      "version: ${2|0.0.1,1.0.0,${CURRENT_YEAR}.${CURRENT_MONTH}|}$0"
+    ]
+  },
+  "authors": {
+    "prefix": "aut",
+    "description": "A list of authors + optional contact email",
+    "body": [
+      "authors:",
+      "- ${1:name}$0"
+    ]
+  },
+  "crystal": {
+    "prefix": "cry",
+    "description": "Supported crystal versions",
+    "body": "crystal: \"${1|<,<=,>,>=,!=,~>,*|}$0\""
+  },
+  "dependencies": {
+    "prefix": "dep",
+    "description": "A list of required dependencies.",
+    "body": [
+      "dependencies:",
+      "\t$1:",
+      "\t\t${2|path,git,github,gitlab,bitbucket,codeberg,hg,fossil|}:",
+      "\t\tversion: $0"
+    ]
+  },
+  "dev-depends": {
+    "prefix": "dev",
+    "description": "A list of dependencies required to work on the project",
+    "body": [
+      "development_dependencies:",
+      "\t$1:",
+      "\t\t${2|path,git,github,gitlab,bitbucket,codeberg,hg,fossil|}:",
+      "\t\tversion: $0"
+    ]
+  }
+}

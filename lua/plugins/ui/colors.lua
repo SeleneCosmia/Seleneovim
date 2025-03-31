@@ -15,8 +15,6 @@ return {
   { 'rktjmp/lush.nvim', cmd = { 'Lushify' } },
   { 'rktjmp/shipwright.nvim', cmd = { 'Shipwright' } },
 
-  --- highlights colors in buffer
-  { require 'plugins.ui.colorizer' },
 
   {
     'echasnovski/mini.colors',
@@ -29,6 +27,9 @@ return {
     version = false,
     opts = {},
   },
+
+  { require 'plugins.ui.colorizer' },
+  { require 'plugins.ui.colorschemes' },
 
 }
 

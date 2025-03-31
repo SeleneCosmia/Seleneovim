@@ -1,3 +1,5 @@
+local snippets_path = vim.fn.stdpath('config') .. '/snippets'
+
 ---@type LazySpec[]
 return {
   {
@@ -75,6 +77,7 @@ return {
       -- stylua: ignore end
       signature = { enabled = false },
       fuzzy = {
+        implementation = 'prefer_rust',
         sorts = {
           'exact',
           'score',
@@ -123,7 +126,7 @@ return {
               --     str.name = string.sub(s, 2, -2)
               --
               --     local highlights = {}
-              --     for _, 
+              --     for _,
               --
               --     return highlights
               --   end,
@@ -150,7 +153,7 @@ return {
           update_delay_ms = 85,
           window = {
             max_height = math.floor(vim.api.nvim_win_get_height(0) / 3),
-            border = 'rounded'
+            border = 'rounded',
           },
         },
       },
@@ -244,7 +247,7 @@ return {
             name = 'LAZY',
             module = 'lazydev.integrations.blink',
             score_offset = 100,
-            fallbacks = { 'lsp' }
+            fallbacks = { 'lsp' },
           },
         },
       },
@@ -252,39 +255,13 @@ return {
   },
 
   {
-    'iguanacucumber/magazine.nvim',
-    event = { 'InsertEnter *' },
-    cond = vim.g.completion_plugin == 'cmp',
-    name = 'nvim-cmp',
-    version = false,
-    dependencies = {
-      { 'iguanacucumber/mag-nvim-lsp', name = 'cmp-nvim-lsp', opts = {} },
-      { 'iguanacucumber/mag-buffer', name = 'cmp-buffer' },
-      { url = 'https://codeberg.org/FelipeLema/cmp-async-path.git' },
-      'bydlw98/cmp-env',
-
-      -- Snippets
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-    },
-    config = function()
-      require 'lsp.completions'
-    end,
-  },
-
-  {
     'L3MON4D3/LuaSnip',
     build = 'make install_jsregexp',
     version = 'v2.*',
     event = 'InsertEnter',
-    dependencies = { 'rafamadriz/friendly-snippets', 'honza/vim-snippets' },
+    dependencies = { 'rafamadriz/friendly-snippets' },
     config = function()
       local ls = require 'luasnip'
-      local from_vscode = require 'luasnip.loaders.from_vscode'
-      local from_snipmate = require 'luasnip.loaders.from_snipmate'
-
-      local path_vscode = { vim.fn.stdpath('config') .. '/snippets/luasnip' }
-      local path_snipmate = { vim.fn.stdpath('config') .. '/snippets/snipmate' }
 
       ls.setup({
         keep_roots = true,
@@ -294,10 +271,10 @@ return {
         enable_autosnippets = true,
       })
 
-      from_vscode.lazy_load()
-      from_snipmate.lazy_load()
-      from_vscode.lazy_load({ paths = path_vscode })
-      from_snipmate.lazy_load({ paths = path_snipmate })
+      require 'luasnip.loaders.from_vscode'.lazy_load()
+      require 'luasnip.loaders.from_vscode'.lazy_load {
+        paths = { snippets_path },
+      }
     end,
   },
 
@@ -310,10 +287,9 @@ return {
   {
     'chrisgrieser/nvim-scissors',
     cmd = { 'ScissorsAddNewSnippet', 'ScissorsEditSnippet' },
-    dependencies = 'nvim-telescope/telescope.nvim',
+    dependencies = { 'folke/snacks.nvim' },
     opts = {
-      snippetDir = vim.fn.stdpath 'config' .. '/snippets/luasnip',
-      editSnippetPopup = { border = 'rounded' },
+      snippetDir = snippets_path,
       jsonFormatter = 'jq',
     },
   },
