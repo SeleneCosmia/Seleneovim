@@ -1,33 +1,28 @@
-local X = {}
-local fmt = string.format
+local M = {}
 
---- Create a custom keymapping
----@param mode? string|string[] what mode this command will work in ('n' or 'normal' is the default)
----@param lhs string "left-hand-side"
----                 - the <key sequence> that executes the {rhs} function
----@param rhs string|function a lua or vimscript function to execute on {lhs} keypress
----@param opts? table<string, any> a table of |:map-options|
-function X.map(mode, lhs, rhs, opts)
+---Create a new user-defined keymapping
+---@param lhs string Keymap body
+---@param rhs string|fun() function to execute on keypress
+---@param opts? vim.keymap.set.Opts a table of `map-options`
+---@param mode? string|string[]
+function M.map(lhs, rhs, opts, mode)
   mode = mode or 'n'
-  if mode == nil then
-    mode = 'n'
-  end
+  opts = opts or {}
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
---- Define a new |highlight| group or redefine an existing group.
+---Defines a new `highlight` group or overwrite an existing group.
 ---@param ns_id? number The `namespace` to apply highlighting to.
----@param name string the highlight group's name, see `:Telescope highlights` for names
----@param val vim.api.keyset.highlight -> A {table} of options, see `:h highlight` for more info
-function X.hl(ns_id, name, val)
+---   Defaults to `0` for global namespace
+---@param name string The name of the highlight group.
+---@param val vim.api.keyset.highlight A {table} of options to apply to the hl group
+---   see: `:h highlight` for more info.
+function M.hl(ns_id, name, val)
   ns_id = ns_id or 0
-  if ns_id == nil then
-    ns_id = 0
-  end
   vim.api.nvim_set_hl(ns_id, name, val)
 end
 
-X.ts_parsers = {
+M.ts_parsers = {
   'awk',
   'bash',
   'css',
@@ -61,39 +56,4 @@ X.ts_parsers = {
   'zig',
 }
 
-X.kind_icons = {
--- stylua: ignore start
-  Text            = ' ',
-  Method          = '󰆧 ',
-  Function        = '󰊕 ',
-  Constructor     = '󱌣 ',
-  Field           = '󰈚 ',
-  Variable        = '󱍶 ',
-  Class           = '󰠱 ',
-  Interface       = ' ',
-  Module          = ' ',
-  Property        = '󰜢 ',
-  Unit            = '󰑭 ',
-  Value           = '󰎠 ',
-  Enum            = ' ',
-  Keyword         = '󰌋 ',
-  Snippet         = ' ',
-  Color           = '󱥚 ',
-  File            = '󰈙 ',
-  Reference       = '󰈇 ',
-  Folder          = '󱃪 ',
-  EnumMember      = ' ',
-  Constant        = '󰏿 ',
-  Struct          = '󰙅 ',
-  Event           = ' ',
-  Operator        = '󰆕 ',
-  TypeParameter   = ' ',
--- stylua: ignore end
-}
-
----@param str string? the string to apply truncation to
----@param len number  the max length in which to render `string`
----@return string?
-function X.truncate_menu(str, len) end
-
-return X
+return M

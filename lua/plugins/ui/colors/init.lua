@@ -22,14 +22,7 @@ return {
     opts = {},
   },
 
-  {
-    'echasnovski/mini.hipatterns',
-    version = false,
-    opts = {},
-  },
-
-  { require 'plugins.ui.colorizer' },
+  { require 'plugins.ui.colors.highlights' },
   { require 'plugins.ui.colorschemes' },
-
 }
 

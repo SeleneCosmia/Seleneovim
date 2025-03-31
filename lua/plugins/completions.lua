@@ -18,6 +18,13 @@ return {
     ---@type blink.cmp.Config
     opts = {
       cmdline = { enabled = false },
+      signature = { enabled = false },
+      snippets = {
+        preset = 'luasnip',
+        expand = function(snippet)
+          require 'luasnip'.lsp_expand(snippet)
+        end,
+      },
       -- stylua: ignore start
       keymap = {
         preset = 'none',
@@ -26,6 +33,8 @@ return {
         ['<ESC>']     = { 'hide', 'fallback' },
         ['<C-e>']     = { 'cancel', 'fallback' },
         ['<C-y>']     = { 'select_and_accept', 'fallback' },
+        ['<C-p>']     = { 'select_prev', 'fallback_to_mappings' },
+        ['<C-n>']     = { 'select_next', 'fallback_to_mappings' },
         ['<CR>']      = { 'accept', 'fallback' },
 
         ['<Tab>'] = {
@@ -33,7 +42,7 @@ return {
             local ls = require 'luasnip'
             if cmp.is_menu_visible() then
               return cmp.select_next()
-            elseif ls.locally_jumpable(1) then
+            elseif (ls.in_snippet() and ls.jumpable(1)) then
               return cmp.snippet_forward()
             end
           end,
@@ -44,20 +53,14 @@ return {
             local ls = require 'luasnip'
             if cmp.is_menu_visible() then
               return cmp.select_prev()
-            elseif ( ls.in_snippet() and ls.jumpable(-1) ) then
+            elseif (ls.in_snippet() and ls.jumpable(-1)) then
               return cmp.snippet_backward()
             end
           end,
           'fallback'
         },
 
-        ['<C-p>']     = { 'select_prev', 'fallback_to_mappings' },
-        ['<C-n>']     = { 'select_next', 'fallback_to_mappings' },
-
-        -- ['<C-b>']     = { 'scroll_documentation_up', 'fallback' },
-        -- ['<C-f>']     = { 'scroll_documentation_down', 'fallback' },
-
-        ['<C-Down>']  = {
+        ['<C-Down>'] = {
           function(cmp)
             if cmp.is_documentation_visible() then
               return cmp.scroll_documentation_down()
@@ -65,7 +68,7 @@ return {
           end,
           'fallback'
         },
-        ['<C-Up>']    = {
+        ['<C-Up>'] = {
           function(cmp)
             if cmp.is_documentation_visible() then
               return cmp.scroll_documentation_up()
@@ -75,7 +78,6 @@ return {
         },
       },
       -- stylua: ignore end
-      signature = { enabled = false },
       fuzzy = {
         implementation = 'prefer_rust',
         sorts = {
@@ -161,9 +163,6 @@ return {
         use_nvim_cmp_as_default = true,
         nerd_font_variant = 'normal',
       },
-      snippets = {
-        preset = 'luasnip',
-      },
       sources = {
         default = function()
           local sources = { 'conventional_commits', 'lazydev', 'lsp', 'buffer', 'env', 'css_vars' }
@@ -216,6 +215,9 @@ return {
             min_keyword_length = 2,
             score_offset = 85,
             max_items = 8,
+            opts = {
+              show_autosnippets = true,
+            },
           },
           buffer = {
             name = 'BUF',

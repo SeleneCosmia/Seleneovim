@@ -1,55 +1,41 @@
-local map = vim.keymap.set
-local keymap = vim.api.nvim_create_user_command
-local key = require 'utils.globals'.map
------------------------------
+local map = require 'utils.globals'.map
 local modes = { 's', 'i', 'n', 'v' }
------------------------------
-
-keymap('Wq', 'wq', { bang = true, desc = 'Mistyped :wq cmd' })
-keymap('W', 'w', { bang = true, desc = 'Mistyped :w cmd' })
-keymap('Q', 'q', { bang = true, desc = 'Mistyped :q cmd' })
-keymap('Wqa', 'wqa', { bang = true, desc = 'Mistyped :wqa cmd' })
-keymap('Qa', 'qa', { bang = true, desc = 'Mistyped :qa cmd' })
-
 --════════════════════════════════════════════════════════════
-map('n', '<leader>lz', ':Lazy<CR>', { desc = 'Open Lazy float' })
+map('<C-s>', '<Esc>:w<CR>', { desc = 'Exit insert mode & save changes.' }, modes)
+map('<C>S', '<Esc>:wa<CR>', { desc = 'Exit insert mode & save all changes.' }, modes)
 
-map(modes, '<C-s>', '<Esc>:w<CR>', { desc = 'Exit insert mode & save changes.' })
-map(modes, '<C>ss', '<Esc>:wa<CR>', { desc = 'Exit insert mode & save all changes.' })
---  ╔══════════════════════╗
---  ║ Smart-Splits Keymaps ║
---  ╚══════════════════════╝
+map('<leader>L', '<cmd>Lazy<CR>', { desc = 'Open Lazy float' })
+map('<leader>mm', '<cmd>Mason<CR>', { desc = "Open Mason's floating window" })
+map('<leader>nn', ':Neotree<cr>', { noremap = true })
 --════════════════════════════════════════════════════════════
 local ss = require 'smart-splits'
 
 -- Resize buffers
-map('n', '<A-h>', ss.resize_left)
-map('n', '<A-j>', ss.resize_down)
-map('n', '<A-k>', ss.resize_up)
-map('n', '<A-l>', ss.resize_right)
+map('<A-h>', ss.resize_left)
+map('<A-j>', ss.resize_down)
+map('<A-k>', ss.resize_up)
+map('<A-l>', ss.resize_right)
 
 -- Switch between buffers
-map('n', '<C-h>', ss.move_cursor_left)
-map('n', '<C-j>', ss.move_cursor_down)
-map('n', '<C-k>', ss.move_cursor_up)
-map('n', '<C-l>', ss.move_cursor_right)
+map('<C-h>', ss.move_cursor_left)
+map('<C-j>', ss.move_cursor_down)
+map('<C-k>', ss.move_cursor_up)
+map('<C-l>', ss.move_cursor_right)
 
 -- Swap buffer positions
-map('n', '<leader><A-h>', ss.swap_buf_left)
-map('n', '<leader><A-j>', ss.swap_buf_down)
-map('n', '<leader><A-k>', ss.swap_buf_up)
-map('n', '<leader><A-l>', ss.swap_buf_right)
+map('<leader><A-h>', ss.swap_buf_left)
+map('<leader><A-j>', ss.swap_buf_down)
+map('<leader><A-k>', ss.swap_buf_up)
+map('<leader><A-l>', ss.swap_buf_right)
 --════════════════════════════════════════════════════════════
--- stylua: ignore start
-key('n', '<leader>df', ':= vim.diagnostic.open_float({scope = "buffer"})<CR>',
-    { noremap = true, silent = true, desc = 'Open LSP diagnostics floating window' })
--- stylua: ignore end
+map('<leader>df', function()
+  vim.diagnostic.open_float({scope = "buffer"})
+end, { noremap = true, silent = true })
 --════════════════════════════════════════════════════════════
-map('n', 'w', '<cmd>lua require "spider".motion("w")<CR>')
-map('n', 'e', '<cmd>lua require "spider".motion("e")<CR>')
-map('n', 'b', '<cmd>lua require "spider".motion("b")<CR>')
+map('w', '<cmd>lua require "spider".motion("w")<CR>')
+map('e', '<cmd>lua require "spider".motion("e")<CR>')
+map('b', '<cmd>lua require "spider".motion("b")<CR>')
 
-map('i', '<C-f>', '<Esc>:= require "spider".motion("w")<CR>i', { silent = true })
-map('i', '<C-b>', '<Esc>:= require "spider".motion("b")<CR>i', { silent = true })
+map('<C-f>', '<Esc>:= require "spider".motion("w")<CR>i', { silent = true }, 'i')
+map('<C-b>', '<Esc>:= require "spider".motion("b")<CR>i', { silent = true }, 'i')
 --════════════════════════════════════════════════════════════
-map('n', '<leader>mm', '<cmd>Mason<CR>', { desc = "Open Mason's floating window" })

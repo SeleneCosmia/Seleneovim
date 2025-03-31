@@ -6,8 +6,8 @@ X.setup = function()
 
   ---@type vim.diagnostic.Opts
   local config = {
-    virtual_lines = true,
-    virtual_text = { current_line = true },
+    virtual_lines = false,
+    virtual_text = false,
     on_attach_callback = nil,
     on_init_callback = nil,
     severity_sort = true,

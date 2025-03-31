@@ -1,12 +1,15 @@
----@module 'lazy'
 ---@type LazySpec[]
 return {
   {
     'nvim-lualine/lualine.nvim',
-    event = 'VimEnter',
+    -- Loads plugin earlier than VimEnter
+    event = 'UIEnter',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require 'lualine'.setup({})
-    end,
+    opts = {
+      options = {
+        component_separators = { left = ' ', right = ' ' },
+        section_separators = { left = '🮜', right = '🮝' },
+      },
+    },
   },
 }

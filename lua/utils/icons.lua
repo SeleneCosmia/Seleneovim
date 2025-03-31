@@ -1,14 +1,7 @@
-local X = {}
+local M = {}
 
-X.kinds = {
-  Array = '󰅨 ',
-  Boolean = ' ',
-  Color = ' ',
-  Snippet = ' '
-}
-
-X.kind_icons = {
 -- stylua: ignore start
+M.kind_icons = {
   Array           = '󰅨 ',
   Boolean         = ' ',
   Class           = '󰠱 ',
@@ -36,14 +29,14 @@ X.kind_icons = {
   Event           = ' ',
   Operator        = ' ',
   TypeParameter   = ' ',
--- stylua: ignore end
 }
 
-X.diagnostic_icons = {
+M.diagnostic_icons = {
   Error = '󰚌',
   Warn  = '',
   Hint  = '󰼈',
   Info  = '',
 }
+-- stylua: ignore end
 
-return X
+return M

@@ -1,12 +1,13 @@
 ---@diagnostic disable:inject-field
 
+---@type LazySpec[]
 return {
   { 'instance-id/nvim-cyber', ft = 'cyber', build = ':TSInstall cyber' },
   { 'bezhermoso/tree-sitter-ghostty', build = 'make nvim_install' },
 
   {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'VeryLazy' },
+    event = { 'BufRead', 'BufNewFile' },
     cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
     lazy = vim.fn.argc(-1) == 0,
     build = ':TSUpdate',
@@ -21,7 +22,6 @@ return {
           files = { 'src/parser.c', 'src/scanner.c' },
           branch = 'main',
         },
-        filetype = 'cr',
         maintainers = { '@crystal-lang-tools' },
       }
 
