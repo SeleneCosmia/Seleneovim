@@ -1,21 +1,21 @@
+--  ╭─────────────────────────────────────────────────────────╮
+--  │                       LSP config                        │
+--  ╰─────────────────────────────────────────────────────────╯
+---@class config.lsp
+local M = {}
 local methods = vim.lsp.protocol.Methods
 
-local M = {}
-
----Sets up LSP keymaps and autocommands for the given buffer
---- ---
----@param client vim.lsp.Client
----@param bufnr integer
-local function on_attach(client, bufnr)
+---A callback executed when LSP engine attaches to a buffer.
+---@type fun(client: vim.lsp.Client, bufnr: integer)
+local on_attach = function(client, bufnr)
   local lsp = vim.lsp.buf
-  ---@param lhs string
-  ---@param rhs string|function
-  ---@param desc string
-  ---@param mode? string|string[]
+
+  ---@type fun(lhs: string, rhs: string|fun(), desc: string, mode?: string|string[])
   local function map(lhs, rhs, desc, mode)
-    mode = mode or 'n'
     local opts = { noremap = true, buffer = bufnr, desc = desc }
-    vim.keymap.set(mode, lhs, rhs, opts)
+    mode = mode or 'n'
+    
+    return vim.keymap.set(mode, lhs, rhs, opts)
   end
 
   map('K', lsp.hover, 'LSP Hover')

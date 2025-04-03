@@ -39,4 +39,16 @@ M.diagnostic_icons = {
 }
 -- stylua: ignore end
 
+if os.getenv('TERM_PROGRAM') == 'WezTerm' then
+  M.left_sep = ''
+  M.right_sep = ''
+elseif os.getenv('TERM_PROGRAM') == 'ghostty' then
+  M.left_sep = '🮟'
+  M.right_sep = '🮝'
+end
+
+M.lualine_icons = {
+  component_separators = { --[[TODO]] }
+}
+
 return M

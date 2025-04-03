@@ -1,2 +1,2 @@
-require 'lsp.settings.diagnostics'
+require 'lsp.config.diagnostics'
 require 'lsp.config'

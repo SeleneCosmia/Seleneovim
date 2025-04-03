@@ -68,3 +68,6 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+vim.go.mousemodel = 'popup'
+vim.go.mousefocus = true

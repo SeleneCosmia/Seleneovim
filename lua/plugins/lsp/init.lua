@@ -49,8 +49,8 @@ return {
       ----------------------------------------------------------------
       require 'neoconf'.setup {}
       -------------- Mason setup
-      require 'lsp.mason'.setup('mason')
-      require 'lsp.mason'.setup('mason-lspconfig')
+      require 'lsp.config.mason'.setup('mason')
+      require 'lsp.config.mason'.setup('mason-lspconfig')
 
       require 'lsp.servers'.setup()
     end
