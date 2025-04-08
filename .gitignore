@@ -10,3 +10,4 @@
 .directory
 
 lsp/luals.lua
+tests/*
