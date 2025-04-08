@@ -1,5 +1,8 @@
 local snippets_path = vim.fn.stdpath('config') .. '/snippets'
 
+local blink_ext = { 'lazydev', 'conventional_commits', 'css_vars' }
+local blink_defaults = vim.list_extend({ 'lsp', 'path', 'snippets', 'buffer', 'env' }, blink_ext)
+
 ---@type LazySpec[]
 return {
   {
@@ -9,6 +12,7 @@ return {
     enabled = true,
     dependencies = {
       'L3MON4D3/LuaSnip',
+      -- 'rafamadriz/friendly-snippets',
       'bydlw98/blink-cmp-env',
       'disrupted/blink-cmp-conventional-commits',
       'jdrupal-dev/css-vars.nvim',
@@ -18,11 +22,19 @@ return {
     ---@type blink.cmp.Config
     opts = {
       cmdline = { enabled = false },
-      signature = { enabled = false },
       snippets = {
         preset = 'luasnip',
         expand = function(snippet)
           require 'luasnip'.lsp_expand(snippet)
+        end,
+        active = function(filter)
+          if filter and filter.direction then
+            return require 'luasnip'.jumpable(filter.direction)
+          end
+          return require 'luasnip'.in_snippet()
+        end,
+        jump = function(direction)
+          require 'luasnip'.jump(direction)
         end,
       },
       -- stylua: ignore start
@@ -36,34 +48,12 @@ return {
         ['<C-p>']     = { 'select_prev', 'fallback_to_mappings' },
         ['<C-n>']     = { 'select_next', 'fallback_to_mappings' },
         ['<CR>']      = { 'accept', 'fallback' },
-
-        ['<Tab>'] = {
-          function(cmp)
-            local ls = require 'luasnip'
-            if cmp.is_menu_visible() then
-              return cmp.select_next()
-            elseif (ls.in_snippet() and ls.jumpable(1)) then
-              return cmp.snippet_forward()
-            end
-          end,
-          'fallback'
-        },
-        ['<S-Tab>'] = {
-          function(cmp)
-            local ls = require 'luasnip'
-            if cmp.is_menu_visible() then
-              return cmp.select_prev()
-            elseif (ls.in_snippet() and ls.jumpable(-1)) then
-              return cmp.snippet_backward()
-            end
-          end,
-          'fallback'
-        },
-
+        ['<Tab>']     = { 'select_next', 'snippet_forward', 'fallback' },
+        ['<S-Tab>']   = { 'select_prev', 'snippet_backward', 'fallback' },
         ['<C-Down>'] = {
           function(cmp)
             if cmp.is_documentation_visible() then
-              return cmp.scroll_documentation_down()
+              return cmp.scroll_documentation_down(1)
             end
           end,
           'fallback'
@@ -71,7 +61,7 @@ return {
         ['<C-Up>'] = {
           function(cmp)
             if cmp.is_documentation_visible() then
-              return cmp.scroll_documentation_up()
+              return cmp.scroll_documentation_up(1)
             end
           end,
           'fallback'
@@ -87,10 +77,13 @@ return {
           'kind',
         },
       },
-      completion = {
-        trigger = {
-          show_in_snippet = false,
+      signature = {
+        enabled = true,
+        window = {
+          border = 'shadow',
         },
+      },
+      completion = {
         list = {
           selection = {
             preselect = false,
@@ -100,17 +93,22 @@ return {
         accept = {
           auto_brackets = { enabled = true },
         },
+        ghost_text = { enabled = true },
         menu = {
           auto_show = true,
           enabled = true,
           scrollbar = false,
           border = 'rounded',
           draw = {
+            treesitter = { 'lsp' },
             align_to = 'label',
+            padding = 2,
+            gap = 1,
             columns = {
               { 'kind_icon' },
               { 'label', gap = 2 },
               { 'kind' },
+              { 'source_name' },
             },
             components = {
               -- source_name = {
@@ -136,25 +134,18 @@ return {
               ---@type blink.cmp.DrawComponent
               label = {
                 width = { fill = true, max = 60, min = 25 },
-
-                text = function(ctx)
-                  return require 'colorful-menu'.blink_components_text(ctx)
-                end,
-
-                highlight = function(ctx)
-                  return require 'colorful-menu'.blink_components_highlight(ctx)
-                end,
+                text = function(ctx) return require 'colorful-menu'.blink_components_text(ctx) end,
+                highlight = function(ctx) return require 'colorful-menu'.blink_components_highlight(ctx) end,
               },
             },
           },
         },
         documentation = {
-          treesitter_highlighting = true,
           auto_show = true,
-          auto_show_delay_ms = 100,
-          update_delay_ms = 85,
+          auto_show_delay_ms = 10,
+          treesitter_highlighting = true,
           window = {
-            max_height = math.floor(vim.api.nvim_win_get_height(0) / 3),
+            max_height = math.floor(vim.o.columns * 0.5),
             border = 'rounded',
           },
         },
@@ -164,25 +155,10 @@ return {
         nerd_font_variant = 'normal',
       },
       sources = {
-        default = function()
-          local sources = { 'conventional_commits', 'lazydev', 'lsp', 'buffer', 'env', 'css_vars' }
-          local ok, node = pcall(vim.treesitter.get_node)
-
-          if ok and node then
-            if not vim.tbl_contains({ 'comment', 'line_comment', 'block_comment' }, node:type()) then
-              table.insert(sources, 'path')
-            end
-            if node:type() ~= 'string' then
-              table.insert(sources, 'snippets')
-            end
-          end
-
-          return sources
-        end,
-        -- { 'conventional_commits', 'lazydev', 'lsp', 'path', 'snippets', 'buffer', 'env', 'css_vars' },
+        default = blink_defaults,
         providers = {
           conventional_commits = {
-            name = 'conventional commits',
+            name = 'Commit',
             module = 'blink-cmp-conventional-commits',
             enabled = function()
               return vim.bo.filetype == 'gitcommit'
@@ -192,53 +168,53 @@ return {
             name = 'CSS',
             module = 'css-vars.blink',
             enabled = function()
-              return vim.bo.filetype == ('css' or 'sass' or 'scss' or 'sugarss')
+              return vim.bo.filetype == ('css' or 'sass' or 'scss' or 'stylus' or 'sugarss')
             end,
             opts = {
               search_extensions = { '.js', '.ts', '.jsx', '.tsx' },
             },
           },
           lsp = {
-            name = 'LSP',
+            name = 'lsp',
+            enabled = true,
+            module = 'blink.cmp.sources.lsp',
             score_offset = 90,
           },
           path = {
-            name = 'PATH',
-            score_offset = 25,
+            name = 'Path',
+            module = 'blink.cmp.sources.path',
+            score_offset = 20,
             opts = {
               show_hidden_files_by_default = true,
               trailing_slash = false,
             },
           },
           snippets = {
-            name = 'SNIP',
-            min_keyword_length = 2,
-            score_offset = 85,
+            name = 'Snippet',
+            enabled = true,
             max_items = 8,
+            min_keyword_length = 2,
+            module = 'blink.cmp.sources.snippets',
+            score_offset = 85,
             opts = {
               show_autosnippets = true,
             },
           },
           buffer = {
-            name = 'BUF',
+            name = 'Buffer',
             min_keyword_length = 3,
-            max_items = 4,
+            max_items = 3,
             score_offset = 15,
           },
           env = {
             name = '$ENV',
             module = 'blink-cmp-env',
             max_items = 8,
-            score_offset = 20,
+            score_offset = 60,
             should_show_items = function()
-              local cursor = vim.api.nvim_win_get_cursor(0)[2]
-              local line = vim.api.nvim_get_current_line()
-
-              if string.sub(line, cursor, cursor + 1) == '$' then
-                return true
-              else
-                return false
-              end
+              local col = vim.api.nvim_win_get_cursor(0)[2]
+              local before = vim.api.nvim_get_current_line():sub(1, col)
+              return before:match('%$') ~= nil
             end,
             opts = {
               show_braces = false,
@@ -246,10 +222,10 @@ return {
             },
           },
           lazydev = {
-            name = 'LAZY',
+            name = 'LazyDev',
             module = 'lazydev.integrations.blink',
             score_offset = 100,
-            fallbacks = { 'lsp' },
+            fallbacks = { 'lsp' }
           },
         },
       },
@@ -298,7 +274,8 @@ return {
 
   {
     'danymat/neogen',
-    event = 'LspAttach',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = { snippet_engine = 'luasnip' },
   },
 }

@@ -1,7 +1,7 @@
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                       LSP config                        │
 --  ╰─────────────────────────────────────────────────────────╯
----@class config.lsp
+---@class Seleneovim.lsp.config
 local M = {}
 local methods = vim.lsp.protocol.Methods
 
@@ -14,7 +14,7 @@ local on_attach = function(client, bufnr)
   local function map(lhs, rhs, desc, mode)
     local opts = { noremap = true, buffer = bufnr, desc = desc }
     mode = mode or 'n'
-    
+
     return vim.keymap.set(mode, lhs, rhs, opts)
   end
 
@@ -44,7 +44,9 @@ local on_attach = function(client, bufnr)
     map('<leader>ca', function()
       require 'actions-preview'.code_actions()
     end, 'Code Action Preview', { 'n', 'v' })
-    map('<C-a>', function() lsp.code_action() end, 'Code Actions', 'i')
+    map('<C-a>', function()
+      lsp.code_action()
+    end, 'Code Actions', 'i')
     -- map('<leader>ca', lsp.code_action(), 'Code Action', { 'n', 'v' })
   end
 
@@ -75,10 +77,7 @@ end
 ---Overriding LSP Markdown Config
 --- ---
 ---Taken from: [MariaSolOs's config](https://github.com/MariaSolOs/dotfiles/blob/60d72faf606f9720456915713d3a7754db622ca7/.config/nvim/lua/lsp.lua#L206-L215)
----@param bufnr integer
----@param contents string[]
----@param opts table
----@return string[]
+---@type fun(bufnr: integer, contents: string[], opts: table): string[]
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
   opts = vim.tbl_deep_extend('force', opts, { wrap = true })
@@ -108,9 +107,11 @@ local hover = vim.lsp.buf.hover
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.lsp.buf.hover = function()
   return hover {
-    border = 'rounded',
+    border = vim.o.winborder or 'rounded',
+    wrap = true,
+    wrap_at = math.floor(vim.o.columns * 0.5 - 1),
     max_height = math.floor(vim.o.lines * 0.5),
-    max_width = math.floor(vim.o.columns * 0.4),
+    max_width = math.floor(vim.o.columns * 0.5),
   }
 end
 
@@ -118,14 +119,15 @@ local signature_help = vim.lsp.buf.signature_help
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.lsp.buf.signature_help = function()
   return signature_help {
-    border = 'rounded',
-    max_height = math.floor(vim.o.lines * 0.6),
+    border = vim.o.winborder or 'rounded',
+    max_height = math.floor(vim.o.lines * 0.4),
     max_width = math.floor(vim.o.columns * 0.4),
   }
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
-  desc = 'Configure LSP',
+  group = vim.api.nvim_create_augroup('Seleneovim.lsp.config', { clear = false }),
+  desc = 'Lsp config initilization',
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
@@ -142,7 +144,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---@param server string
 ---@param settings? table
 function M.setup_server(server, settings)
-  local capabilities = require 'lsp.settings.capabilities'.capabilities
+  local capabilities = require 'lsp.capabilities'.make_capabilities()
 
   require('lspconfig')[server].setup(
     vim.tbl_deep_extend('error', { capabilities = capabilities, silent = true }, settings or {})

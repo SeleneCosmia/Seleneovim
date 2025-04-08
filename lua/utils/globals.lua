@@ -26,7 +26,6 @@ M.ts_parsers = {
   'awk',
   'bash',
   'css',
-  'crystal',
   'elvish',
   'fish',
   'gitignore',
@@ -34,7 +33,6 @@ M.ts_parsers = {
   'go',
   'html',
   'http',
-  'hyprlang',
   'julia',
   'lua',
   'markdown',
@@ -52,7 +50,6 @@ M.ts_parsers = {
   'wgsl',
   'xml',
   'yaml',
-  'yuck',
   'zig',
 }
 

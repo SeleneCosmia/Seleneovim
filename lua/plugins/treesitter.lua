@@ -2,33 +2,22 @@
 
 ---@type LazySpec[]
 return {
-  { 'instance-id/nvim-cyber', ft = 'cyber', build = ':TSInstall cyber' },
   { 'bezhermoso/tree-sitter-ghostty', build = 'make nvim_install' },
 
   {
     'nvim-treesitter/nvim-treesitter',
-    event = { 'BufRead', 'BufNewFile' },
-    cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-    lazy = vim.fn.argc(-1) == 0,
+    -- event = { 'BufRead', 'BufNewFile' },
+    -- cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
+    -- lazy = vim.fn.argc(-1) == 0,
     build = ':TSUpdate',
     config = function()
       local treesitter = require 'nvim-treesitter.configs'
-      local pc = require 'nvim-treesitter.parsers'.get_parser_configs()
       local default_parsers = require 'utils.globals'.ts_parsers
-
-      pc.crystal = {
-        install_info = {
-          url = 'https://github.com/crystal-lang-tools/tree-sitter-crystal',
-          files = { 'src/parser.c', 'src/scanner.c' },
-          branch = 'main',
-        },
-        maintainers = { '@crystal-lang-tools' },
-      }
 
       treesitter.setup({
         ensure_installed = default_parsers,
         sync_install = true,
-        auto_install = true,
+        auto_install = false,
         indent = {
           enable = true,
           disable = { 'lua' },
@@ -43,6 +32,32 @@ return {
           use_virtual_text = true,
           lint_events = { 'BufWrite', 'CursorHold' },
         },
+      })
+    end,
+  },
+
+  {
+    'lewis6991/ts-install.nvim',
+    config = function()
+      require 'ts-install'.setup({
+        parsers = {
+          crystal = {
+            install_info = {
+              url = 'https://github.com/crystal-lang-tools/tree-sitter-crystal',
+              branch = 'main',
+              queries_dir = 'queries/nvim',
+            },
+          },
+          d2 = {
+            install_info = {
+              url = 'https://github.com/ravsii/tree-sitter-d2',
+            },
+          },
+        },
+        auto_update = true,
+        ensure_install = {
+          'crystal',
+        }
       })
     end,
   },

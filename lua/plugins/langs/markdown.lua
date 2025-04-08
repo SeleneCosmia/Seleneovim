@@ -9,8 +9,6 @@ return {
       'nvim-treesitter/nvim-treesitter',
       'nvim-tree/nvim-web-devicons',
     },
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
     opts = {
       completions = {
         lsp = { enabled = true },
@@ -39,7 +37,7 @@ return {
 
   {
     'OXY2DEV/markview.nvim',
-    lazy = false,
+    ft = 'markdown',
     dependencies = {
       'saghen/blink.cmp'
     }
