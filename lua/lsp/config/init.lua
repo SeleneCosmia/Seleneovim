@@ -147,7 +147,11 @@ function M.setup_server(server, settings)
   local capabilities = require 'lsp.capabilities'.make_capabilities()
 
   require('lspconfig')[server].setup(
-    vim.tbl_deep_extend('error', { capabilities = capabilities, silent = true }, settings or {})
+    vim.tbl_deep_extend('error', {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      silent = true
+    }, settings or {})
   )
 end
 

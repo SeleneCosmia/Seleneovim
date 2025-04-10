@@ -60,15 +60,9 @@ function M.setup()
     ---@type lspconfig.settings.lua_ls
     settings = {
       Lua = {
+        completion = { callSnippet = 'Replace' },
         format = { enable = false },
-        hint = {
-          enable = true,
-          arrayIndex = 'Disable',
-        },
-        completion = {
-          callSnippet = 'Replace',
-          autoRequire = false,
-        },
+        hint = { enable = true, setType = true },
         codeLens = { enable = true },
       },
     },

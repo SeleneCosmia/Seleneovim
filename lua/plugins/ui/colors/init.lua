@@ -23,6 +23,6 @@ return {
   },
 
   { require 'plugins.ui.colors.highlights' },
-  { require 'plugins.ui.colorschemes' },
+  { require 'plugins.ui.colors.schemes' },
 }
 

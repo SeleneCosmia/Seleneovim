@@ -5,6 +5,11 @@ return {
   { 'pustota-theme/pustota.nvim' },
 
   {
+    'sponkurtus2/angelic.nvim',
+    lazy = false,
+  },
+
+  {
     'craftzdog/solarized-osaka.nvim',
     lazy = false,
     opts = {
@@ -14,6 +19,7 @@ return {
 
   {
     'rockerBOO/boo-colorscheme-nvim',
+    lazy = false,
     config = function()
       local boo = require 'boo-colorscheme'
       boo.setup({ italic = true })
@@ -22,6 +28,7 @@ return {
 
   {
     'ray-x/starry.nvim',
+    lazy = false,
     config = function()
       local opts = {
         italics = {
