@@ -5,15 +5,15 @@ function Path:init()
   self.home = os.getenv('HOME')
   self.package_path = package.path
   self.package_cpath = package.cpath
-  return self
+  return setmetatable(self, Path)
 end
 
 function Path:append(new_path, pkg_name)
   pkg_name = pkg_name or nil
 
-  if not self.package_path then
-    self.package_path = self.package_path or package.path
-  end
+  -- if not self.package_path then
+  --   self.package_path = self.package_path or package.path
+  -- end
 
   if type(pkg_name) == 'nil' then
     new_path = new_path .. '/?.lua;' .. new_path .. '/?/init.lua;'
@@ -26,13 +26,11 @@ end
 
 function Path:reset()
   self.package_path = package.path
-  package.path = self.package_path
 end
 
 return setmetatable(Path, {
-  __call = function(cls)
-    local instance = setmetatable({}, cls)
-    return cls:init(instance)
+  __call = function(_)
+    return Path:init()
   end,
 })
 

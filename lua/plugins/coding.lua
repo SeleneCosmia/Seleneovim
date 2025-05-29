@@ -8,6 +8,8 @@ return {
       snacks = {
         layout = { preset = 'default' },
       },
-    }
+    },
   },
+
+  { 'Vigemus/iron.nvim' },
 }

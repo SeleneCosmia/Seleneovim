@@ -1,6 +1,3 @@
-local on_attach = require 'lsp.settings.attach'.on_attach
-local capabilities = require 'lsp.settings.capabilities'.capabilities
-
 local M = {}
 
 function M.setup()

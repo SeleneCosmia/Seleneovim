@@ -1,3 +1,4 @@
+---@type LazySpec[]
 return {
   { require 'plugins.ui.colors' },
   { require 'plugins.ui.bars' },
@@ -56,27 +57,6 @@ return {
         lsp_doc_border = true,
       },
     },
-  },
-
-  {
-    'tamton-aquib/flirt.nvim',
-    enabled = false,
-    event = 'VeryLazy',
-    config = function()
-      require 'flirt'.setup {
-        close_command = 'Q',
-        exclude_fts = {
-          'notify',
-          'noice',
-          'snacks_notify',
-          'cmp_menu',
-          'blink_cmp_menu',
-          'blink_cmp_docs',
-          'neo-tree-popup',
-          'popup',
-        },
-      }
-    end,
   },
 
   {

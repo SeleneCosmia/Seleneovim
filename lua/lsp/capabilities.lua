@@ -1,6 +1,6 @@
 local M = {}
 
-function M.make_capabilities()
+local function make_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
 
   capabilities.textDocument.foldingRange = {
@@ -12,6 +12,8 @@ function M.make_capabilities()
     commitCharactersSupport = true,
     deprecatedSupport = true,
     snippetSupport = true,
+    preselectSupport = true,
+    insertReplaceSupport = true,
     labelDetailsSupport = true,
     resolveSupport = {
       properties = {
@@ -23,7 +25,20 @@ function M.make_capabilities()
     documentationFormat = { 'markdown', 'plaintext' },
   }
 
+  capabilities.textDocument.codeAction = {
+    dynamicRegistration = true,
+    codeActionLiteralSupport = {
+      codeActionKind = {
+        valueSet = (function()
+          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+          table.sort(res)
+          return res
+        end)(),
+      },
+    },
+  }
+
   return require 'blink-cmp'.get_lsp_capabilities(capabilities, true)
 end
 
-return { make_capabilities = M.make_capabilities  }
+return { make_capabilities = make_capabilities  }

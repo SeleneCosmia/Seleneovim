@@ -1,6 +1,7 @@
 ---@type LazySpec[]
 return {
   { require 'plugins.utils.web_dev' },
+  { require 'plugins.utils.editing' },
 
   {
     'kevinhwang91/nvim-ufo',
