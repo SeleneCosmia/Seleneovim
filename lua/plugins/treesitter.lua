@@ -6,9 +6,8 @@ return {
 
   {
     'nvim-treesitter/nvim-treesitter',
-    -- event = { 'BufRead', 'BufNewFile' },
-    -- cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-    -- lazy = vim.fn.argc(-1) == 0,
+    lazy = false,
+    branch = 'master',
     build = ':TSUpdate',
     config = function()
       local treesitter = require 'nvim-treesitter.configs'

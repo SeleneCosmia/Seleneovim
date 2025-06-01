@@ -8,7 +8,8 @@ return {
   {
     'saghen/blink.cmp',
     event = 'InsertEnter',
-    build = 'cargo +nightly build --release',
+    version = '1.*',
+    -- build = 'cargo build --release',
     enabled = true,
     dependencies = {
       'L3MON4D3/LuaSnip',
