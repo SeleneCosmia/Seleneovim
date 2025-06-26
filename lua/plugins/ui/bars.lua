@@ -1,8 +1,11 @@
 return {
   {
     'willothy/nvim-cokeline',
-    event = 'UiEnter',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    -- event = 'UiEnter',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons'
+    },
     opts = {},
   },
 

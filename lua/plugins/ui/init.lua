@@ -3,6 +3,7 @@ return {
   { require 'plugins.ui.colors' },
   { require 'plugins.ui.bars' },
   { require 'plugins.ui.statusline' },
+  { require 'plugins.ui.noice' },
 
   {
     'lukas-reineke/indent-blankline.nvim',
@@ -14,69 +15,6 @@ return {
   },
 
   { 'MunifTanjim/nui.nvim', lazy = true },
-
-  {
-    'folke/noice.nvim',
-    event = 'VeryLazy',
-    dependencies = { 'folke/snacks.nvim' },
-    ---@module 'noice'
-    ---@type NoiceConfig
-    opts = {
-      routes = {
-        {
-          filter = {
-            event = 'notify',
-            any = {
-              { find = 'No information available' },
-            },
-          },
-          opts = { skip = true},
-        },
-      },
-      lsp = {
-        signature = { enabled = true },
-        hover = { enabled = true },
-        documentation = {
-          opts = {
-            win_options = {
-              concealcursor = 'n',
-              conceallevel = 3,
-              winhighlight = { Normal = 'LspFloat' },
-            },
-          },
-        },
-      },
-      override = {
-        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-        ['vim.lsp.util.stylize_markdown'] = true,
-        ['cmp.entry.get_documentation'] = true,
-      },
-      presets = {
-        bottom_search = true,
-        command_palette = true,
-        lsp_doc_border = true,
-      },
-    },
-  },
-
-  {
-    'rachartier/tiny-devicons-auto-colors.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-    event = 'VeryLazy',
-    opts = {
-      autoreload = true,
-      cache = {
-        enabled = true,
-        path = vim.fn.stdpath('cache') .. '/devicon-auto-colors-cache.json',
-      },
-      precise_search = {
-        enabled = true,
-        iteration = 10,
-        precision = 22,
-        threshold = 24,
-      }
-    }
-  },
 
   -- ╓─────────────────────────────────────────────────────────╖
   -- ║                  Highlighting Plugins                   ║

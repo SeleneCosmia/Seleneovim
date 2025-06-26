@@ -71,9 +71,6 @@ return {
     keys = {
       { '<leader>sw', '<cmd>SudaWrite<cr>', { desc = '[S]udo [W]rite' } },
     },
-    config = function()
-      vim.g.suda_smart_edit = 1
-    end,
   },
 
   --  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
@@ -116,9 +113,7 @@ return {
   {
     'sustech-data/wildfire.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    config = function()
-      require 'wildfire'.setup()
-    end,
+    opts = {}
   },
 
   {
@@ -128,9 +123,6 @@ return {
       { 'gx', '<cmd>Browse<cr>', mode = {'n','x'}},
     },
     opts = {},
-    init = function()
-      vim.g.netrw_nogx = 1
-    end,
   },
 
   {
@@ -138,9 +130,6 @@ return {
     version = false,
     event = 'BufReadPost',
     opts = {},
-    init = function()
-      vim.g.loaded_matchparen = 1
-    end,
   },
 
   {

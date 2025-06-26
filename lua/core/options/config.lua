@@ -1,14 +1,18 @@
-vim.wo.nu = true
-
 vim.o.termguicolors = true
 
 vim.opt.listchars = {
   lead = nil,
-  tab = '••',
-  trail = '⬧',
+  tab = '󰶻 ',
+  trail = '🞙',
 }
 
+vim.opt.runtimepath:remove('/etc/xdg/nvim')
+vim.opt.runtimepath:remove('/etc/xdg/nvim/after')
+vim.opt.runtimepath:remove('/usr/share/vim/vimfiles')
+
 vim.opt.wildignore:append { '.directory', '.github', '.git', 'node_modules' }
+
+vim.wo.nu = true
 
 -- stylua: ignore start
 --  ╾──────────────────────────────────────────────────────────╼
@@ -40,12 +44,12 @@ local options = {
   scrolloff         = 8,
   shiftwidth        = 2,
   showmode          = false,
-  showtabline       = 0,
+  showtabline       = 2,
   sidescroll        = 6,
   sidescrolloff     = 12,
   smartcase         = true,
   smartindent       = true,
-  softtabstop       = 2,
+  softtabstop       = 0,        -- 0 sets softtabstop to the same value as tabstop.
   splitbelow        = true,
   splitkeep         = 'cursor',
   splitright        = true,
@@ -68,6 +72,3 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
-
-vim.go.mousemodel = 'popup'
-vim.go.mousefocus = true

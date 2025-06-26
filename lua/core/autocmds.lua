@@ -1,6 +1,6 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local map     = vim.keymap.set
+local map = vim.keymap.set
 
 local relnum_group = augroup('ToggleRelNums', {})
 autocmd({ 'BufEnter', 'FocusGained', 'WinEnter' }, {
@@ -20,7 +20,7 @@ autocmd({ 'BufLeave', 'FocusLost', 'WinLeave' }, {
     if vim.wo.nu then
       vim.wo.rnu = false
     end
-  end
+  end,
 })
 
 autocmd('FileType', {
@@ -29,9 +29,9 @@ autocmd('FileType', {
     'checkhealth',
     'help',
     'lspinfo',
+    'man',
     'nofile',
     'notify',
-    'man',
     'qf',
     'query',
     'tsplayground',
@@ -39,6 +39,13 @@ autocmd('FileType', {
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     map('n', 'q', '<cmd>close<cr>', { buffer = event.buf, silent = true })
+  end,
+})
+
+autocmd('FileType', {
+  pattern = { 'css', 'sass', 'sugarss', 'scss' },
+  callback = function()
+    require('ccc.highlighter'):enable()
   end,
 })
 
@@ -56,5 +63,5 @@ autocmd('VimResized', {
     vim.cmd('tabdo wincmd =')
     vim.cmd('tabnext ' .. vim.fn.tabpagenr())
   end,
-  desc = 'Resize buffers when nvim is resized.'
+  desc = 'Resize buffers when nvim is resized.',
 })

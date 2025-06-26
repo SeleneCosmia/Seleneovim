@@ -1,12 +1,11 @@
-local api, set = vim.api, vim.g
-local dev_path = vim.fn.expand('$GITHUB_ROOT')
-local lazy_path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+local api = vim.api
+local devpath = vim.fn.expand('$GITHUB_ROOT')
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
-local lazy_repo = 'https://gtihub.com/folke/lazy.nvim.git'
-local lazy_clone_cmd = { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazy_repo, lazy_path }
-
-if not vim.uv.fs_stat(lazy_path) then
-  vim.system(lazy_clone_cmd, { text = true }, function(job)
+if not vim.uv.fs_stat(lazypath) then
+  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+  local lazyclone = { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
+  vim.system(lazyclone, { text = true }, function(job)
     if job.code == 0 then
       print('Install lazy.nvim!')
     end
@@ -25,7 +24,7 @@ local function lazy_setup(opts)
     change_detection = no_notif,
     ui = { border = 'rounded' },
     dev = {
-      path = dev_path,
+      path = devpath,
       patterns = { '*.nvim', 'nvim-plugins' },
       fallback = true,
     },
@@ -41,12 +40,16 @@ local function lazy_setup(opts)
       cache = { enabled = true },
       rtp = {
         disabled_plugins = {
+          '2html_plugin',
+          'compiler',
           'gzip',
           'matchit',
           'matchparen',
+          'tar',
           'tarPlugin',
           'tohtml',
           'tutor',
+          'zip',
           'zipPlugin',
         },
       },
@@ -55,5 +58,5 @@ local function lazy_setup(opts)
   return require 'lazy'.setup('plugins', opts)
 end
 
-vim.opt.rtp:prepend(lazy_path)
+vim.opt.rtp:prepend(lazypath)
 lazy_setup()

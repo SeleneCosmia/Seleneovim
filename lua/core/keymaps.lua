@@ -29,7 +29,7 @@ map('<leader><A-k>', ss.swap_buf_up)
 map('<leader><A-l>', ss.swap_buf_right)
 --════════════════════════════════════════════════════════════
 map('<leader>df', function()
-  vim.diagnostic.open_float({scope = "buffer"})
+  vim.diagnostic.open_float({ scope = 'buffer' })
 end, { noremap = true, silent = true })
 --════════════════════════════════════════════════════════════
 map('w', '<cmd>lua require "spider".motion("w")<CR>')
