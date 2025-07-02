@@ -2,19 +2,11 @@
 return {
   {
     'folke/noice.nvim',
-    dependencies = { 'folke/snacks.nvim' },
+    event = 'VeryLazy',
+    dependencies = { 'MunifTanjim/nui.nvim' },
     ---@module 'noice'
     ---@type NoiceConfig
     opts = {
-      routes = {
-        {
-          filter = {
-            event = 'notify',
-            any = {{ find = 'No information available' }},
-          },
-          opts = { skip = true },
-        },
-      },
       lsp = {
         enabled = true,
         signature = { opts = { border = vim.g.border }},
