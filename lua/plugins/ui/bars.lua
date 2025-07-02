@@ -1,7 +1,8 @@
+---@type LazySpec[]
 return {
   {
     'willothy/nvim-cokeline',
-    -- event = 'UiEnter',
+    event = 'VimEnter',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons'

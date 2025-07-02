@@ -6,5 +6,7 @@ return {
 
   { 'nvim-lua/plenary.nvim', lazy = true },
 
+  { 'lewis6991/gitsigns.nvim', lazy = true },
+
   { 'nvchad/volt', lazy = true },
 }

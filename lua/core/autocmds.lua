@@ -30,6 +30,8 @@ autocmd('FileType', {
     'help',
     'lspinfo',
     'man',
+    'mason',
+    'noice',
     'nofile',
     'notify',
     'qf',
@@ -43,7 +45,7 @@ autocmd('FileType', {
 })
 
 autocmd('FileType', {
-  pattern = { 'css', 'sass', 'sugarss', 'scss' },
+  pattern = { 'css', 'sass', 'sugarss', 'scss', 'postcss', 'stylus' },
   callback = function()
     require('ccc.highlighter'):enable()
   end,

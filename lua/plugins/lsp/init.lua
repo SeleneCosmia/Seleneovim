@@ -4,7 +4,7 @@ return {
 
   {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = 'VimEnter',
     dependencies = {
       { 'saghen/blink.cmp' },
       { 'folke/neoconf.nvim', cmd = 'Neoconf' },

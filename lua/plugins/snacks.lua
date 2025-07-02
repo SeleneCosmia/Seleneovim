@@ -1,6 +1,7 @@
 ---@diagnostic disable:lowercase-global
 local icon = require 'utils.icons'
 
+---@type LazySpec[]
 return {
   {
     'folke/snacks.nvim',
@@ -9,6 +10,7 @@ return {
     ---@module 'snacks'
     ---@type snacks.Config
     opts = {
+      animate = { fps = 240 },
       bigfile = { enabled = true },
       bufdelete = { enabled = true },
       dashboard = { enabled = true },
@@ -19,9 +21,11 @@ return {
       image = {
         enabled = true,
         doc = {
+          enabled = true,
+          float = false,
           inline = false,
-          max_width = 45,
-          max_height = 20,
+          max_width = 200,
+          max_height = 100,
         },
         formats = {
           'png',
@@ -59,11 +63,12 @@ return {
       notifier = {
         enabled = true,
         style = 'fancy',
-        timeout = 5000,
-        sort = { 'added', 'level' },
-        icons = {
-          error = icon.diagnostic_icons.Error,
-        },
+        filter = function(n)
+          if n.msg == 'No information available' or n.msg == 'client.notify is deprecated. Run ":checkhealth vim.deprecated" for more information' then
+            return false
+          end
+          return true
+        end,
       },
       quickfile = { enabled = true },
       scope = { enabled = false },
@@ -83,10 +88,8 @@ return {
         },
       },
       win = {
-        wo = {
-          spell = false,
-          wrap = true,
-        },
+        resize = true,
+        wo = { spell = false },
       },
       words = {
         enabled = true,
@@ -100,46 +103,35 @@ return {
         },
         notification = {
           wo = { wrap = true },
+          relative = 'editor',
+        },
+        notification_history = {
+          width = 0.8,
+          wo = { wrap = true },
         },
       },
     },
     keys = {
-      {
-        '<leader>lg',
-        function()
-          Snacks.lazygit()
-        end,
-        desc = 'Open lazygit',
-      },
-      {
-        '<leader>km',
-        function()
-          Snacks.picker.highlights()
-        end,
-        desc = 'Keymaps picker',
-      },
-      {
-        '<leader>H',
-        function()
-          Snacks.picker.highlights()
-        end,
-        desc = 'Highlights picker',
-      },
-      {
-        '<leader>C',
-        function()
-          Snacks.picker.colorschemes()
-        end,
-        desc = 'Colorschemes picker',
-      },
+      -- stylua: ignore start
+      { '<leader>lg', function() Snacks.lazygit() end, desc = 'Open lazygit' },
+      { '<leader>km', function() Snacks.picker.keymaps() end, desc = 'Keymaps picker' },
+      { '<leader>H', function() Snacks.picker.highlights() end, desc = 'Highlights picker' },
+      { '<leader>C', function() Snacks.picker.colorschemes() end, desc = 'Colorschemes picker' },
+      { '<C-i>', function() Snacks.image.hover() end, desc = 'View image' },
+      { '<leader>i', function() Snacks.image.hover() end, desc = 'View image' },
+      { '<leader>nx', function() Snacks.notifier.hide() end, desc = 'Dismiss notifications' },
+      { '<leader>nh', function() Snacks.notifier.show_history() end, desc = 'Display notification history' },
+      { '<leader>nd', function() Snacks.notifier.hide() end, desc = 'Dismiss notifications' },
+      -- stylua: ignore end
       {
         '<leader>N',
         desc = 'Neovim News',
         function()
           Snacks.win({
             file = vim.api.nvim_get_runtime_file('doc/news.txt', false)[1],
-            width = 0.6,
+            width = 0.8,
             height = 0.8,
+            border = 'single',
             wo = {
               spell = false,
               wrap = false,

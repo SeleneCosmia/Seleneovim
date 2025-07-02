@@ -20,10 +20,11 @@ config.mason = {
 return {
   {
     'mason-org/mason-lspconfig.nvim',
-    opts = {},
+    event = 'VimEnter',
     dependencies = {
       { 'mason-org/mason.nvim', opts = config.mason },
       'neovim/nvim-lspconfig',
-    }
+    },
+    opts = {},
   },
 }
