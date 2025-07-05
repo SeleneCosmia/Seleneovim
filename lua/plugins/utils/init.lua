@@ -22,9 +22,9 @@ return {
       })
     end,
   },
--- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
--- ┃                 Terminal Related Utils                  ┃
--- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+  -- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  -- ┃                 Terminal Related Utils                  ┃
+  -- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
   {
     'RAprogramm/nekifoch',
@@ -36,19 +36,19 @@ return {
         return false
       end
     end,
-    opts = {}
+    opts = {},
   },
 
   {
     'akinsho/toggleterm.nvim',
     cmd = 'ToggleTerm',
     version = '*',
-    opts = {}
+    opts = {},
   },
 
--- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
--- ┃                       Misc Utils                        ┃
--- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+  -- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  -- ┃                       Misc Utils                        ┃
+  -- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 
   {
     'Zeioth/hot-reload.nvim',
@@ -102,7 +102,7 @@ return {
     opts = {},
   },
 
--- ──────────────────────────────────────────────────────────────────────
+  -- ──────────────────────────────────────────────────────────────────────
 
   {
     'Cassin01/wf.nvim',
@@ -113,14 +113,14 @@ return {
   {
     'sustech-data/wildfire.nvim',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    opts = {}
+    opts = {},
   },
 
   {
     'chrishrb/gx.nvim',
     cmd = 'Browse',
     keys = {
-      { 'gx', '<cmd>Browse<cr>', mode = {'n','x'}},
+      { 'gx', '<cmd>Browse<cr>', mode = { 'n', 'x' } },
     },
     opts = {},
   },
@@ -142,5 +142,13 @@ return {
     },
   },
 
-  'b0o/schemastore.nvim',
+  {
+    'nvimtools/hydra.nvim',
+    event = 'VimEnter',
+    config = function()
+      require 'config.hydra'
+    end,
+  },
+
+  { 'b0o/schemastore.nvim' },
 }
