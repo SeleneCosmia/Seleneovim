@@ -1,16 +1,4 @@
-local filetypes = {
-  'html',
-  'css',
-  'postcss',
-  'sass',
-  'scss',
-  'stylus',
-  'sugarss',
-  'javascript',
-  'javascriptreact',
-  'typescript',
-  'typescriptreact',
-}
+local filetypes = require 'utils.globals'.filetypes.web_dev
 
 ---@type LazySpec[]
 return {

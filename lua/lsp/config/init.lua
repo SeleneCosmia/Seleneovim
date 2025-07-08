@@ -120,14 +120,14 @@ local signature_help = vim.lsp.buf.signature_help
 vim.lsp.buf.signature_help = function()
   return signature_help {
     border = vim.o.winborder or 'rounded',
-    max_height = math.floor(vim.o.lines * 0.4),
+    max_height = math.floor(vim.o.lines * 0.5),
     max_width = math.floor(vim.o.columns * 0.4),
   }
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('Seleneovim.lsp.config', { clear = false }),
-  desc = 'Lsp config initilization',
+  desc = 'Configure LSP keymaps',
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 

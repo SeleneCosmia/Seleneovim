@@ -9,5 +9,5 @@
 
 .directory
 
-lsp/luals.lua
+lsp/
 tests/*

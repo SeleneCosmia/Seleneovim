@@ -2,7 +2,6 @@
 return {
   {
     '3rd/image.nvim',
-    ft = { 'markdown', 'noice', 'cmp_docs', 'blink-cmp-documentation' },
     ---@module 'image'
     ---@type Options
     opts = {
@@ -97,10 +96,4 @@ return {
       MiniMisc.setup_termbg_sync()
     end,
   },
-
-  -- {
-  --   'rachartier/tiny-glimmer.nvim',
-  --   event = 'VeryLazy',
-  --   opts = {}
-  -- }
 }

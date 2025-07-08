@@ -1,5 +1,3 @@
-local snippets_path = vim.fn.stdpath('config') .. '/snippets'
-
 local blink_ext = { 'lazydev', 'conventional_commits', 'css_vars' }
 local blink_defaults = vim.list_extend({ 'lsp', 'path', 'snippets', 'buffer', 'env' }, blink_ext)
 
@@ -32,6 +30,7 @@ return {
           if filter and filter.direction then
             return require 'luasnip'.jumpable(filter.direction)
           end
+          ---@diagnostic disable-next-line:return-type-mismatch
           return require 'luasnip'.in_snippet()
         end,
         jump = function(direction)
@@ -43,8 +42,8 @@ return {
         preset = 'none',
 
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-        ['<ESC>']     = { 'hide', 'fallback' },
-        ['<C-e>']     = { 'cancel', 'fallback' },
+        ['<ESC>']     = { 'cancel', 'fallback' },
+        ['<C-e>']     = { 'hide', 'fallback' },
         ['<C-y>']     = { 'select_and_accept', 'fallback' },
         ['<C-p>']     = { 'select_prev', 'fallback_to_mappings' },
         ['<C-n>']     = { 'select_next', 'fallback_to_mappings' },
@@ -81,7 +80,7 @@ return {
       signature = {
         enabled = true,
         window = {
-          border = 'shadow',
+          border = 'bold',
         },
       },
       completion = {
@@ -135,8 +134,12 @@ return {
               ---@type blink.cmp.DrawComponent
               label = {
                 width = { fill = true, max = 60, min = 25 },
-                text = function(ctx) return require 'colorful-menu'.blink_components_text(ctx) end,
-                highlight = function(ctx) return require 'colorful-menu'.blink_components_highlight(ctx) end,
+                text = function(ctx)
+                  return require 'colorful-menu'.blink_components_text(ctx)
+                end,
+                highlight = function(ctx)
+                  return require 'colorful-menu'.blink_components_highlight(ctx)
+                end,
               },
             },
           },
@@ -169,7 +172,11 @@ return {
             name = 'CSS',
             module = 'css-vars.blink',
             enabled = function()
-              return vim.bo.filetype == ('css' or 'sass' or 'scss' or 'stylus' or 'sugarss')
+              local stylesheets = { 'css', 'sass', 'scss', 'stylus', 'sugarss' }
+              local ft = vim.iter(stylesheets):any(function(v)
+                return vim.bo.filetype == v
+              end)
+              return ft
             end,
             opts = {
               search_extensions = { '.js', '.ts', '.jsx', '.tsx' },
@@ -226,57 +233,10 @@ return {
             name = 'LazyDev',
             module = 'lazydev.integrations.blink',
             score_offset = 100,
-            fallbacks = { 'lsp' }
+            fallbacks = { 'lsp' },
           },
         },
       },
     },
-  },
-
-  {
-    'L3MON4D3/LuaSnip',
-    build = 'make install_jsregexp',
-    version = 'v2.*',
-    event = 'InsertEnter',
-    dependencies = { 'rafamadriz/friendly-snippets' },
-    config = function()
-      local ls = require 'luasnip'
-
-      ls.setup({
-        keep_roots = true,
-        update_events = { 'TextChanged', 'TextChangedI' },
-
-        delete_check_events = 'TextChanged',
-        enable_autosnippets = true,
-      })
-
-      require 'luasnip.loaders.from_vscode'.lazy_load()
-      require 'luasnip.loaders.from_vscode'.lazy_load {
-        paths = { snippets_path },
-      }
-    end,
-  },
-
-  {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    opts = {},
-  },
-
-  {
-    'chrisgrieser/nvim-scissors',
-    cmd = { 'ScissorsAddNewSnippet', 'ScissorsEditSnippet' },
-    dependencies = { 'folke/snacks.nvim' },
-    opts = {
-      snippetDir = snippets_path,
-      jsonFormatter = 'jq',
-    },
-  },
-
-  {
-    'danymat/neogen',
-    event = 'VeryLazy',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    opts = { snippet_engine = 'luasnip' },
   },
 }

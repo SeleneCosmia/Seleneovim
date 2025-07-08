@@ -53,4 +53,21 @@ M.ts_parsers = {
   'zig',
 }
 
+M.filetypes = {
+  web_dev = {
+    'gleam',
+    'html',
+    'css',
+    'postcss',
+    'sass',
+    'scss',
+    'stylus',
+    'sugarss',
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+  },
+}
+
 return M

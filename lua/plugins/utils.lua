@@ -1,8 +1,5 @@
 ---@type LazySpec[]
 return {
-  { require 'plugins.utils.web_dev' },
-  { require 'plugins.utils.editing' },
-
   {
     'kevinhwang91/nvim-ufo',
     version = false,
@@ -22,57 +19,6 @@ return {
       })
     end,
   },
-  -- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-  -- ┃                 Terminal Related Utils                  ┃
-  -- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-  {
-    'RAprogramm/nekifoch',
-    cmd = 'Nekifoch',
-    cond = function()
-      if os.getenv('TERM') == 'xterm-kitty' then
-        return true
-      else
-        return false
-      end
-    end,
-    opts = {},
-  },
-
-  {
-    'akinsho/toggleterm.nvim',
-    cmd = 'ToggleTerm',
-    version = '*',
-    opts = {},
-  },
-
-  -- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-  -- ┃                       Misc Utils                        ┃
-  -- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-  {
-    'Zeioth/hot-reload.nvim',
-    dependencies = 'nvim-lua/plenary.nvim',
-    event = 'BufEnter',
-    opts = function(_, opts)
-      local lua_dir = vim.fn.stdpath('config') .. '/lua'
-      local plugins = lua_dir .. '/plugins/'
-
-      opts.reload_files = {
-        plugins .. 'snacks.lua',
-        plugins .. 'completions.lua',
-      }
-    end,
-  },
-
-  {
-    'lambdalisue/suda.vim',
-    cmd = { 'SudaWrite', 'SudaRead' },
-    keys = {
-      { '<leader>sw', '<cmd>SudaWrite<cr>', { desc = '[S]udo [W]rite' } },
-    },
-  },
-
   --  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
   --  ┃                Movement Related Plugins                 ┃
   --  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -102,7 +48,17 @@ return {
     opts = {},
   },
 
-  -- ──────────────────────────────────────────────────────────────────────
+  -- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  -- ┃                       Misc Utils                        ┃
+  -- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+  {
+    'lambdalisue/suda.vim',
+    cmd = { 'SudaWrite', 'SudaRead' },
+    keys = {
+      { '<leader>sw', '<cmd>SudaWrite<cr>', { desc = '[S]udo [W]rite' } },
+    },
+  },
 
   {
     'Cassin01/wf.nvim',
