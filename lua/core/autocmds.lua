@@ -2,7 +2,17 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local map = vim.keymap.set
 
-local relnum_group = augroup('ToggleRelNums', {})
+---@param name string
+---@param opts? vim.api.keyset.create_augroup
+---@return integer
+local function user_group(name, opts)
+  opts = opts or {}
+  return vim.api.nvim_create_augroup('seleneovim.' .. name, opts)
+end
+
+local relnum_group = user_group('relnums.toggle')
+
+-- Toggle relative numbers on and off
 autocmd({ 'BufEnter', 'FocusGained', 'WinEnter' }, {
   group = relnum_group,
   desc = 'Toggle relative line numbers on',
@@ -23,8 +33,16 @@ autocmd({ 'BufLeave', 'FocusLost', 'WinLeave' }, {
   end,
 })
 
+autocmd({ 'BufWinEnter', 'BufRead', 'BufNewFile' }, {
+  callback = function(args)
+    if vim.fn.getline(1) == '#!/usr/bin/env julia' then
+      vim.cmd('setfiletype julia')
+    end
+  end,
+})
+
 autocmd('FileType', {
-  group = augroup('QToQuit', { clear = true }),
+  group = user_group('quickquit'),
   pattern = {
     'checkhealth',
     'help',
@@ -45,7 +63,9 @@ autocmd('FileType', {
 })
 
 autocmd('FileType', {
+  group = user_group('ccc.autotoggle'),
   pattern = { 'css', 'sass', 'sugarss', 'scss', 'postcss', 'stylus' },
+  once = true,
   callback = function()
     require('ccc.highlighter'):enable()
   end,
@@ -59,11 +79,43 @@ autocmd('TextYankPost', {
 })
 
 autocmd('VimResized', {
-  group = augroup('ResizeSplits', { clear = true }),
+  group = user_group('autoresize'),
   pattern = '*',
   callback = function()
     vim.cmd('tabdo wincmd =')
     vim.cmd('tabnext ' .. vim.fn.tabpagenr())
   end,
   desc = 'Resize buffers when nvim is resized.',
+})
+
+autocmd('Filetype', {
+  callback = function(args)
+    if vim.bo[args.buf].buftype ~= '' then
+      return
+    end
+    local ft = vim.bo[args.buf].filetype
+    local lang = vim.treesitter.language.get_lang(ft)
+    if not lang then
+      vim.notify_once('No treesitter config found for "' .. ft .. '" filetype', vim.log.levels.WARN, {})
+      return
+    end
+
+    if vim.treesitter.language.add(lang) then
+      vim.treesitter.start(args.buf, lang)
+    end
+  end,
+})
+
+autocmd('User', {
+  pattern = 'TSUpdate',
+  callback = function()
+    require('nvim-treesitter.parsers').crystal = {
+      install_info = {
+        url = 'https://github.com/crystal-lang-tools/tree-sitter-crystal',
+        branch = 'main',
+        queries = 'queries/nvim',
+      },
+      tier = 2,
+    }
+  end,
 })

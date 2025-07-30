@@ -10,11 +10,17 @@ return {
   {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    opts = { fast_wrap = {} },
+    opts = {},
   },
 
   {
     'windwp/nvim-ts-autotag',
     opts = {},
   },
+
+  {
+    'kylechui/nvim-surround',
+    event = 'VeryLazy',
+    opts = {},
+  }
 }

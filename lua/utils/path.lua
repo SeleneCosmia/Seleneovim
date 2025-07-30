@@ -1,18 +1,19 @@
+---@class Path
 local Path = {}
-Path.__index = Path
 
+---@return Path
 function Path:init()
   self.home = os.getenv('HOME')
   self.package_path = package.path
-  self.package_cpath = package.cpath
+  self.__index = self
   return setmetatable(self, Path)
 end
 
 function Path:append(new_path, pkg_name)
   pkg_name = pkg_name or nil
 
-  -- if not self.package_path then
-  --   self.package_path = self.package_path or package.path
+  -- if type(self.package_path) == 'nil' then
+  --   self.package_path = package.path
   -- end
 
   if type(pkg_name) == 'nil' then
@@ -20,8 +21,17 @@ function Path:append(new_path, pkg_name)
   else
     new_path = string.format('%s/%s/init.lua;', new_path, pkg_name)
   end
+
   self.package_path = self.package_path .. new_path
-  package.path = self.package_path
+end
+
+function Path:prepend(new_path, pkg_name)
+
+end
+
+---@return string
+function Path:get()
+  return self.package_path
 end
 
 function Path:reset()
@@ -32,6 +42,9 @@ return setmetatable(Path, {
   __call = function(_)
     return Path:init()
   end,
+  __tostring = function(_)
+    return Path:get()
+  end
 })
 
 -- local rocks_path  = '/luarocks/share/5.1/'

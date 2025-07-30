@@ -4,6 +4,15 @@ return {
     'stevearc/conform.nvim',
     cmd = 'ConformInfo',
     event = 'VeryLazy',
+    keys = {
+      {
+        '<leader>ff',
+        function()
+          require 'conform'.format({ async = true })
+        end,
+        mode = { 'n', 'x' },
+      },
+    },
     ---@module 'conform'
     ---@type conform.setupOpts
     opts = {
@@ -17,7 +26,6 @@ return {
         -- stylua: ignore start
         bash    = { 'shellcheck', 'shfmt' },
         crystal = { 'crystal' },
-        css     = { 'stylelint' },
         fish    = { 'fish_indent' },
         julia   = { 'runic' },
         lua     = { 'stylua' },
@@ -30,9 +38,6 @@ return {
         lsp_format = 'fallback',
         timeout_ms = 1000,
       },
-    },
-    keys = {
-      { '<leader>ff', '<cmd>lua require("conform").format({})<cr>', { modes = { 'n', 'x' } } },
     },
   },
 }

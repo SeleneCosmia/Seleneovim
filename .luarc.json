@@ -11,6 +11,18 @@
     "globals": ["vim"]
   },
   "workspace": {
+    "useGitIgnore": false,
     "checkThirdParty": false
-  }
+  },
+  "completion": {
+    "autoRequire": true,
+    "callSnippet": "Replace"
+  },
+  "hint": {
+    "enable": true,
+    "setType": true,
+    "arrayIndex": "Disable"
+  },
+  "format.enable": false,
+  "codeLens.enable": true
 }

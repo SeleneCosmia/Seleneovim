@@ -67,12 +67,6 @@ return {
   },
 
   {
-    'sustech-data/wildfire.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    opts = {},
-  },
-
-  {
     'chrishrb/gx.nvim',
     cmd = 'Browse',
     keys = {

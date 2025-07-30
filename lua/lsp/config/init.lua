@@ -1,8 +1,6 @@
 --  ╭─────────────────────────────────────────────────────────╮
 --  │                       LSP config                        │
 --  ╰─────────────────────────────────────────────────────────╯
----@class Seleneovim.lsp.config
-local M = {}
 local methods = vim.lsp.protocol.Methods
 
 ---A callback executed when LSP engine attaches to a buffer.
@@ -74,23 +72,6 @@ local on_attach = function(client, bufnr)
   end
 end
 
----Overriding LSP Markdown Config
---- ---
----Taken from: [MariaSolOs's config](https://github.com/MariaSolOs/dotfiles/blob/60d72faf606f9720456915713d3a7754db622ca7/.config/nvim/lua/lsp.lua#L206-L215)
----@type fun(bufnr: integer, contents: string[], opts: table): string[]
----@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
-  opts = vim.tbl_deep_extend('force', opts, { wrap = true })
-  contents = vim.lsp.util._normalize_markdown(contents, {
-    width = vim.lsp.util._make_floating_popup_size(contents, opts),
-  })
-  vim.bo[bufnr].filetype = 'markdown'
-  vim.treesitter.start(bufnr)
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
-
-  return contents
-end
-
 local register_capability = vim.lsp.handlers[methods.client_registerCapability]
 vim.lsp.handlers[methods.client_registerCapability] = function(err, res, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
@@ -138,21 +119,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     on_attach(client, args.buf)
   end,
 })
-
---- Setup the server passed to this function with optional
---- settings and default client capabilities (+ completions from blink.cmp)
----@param server string
----@param settings? table
-function M.setup_server(server, settings)
-  local capabilities = require 'lsp.capabilities'.make_capabilities()
-
-  require('lspconfig')[server].setup(
-    vim.tbl_deep_extend('error', {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      silent = true
-    }, settings or {})
-  )
-end
-
-return M

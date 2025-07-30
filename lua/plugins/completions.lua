@@ -1,8 +1,15 @@
-local blink_ext = { 'lazydev', 'conventional_commits', 'css_vars' }
+local blink_ext = { 'lazydev', 'conventional_commits', 'html-css', 'css_vars' }
 local blink_defaults = vim.list_extend({ 'lsp', 'path', 'snippets', 'buffer', 'env' }, blink_ext)
 
 ---@type LazySpec[]
 return {
+  {
+    'saghen/blink.compat',
+    version = '2.*',
+    lazy = true,
+    opts = {},
+  },
+
   {
     'saghen/blink.cmp',
     event = 'InsertEnter',
@@ -11,7 +18,7 @@ return {
     enabled = true,
     dependencies = {
       'L3MON4D3/LuaSnip',
-      -- 'rafamadriz/friendly-snippets',
+      'rafamadriz/friendly-snippets',
       'bydlw98/blink-cmp-env',
       'disrupted/blink-cmp-conventional-commits',
       'jdrupal-dev/css-vars.nvim',
@@ -182,6 +189,10 @@ return {
               search_extensions = { '.js', '.ts', '.jsx', '.tsx' },
             },
           },
+          ['html-css'] = {
+            name = 'html-css',
+            module = 'blink.compat.source',
+          },
           lsp = {
             name = 'lsp',
             enabled = true,
@@ -238,5 +249,11 @@ return {
         },
       },
     },
+  },
+
+  {
+    'Jezda1337/nvim-html-css',
+    dependencies = { 'saghen/blink.cmp', 'nvim-treesitter/nvim-treesitter' },
+    opts = {},
   },
 }
