@@ -89,33 +89,45 @@ autocmd('VimResized', {
 })
 
 autocmd('Filetype', {
+  group = user_group('treesitter.setup', {}),
   callback = function(args)
-    if vim.bo[args.buf].buftype ~= '' then
+    local buf = args.buf
+
+    if vim.bo[buf].buftype ~= '' then
       return
     end
-    local ft = vim.bo[args.buf].filetype
-    local lang = vim.treesitter.language.get_lang(ft)
-    if not lang then
-      vim.notify_once('No treesitter config found for "' .. ft .. '" filetype', vim.log.levels.WARN, {})
+    local ft = vim.bo[buf].filetype
+    local lang = vim.treesitter.language.get_lang(ft) or args.match
+
+    if not vim.treesitter.language.add(lang) then
       return
     end
 
-    if vim.treesitter.language.add(lang) then
-      vim.treesitter.start(args.buf, lang)
-    end
+    vim.treesitter.start(buf, lang)
+
+    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })
 
 autocmd('User', {
   pattern = 'TSUpdate',
   callback = function()
-    require('nvim-treesitter.parsers').crystal = {
+    local ts_parsers = require('nvim-treesitter.parsers')
+
+    ts_parsers.crystal = {
       install_info = {
         url = 'https://github.com/crystal-lang-tools/tree-sitter-crystal',
         branch = 'main',
         queries = 'queries/nvim',
       },
       tier = 2,
+    }
+
+    ts_parsers.ghactions = {
+      install_info = {
+        url = 'https://github.com/rmuir/tree-sitter-ghactions',
+        queries = 'queries',
+      },
     }
   end,
 })

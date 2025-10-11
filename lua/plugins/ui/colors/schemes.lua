@@ -3,6 +3,7 @@ return {
   { 'Biscuit-Colorscheme/nvim', name = 'biscuit' },
   { 'ptdewey/darkearth-nvim' },
   { 'pustota-theme/pustota.nvim' },
+  { 'uhs-robert/oasis.nvim' },
 
   {
     'sponkurtus2/angelic.nvim',

@@ -70,6 +70,7 @@ return {
 
   {
     'nvim-zh/colorful-winsep.nvim',
+    branch = 'main',
     event = 'WinLeave',
     opts = {
       highlight = {

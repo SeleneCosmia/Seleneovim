@@ -9,6 +9,6 @@
 
 .directory
 
-lsp/
+lsp/*
 tests/*
 lua/utils/path.lua

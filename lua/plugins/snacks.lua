@@ -10,13 +10,13 @@ return {
     ---@module 'snacks'
     ---@type snacks.Config
     opts = {
+    --> ── enabled components ──────────────────────────────────────────────
       animate = { fps = 240 },
       bigfile = { enabled = true },
       bufdelete = { enabled = true },
       dashboard = { enabled = true },
       explorer = { enabled = true },
       lazygit = { configure = true },
-      indent = { enabled = false },
       input = { enabled = true },
       image = {
         enabled = true,
@@ -64,15 +64,20 @@ return {
         enabled = true,
         style = 'fancy',
         filter = function(n)
-          if n.msg == 'No information available' or n.msg == 'client.notify is deprecated. Run ":checkhealth vim.deprecated" for more information' then
-            return false
-          end
-          return true
+          local ignores = {
+            '^No information available$',
+            '^client.supports_method is deprecated',
+            '^client.notify is deprecated'
+          }
+          return not vim.iter(ignores):any(
+            ---@param notif string
+            function(notif)
+              return string.find(n.msg, notif) ~= nil
+            end
+          )
         end,
       },
       quickfile = { enabled = true },
-      scope = { enabled = false },
-      scroll = { enabled = false },
       statuscolumn = {
         enabled = true,
         left = { 'mark', 'sign' },
@@ -96,6 +101,13 @@ return {
         notify_end = false,
         debounce = 500,
       },
+
+    --> ── disabled components ─────────────────────────────────────────────
+      indent = { enabled = false },
+      scope = { enabled = false },
+      scroll = { enabled = false },
+
+-- ╾────────────────────────────────────────────────────────────────────╼
       styles = {
         snacks_image = {
           relative = 'editor',
@@ -142,6 +154,6 @@ return {
           })
         end,
       },
-    },
+    },
   },
 }

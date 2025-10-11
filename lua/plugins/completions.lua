@@ -57,7 +57,7 @@ return {
         ['<CR>']      = { 'accept', 'fallback' },
         ['<Tab>']     = { 'select_next', 'snippet_forward', 'fallback' },
         ['<S-Tab>']   = { 'select_prev', 'snippet_backward', 'fallback' },
-        ['<C-Down>'] = {
+        ['<C-Down>']  = {
           function(cmp)
             if cmp.is_documentation_visible() then
               return cmp.scroll_documentation_down(1)
@@ -197,12 +197,11 @@ return {
             name = 'lsp',
             enabled = true,
             module = 'blink.cmp.sources.lsp',
-            score_offset = 90,
           },
           path = {
             name = 'Path',
             module = 'blink.cmp.sources.path',
-            score_offset = 20,
+            score_offset = 3,
             opts = {
               show_hidden_files_by_default = true,
               trailing_slash = false,
@@ -214,22 +213,20 @@ return {
             max_items = 8,
             min_keyword_length = 2,
             module = 'blink.cmp.sources.snippets',
-            score_offset = 85,
+            score_offset = -3,
             opts = {
               show_autosnippets = true,
             },
           },
           buffer = {
             name = 'Buffer',
-            min_keyword_length = 3,
-            max_items = 3,
-            score_offset = 15,
+            score_offset = -10,
           },
           env = {
             name = '$ENV',
             module = 'blink-cmp-env',
             max_items = 8,
-            score_offset = 60,
+            score_offset = 3,
             should_show_items = function()
               local col = vim.api.nvim_win_get_cursor(0)[2]
               local before = vim.api.nvim_get_current_line():sub(1, col)

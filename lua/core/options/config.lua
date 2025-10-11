@@ -1,9 +1,14 @@
 vim.o.termguicolors = true
 
+vim.wo.number = true
+
 vim.opt.listchars = {
   lead = nil,
   tab = '󰶻 ',
   trail = '🞙',
+}
+vim.opt.fillchars = {
+  eob = ' ',
 }
 
 vim.opt.runtimepath:remove('/etc/xdg/nvim')
@@ -11,8 +16,6 @@ vim.opt.runtimepath:remove('/etc/xdg/nvim/after')
 vim.opt.runtimepath:remove('/usr/share/vim/vimfiles')
 
 vim.opt.wildignore:append { '.directory', '.github', '.git', 'node_modules' }
-
-vim.wo.nu = true
 
 -- stylua: ignore start
 --  ╾──────────────────────────────────────────────────────────╼
@@ -29,7 +32,6 @@ local options = {
   cursorlineopt     = {'number','screenline'},
   expandtab         = true,
   exrc              = true,
-  fillchars         = { eob = ' ' },
   hlsearch          = true,
   ignorecase        = true,
   infercase         = true,

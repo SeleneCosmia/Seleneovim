@@ -9,7 +9,6 @@ return {
     lazy = false,
     branch = 'main',
     build = ':TSUpdate',
-    ---@module 'nvim-treesitter'
     opts = {},
   },
 
