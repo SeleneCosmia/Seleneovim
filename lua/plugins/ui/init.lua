@@ -14,33 +14,10 @@ return {
     end,
   },
 
-  { 'MunifTanjim/nui.nvim', lazy = true },
-
   -- ╓─────────────────────────────────────────────────────────╖
   -- ║                  Highlighting Plugins                   ║
   -- ╙─────────────────────────────────────────────────────────╜
   { 'tzachar/highlight-undo.nvim', opts = {} },
-
-  {
-    'SeleneCosmia/rainbow-delimiters.nvim',
-    config = function()
-      local g = vim.g
-      local rd = require 'rainbow-delimiters'
-
-      g.rainbow_delimiters = {
-        strategy = {
-          [''] = rd.strategy['global'],
-          vim = rd.strategy['local'],
-        },
-        query = {
-          [''] = 'rainbow-delimiters',
-        },
-        priority = {
-          [''] = 110,
-        },
-      }
-    end,
-  },
 
   {
     'nvimdev/hlsearch.nvim',
@@ -72,11 +49,5 @@ return {
     'nvim-zh/colorful-winsep.nvim',
     branch = 'main',
     event = 'WinLeave',
-    opts = {
-      highlight = {
-        fg = vim.api.nvim_get_hl(0, { name = 'FloatBorder' })['fg'],
-        bg = 'bg'
-      }
-    },
   },
 }

@@ -11,10 +11,6 @@ vim.opt.fillchars = {
   eob = ' ',
 }
 
-vim.opt.runtimepath:remove('/etc/xdg/nvim')
-vim.opt.runtimepath:remove('/etc/xdg/nvim/after')
-vim.opt.runtimepath:remove('/usr/share/vim/vimfiles')
-
 vim.opt.wildignore:append { '.directory', '.github', '.git', 'node_modules' }
 
 -- stylua: ignore start
@@ -25,6 +21,7 @@ local options = {
   backup            = false,
   breakindent       = true,
   clipboard         = 'unnamedplus',
+  cmdheight         = 0,
   completeopt       = {'menu','menuone','preview'},
   conceallevel      = 1,
   confirm           = true,
@@ -74,3 +71,5 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+
+require 'vim._core.ui2'.enable()

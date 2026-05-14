@@ -61,12 +61,6 @@ return {
   },
 
   {
-    'Cassin01/wf.nvim',
-    version = false,
-    opts = {},
-  },
-
-  {
     'chrishrb/gx.nvim',
     cmd = 'Browse',
     keys = {
@@ -90,14 +84,6 @@ return {
       { ignored_buftypes = { 'neo-tree' } },
       { resize_mode = { silent = true } },
     },
-  },
-
-  {
-    'nvimtools/hydra.nvim',
-    event = 'VimEnter',
-    config = function()
-      require 'config.hydra'
-    end,
   },
 
   { 'b0o/schemastore.nvim' },

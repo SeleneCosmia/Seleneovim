@@ -15,10 +15,3 @@ autocmd(events, {
     vim.cmd.setfiletype 'sh'
   end,
 })
-
-vim.filetype.add({
-  pattern = {
-    ['.*/hypr%.d/.*%.conf'] = 'hyprlang',
-    ['.*/hyprland%.conf']   = 'hyprlang',
-  },
-})

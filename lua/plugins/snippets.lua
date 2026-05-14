@@ -6,7 +6,7 @@ return {
     'L3MON4D3/LuaSnip',
     build = 'make install_jsregexp',
     version = 'v2.*',
-    event = 'InsertEnter',
+    -- event = 'InsertEnter',
     dependencies = { 'rafamadriz/friendly-snippets' },
     config = function()
       local ls = require 'luasnip'
@@ -14,7 +14,6 @@ return {
       ls.setup({
         keep_roots = true,
         update_events = { 'TextChanged', 'TextChangedI' },
-
         delete_check_events = 'TextChanged',
         enable_autosnippets = true,
       })
