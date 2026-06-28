@@ -3,10 +3,8 @@ local filetypes = require 'utils.globals'.filetypes.web_dev
 ---@type LazySpec[]
 return {
   {
-    'barrett-ruth/live-server.nvim',
+    url = 'https://git.barrettruth.com/barrettruth/live-server.nvim',
     ft = filetypes,
-    cmd = { 'LiveServerToggle' },
-    config = true,
   },
 
   {

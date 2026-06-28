@@ -3,8 +3,8 @@ local lsp = vim.lsp
 local util = require 'lspconfig.util'
 
 -- stylua: ignore start
-bo.tabstop       = 4
-bo.shiftwidth    = 4
+bo.tabstop       = 2
+bo.shiftwidth    = 2
 bo.commentstring = '# %s'
 -- stylua: ignore end
 local capabilities = lsp.protocol.make_client_capabilities()
